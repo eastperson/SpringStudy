@@ -1,0 +1,14 @@
+<%
+String prePath = "/";
+String curPath = request.getRequestURI();
+
+if(request.getAttribute("prePath") != null)
+	prePath = (String) request.getAttribute("prePath");
+else 
+	request.setAttribute("prePath", curPath);
+
+if(request.getParameter("prePath") != null)
+	prePath = (String) request.getParameter("prePath");
+else 
+	request.setAttribute("prePath", curPath);
+%>

@@ -133,7 +133,7 @@
 				formObj.append(keywordTag);
 				formObj.append(typeTag);
 				
-			}d
+			}
 			
 			formObj.submit();
 		});
