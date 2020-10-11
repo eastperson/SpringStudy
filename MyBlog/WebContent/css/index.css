@@ -1,0 +1,306 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "aktiv-grotesk-std",sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+}
+a {text-decoration : none;}
+a:link{text-decoration: none;}
+a:visited{text-decoration: none;}
+a:active{text-decoration: none;}
+li{list-style: none;}
+a:-webkit-any-link{
+    text-decoration: none; 
+    color: #90ece7;
+    font-weight: 400;
+}
+a:-webkit-any-link:hover{
+    color: white;
+}
+img {border : 0}
+
+/* 초기화 */
+
+#blank_box{
+    position: relative;
+    display: block;
+    border-bottom: #4b4c59 solid 1px;
+    height: 10vw;
+    width: 100vw;
+    background-color: #353844;
+    overflow: hidden;
+    color: white;
+    
+}
+
+#blank_box span{
+    position: absolute;
+    text-align: center;
+    font-size: 36px;
+    bottom: 25%;
+    left: 45%;
+}
+
+/* header box */
+#header_box{
+    height: 100px;
+    overflow: visible;
+    position: relative;
+    width: 100vw;
+    height: 10vw;
+    background-color: #353844;
+}
+#left_header{
+    position: absolute;
+    top: 25%;
+    left: 4%;
+    display: inline;
+}
+#logo_box{
+    display: inline;
+    padding: 5px;
+}
+
+#right_header{
+    position: absolute;
+    right: 3%;
+    top: 35%;
+}
+#right_header li{
+    
+    display: inline;
+    padding-right: 5px;
+    
+}
+
+#right_header li > div{
+    display: inline-block;
+    position: relative;
+}
+
+/* header box dorp down*/
+.drop_btn{
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+    font-weight: 400;
+}
+
+.dropdown_mypagelist{
+    display: none;
+    position: absolute;
+    background-color: white;
+    right: -5px;
+    top : 25px;
+    border: black solid 1px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown_mypagelist a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+.dropdown_mypagelist a:hover {
+    color: black;  
+    background-color: #f1f1f1}
+#my_pagelist:hover .dropdown_mypagelist {
+    display: inline-block;
+}
+.dropdown_mypagelist:hover .dropdown_mypagelist {
+    display: inline-block;
+}
+
+/* end dorp down*/
+/* end header box*/
+
+/* flex box*/
+.flexbox_row{
+    display: -webkit-flex;
+    display: flex;
+    
+}
+.flexbox_column{
+    padding: 10px;
+    height: 600px;
+}
+
+/* main box*/
+#main_box {
+    background-color: #353844d8;
+}
+
+
+.flexbox_column1{
+    -webkit-flex: 4;
+    -ms-flex: 4;
+    flex: 4;
+}
+
+#content_wrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.login_box{
+    background-color: white;
+    border: 1px black solid;
+    position: absolute;
+    height: 75%;
+    width: 40%;
+    left: 5%;
+    top: 12.5%;
+    overflow : hidden;
+}
+
+.login_box form {
+    position: absolute;
+    top: 50px;
+    left: 30px;
+}
+
+.input_box{
+    padding: 15px 0;
+    width: 70%;
+    overflow : hidden;
+    
+}
+
+.input_box label{
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.input_box input {
+}
+.button_box {
+    padding: 15px 0;
+}
+
+#welcome {
+	font-size : normal;
+	text-align: center;
+}
+
+/* image box */
+
+.imagebox{
+    background-color: white;
+    border: 1px black solid;
+    position: absolute;
+    height: 75%;
+    width: 40%;
+    right: 5%;
+    top: 12.5%;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 300px) {
+    .imagebox  { display: none; } 
+}
+
+.imagebox_image {
+    display: inline-block;
+    position: absolute;
+    height: 40%;
+    left: 30px;
+    top: 30px;
+    width: 80%;
+}
+
+.imagebox_content {
+    display: inline-block;
+    position: absolute;
+    height: 30%;
+    left: 30px;
+    bottom: 60px;
+    width: 80%;
+    font-size: 18px;
+    overflow: scroll;
+}
+
+/* side box */
+
+
+.flexbox_column2{
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: center;
+    background-color: rgba(230, 230, 230, 0.835);
+}
+
+@media screen and (max-width: 600px) {
+    #side_box  { display: none; } 
+}
+
+#side_box span{
+    display: block;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+#side_wrapper ul{
+    width: 80%;
+}
+
+.side_flexcolumn{
+    display: -webkit-flex;
+    display: flex;
+}
+.side_flexrow{
+    border: black solid 1px;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    height: 150px;
+    width: 100%;
+    margin: 20px 20px;
+    text-align: center;
+}
+
+/* section */
+#today_info {
+    border: #4b4c59 solid 1px;
+    display: -webkit-flex;
+    display: flex;
+    height: 10vw;
+    width: 100vw;
+}
+
+#today_info  div, ol{
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+/* footer box */
+.wrapper {
+    border: black solid 1px;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.wrapper div{
+    display: -webkit-flex;
+    display: flex;
+}
+
+#footer_box {
+    position: relative;
+    display: block;
+    border-bottom: #4b4c59 solid 1px;
+    height: 100px;
+    width: 100vw;
+    background-color: #353844;
+    overflow: hidden;
+    color: white;
+}

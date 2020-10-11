@@ -6,32 +6,66 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/registerForm.css">
 </head>
 <body>
-<form action="/RegisterAction" method="post" id="register_acition">
+<%@ include file="/include/header.jspf" %>
+<main class="main_box"> <!-- main_box -->
+    <div class="content"> <!-- content -->
+        <div class="instruction">
+        <h1>AI 아카데미 등록을 환영합니다.</h1>
+        <p>            
+            Pando members get full access to every article published on Pando, including our full archive. You’ll also get free access to Pando Monthly events, each event’s live video stream and our full video archive.
+        </p>
+        <p>
+            To activate your membership immediately, enter your payment details and subscription preferences below.
+        </p>
+    </div>
+<form action="/RegisterAction" method="post" id="register_action" class="form">
+	<div class="radio">
+            <h2>등급 선택</h2>
+            <input type="radio" name="grade" value="Diamond"><span>Diamond</span><br/>
+            <input type="radio" name="grade" value="Platinum"><span>Platinum</span><br/>
+            <input type="radio" name="grade" value="Gold"><span>Gold</span><br/>
+            <input type="radio" name="grade" value="Silver"><span>Silver</span><br/>
+            <input type="radio" name="grade" value="Bronze"><span>Bronze</span><br/>
+        </div>
+        
+	<input id="user_id" type="text" name="user_id" placeholder="아이디">
+	<span id="id_msg"></span><br/>
 	
-	<label for="user_id">ID</label>
-	<input id="user_id" type="text" name="user_id" placeholder="id를 입력하세요(10자 미만)" required><br/>
 	
-	<label for="user_pw">비밀번호</label>
-	<input id="user_pw" type="password" name="user_pw" placeholder="password를 입력하세요(4글자 이상, 20자 미만)" required><br/>
+	<input id="user_pw" type="password" name="user_pw" placeholder="비밀번호">
+	<span id="pw_msg"></span><br/>
 	
-	<label for="name">이름</label>
-	<input id="name" type="text" name="name" placeholder="이름을 입력하세요(10자 이하)" required><br/>
 	
-	<label for="email">이메일</label>
-	<input id="email" type="email"name="email" placeholder="email를 입력하세요(@포함)" required><br/>
+	<input id="user_pw_check" type="password" name="user_pw_check" placeholder="비밀번호 확인">
+	<span id="pwCheck_msg"></span><br/>
 	
-	<label for="phoneNum">휴대번호</label>
-	<input id="phoneNum" type="text"name="phoneNum" placeholder="휴대번호를 입력하세요" required><br/>
 	
-	<label for="dateOfBirth">생년월일</label>
-	<input id="dateOfBirth" type="date" name="dateOfBirth" placeholder="생년월일을 입력하세요" required><br/>
-	<input type="hidden" value=<%=prePath %>>
+	<input id="name" type="text" name="name" placeholder="이름">
+	<span id="name_msg"></span><br/>
 	
-	<button type="submit">회원가입</button>
+	
+	<input id="email" type="email"name="email" placeholder="이메일">
+	<span id="email_msg"></span><br/>
+	
+	
+	<input id="phoneNum" type="text"name="phoneNum" placeholder="휴대번호">
+	<span id="phoneNum_msg"></span><br/>
+	
+	
+	<input id="dateOfBirth" type="date" name="dateOfBirth" placeholder="생년월일" >
+	<span id="dateOfBirth_msg"></span><br/>
+	
+	<button type="submit" id="form_submit">회원가입</button>
 </form>
 <h1><%=msg %></h1>
+</div> <!-- end content -->
+</main> <!-- end main_box -->
+<%@ include file="/include/footer.jspf" %>
+<script type="text/javascript" src="/js/registerFormCheck.js"></script>
 </body>
 </html>

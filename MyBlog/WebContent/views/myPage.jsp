@@ -13,6 +13,7 @@ UserDAO udao = UserDAO.getInstance();
 UserVO user = udao.selectUser((String)request.getSession().getAttribute("id"));
 %>
 <body>
+<%@ include file="/include/header.jspf" %>
 <h1>ID : <%=user.getId() %></h1>
 <h1>PW : <%=user.getPw() %></h1>
 <h1>EMAIL : <%=user.getEmail() %></h1>
@@ -21,7 +22,6 @@ UserVO user = udao.selectUser((String)request.getSession().getAttribute("id"));
 <h1>가입날짜 : <%=user.getInDate() %></h1>
 <h1>수정날짜 : <%=user.getUpdateDate() %></h1>
 <h1>멤버등급 : <%=user.getGrade() %></h1>
-<a href="/views/board/list.jsp">리스트</a>
-<a href="/LogoutAction">로그아웃</a>
+<a href="/UserWithdrawAction">회원탈퇴</a>
 </body>
 </html>

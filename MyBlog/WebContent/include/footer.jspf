@@ -1,12 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<div id="blank_box"><span></span></div>
+<!-- 
+<section id="today_info">
+    <div></div>
+    <ol>
+        <li>
+            <div class="wrapper">
+                <div>
+                    <h2 class="title">title</h2>
+                    <p class="content">content</p>
+                </div>
+                <div>
+                    <p class="author">writer</p>
+                </div>
+            </div>
+        </li>
+    </ol>
+</section>
+ -->
+    <footer id="footer_box"> <!-- footer box -->
+        <div id="footer_wrapepr"> <!-- footer wrapper -->
+        </div> <!-- end footer wrapper box -->
+    </footer> <!-- end footer box -->
