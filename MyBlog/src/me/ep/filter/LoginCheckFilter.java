@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebFilter(filterName="LoginCheckFilter", urlPatterns= { "/board/*" })
+@WebFilter(filterName="LoginCheckFilter", urlPatterns= { "/views/board/*" })
 public class LoginCheckFilter implements Filter {
 
 
@@ -31,7 +31,7 @@ public class LoginCheckFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 
         if(session.getAttribute("id") == null) {
-        	RequestDispatcher reqDis = request.getRequestDispatcher("/loginForm.jsp");
+        	RequestDispatcher reqDis = request.getRequestDispatcher("/");
         	reqDis.forward(request, response);        	        	
         }
 		

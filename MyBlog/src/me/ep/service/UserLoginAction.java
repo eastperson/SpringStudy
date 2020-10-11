@@ -43,15 +43,18 @@ public class UserLoginAction extends HttpServlet {
 		
 		System.out.println(id);
 		System.out.println(pw);
-		
-		String prePath = request.getParameter("prePath");
-		String toURL = "/index.jsp";
+		String prePath ="/";
+		if(request.getAttribute("prePath") != null)
+			prePath = (String) request.getAttribute("prePath");
+		String toURL = "/";
 		
 		
 		if(isValidUser(id,pw)) {
 			System.out.println("통과");
+			request.setAttribute("loginUser", udao.selectUser(id));
 			request.getSession().setAttribute("id", id);
-			toURL = "/views/board/board.jsp";
+			request.setAttribute("prePath", prePath);
+			toURL = prePath;
 		}
 		
 		else {

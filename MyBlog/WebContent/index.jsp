@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/include/getPrePath.jspf" %>
+<%@ include file="/include/setPrePath.jspf" %>
 <%@ include file="/include/getMsg.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Index</title>
+<link rel="stylesheet" href="/webapp/css/index.css" type="text/css">
 </head>
+<%
+String id = "";
+if(request.getSession().getAttribute("id") != null)
+	id = (String) request.getSession().getAttribute("id");
+
+%>
 <body>
+<%@ include file="/include/header.jspf" %>
             <div class="login_box">
                 <form action="/LoginAction" method="POST" id="login_form">
                     <label for="user_id"">아이디</label>
@@ -21,7 +29,10 @@
                     <button id="login_btn" type="submit" class="btn_submit">LOGIN NOW</button>
                     <button id="join_btn" type="submit" class="btn_join">JOIN NOW</button>
                 </form>
+                <a href="/views/board/list.jsp">리스트</a>
+                <a href="/LogoutAction">로그아웃</a>
                 <h1><%=msg %></h1>
+                <h1><%=id %></h1>
             </div>
             <script>
             	window.onload = function() {

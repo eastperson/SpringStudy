@@ -1,0 +1,23 @@
+<%
+String logState = "";
+if(request.getSession().getAttribute("id") != null)
+	logState = "<li><a href='#'>Logout</a></li>" + "<li><div id='my_pagelist'><a class='drop_btn' href='#'>MyPage</a><div class='dropdown_mypagelist'><!-- dropdown mypageList -->"
+			+"<a href='#'>Info</a><a href='#'>cart</a><a href='#'>my content</a><a href='#'>goods</a></div><!-- end dropdown mypageList --></div></li>";
+
+
+%>
+    <div id="blank_box"><span>My Blog</span></div>
+    <header id="header_box"><!-- header box-->
+            <div id="left_header"> <!-- left header -->
+                <div id="logo_box"><a href="#"><img src="https://via.placeholder.com/180x60" alt="logo"></a></div>
+            </div><!-- end left_header -->
+            <div id="right_header"><!-- right_header -->
+                <ul>
+                    <li><a href="#">Board</a></li>
+                    <li><a href="#">Join</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Logout</a></li>
+	                 <%=logState %>
+                </ul>
+            </div><!-- end right header -->
+    </header><!-- end header box-->
