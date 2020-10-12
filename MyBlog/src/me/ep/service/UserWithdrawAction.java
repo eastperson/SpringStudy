@@ -21,6 +21,7 @@ public class UserWithdrawAction extends HttpServlet {
 	
 	UserDAO udao = UserDAO.getInstance();
 	
+	// 삭제 가능한 user인지 확인한다.(기존 사용자인지)
 	boolean isValidWithdrawUser(UserVO user) {
 		
 		if(udao.selectUser(user.getId()) == null)
@@ -31,23 +32,27 @@ public class UserWithdrawAction extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String prePath = "/";
+		//이전 경로를 기억해서 toURL의 default 값을 설정한다.
+		String prePath ="/";
+		if(request.getAttribute("prePath") != null)
+			prePath = (String) request.getAttribute("prePath");
 		String toURL = prePath;
 		
 		UserVO user = udao.selectUser((String)request.getSession().getAttribute("id"));
 		
-		
+		// 탈퇴 가능한 계정이면
+		// 해당 user를 삭제한다.
+		// 세션값도 만료시킨다.
 		if(isValidWithdrawUser(user)) {
 			udao.deleteUser(user.getId());
 			request.getSession().invalidate();
 		} 
 		
 		else {
-			request.setAttribute("msg", "이미 존재하는 ID가 있습니다.");
+			request.setAttribute("msg", "해당 ID의 유저가 없습니다.");
 			toURL = "/views/registerForm.jsp";
 		}
-		RequestDispatcher reqDis = request.getRequestDispatcher(toURL);
-		reqDis.forward(request, response);
+		request.getRequestDispatcher(toURL).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

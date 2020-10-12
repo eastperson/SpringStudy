@@ -48,7 +48,7 @@ public class UserVOTest {
 	@DisplayName("UserVO 생성 조건 예외 테스트(ID)")
 	void newUserVOExceptionTest1() {
 
-		//"ID는 10자 미만의 글자로만 저장이 되어야 합니다."
+		//"ID는 10자 이하의 글자로만 저장이 되어야 합니다."
 		assertTrue("12345678901".length() == 11);
 		
 		// 10자 초과의 아이디를 넣었을 때, 예외가 발생해야 한다.

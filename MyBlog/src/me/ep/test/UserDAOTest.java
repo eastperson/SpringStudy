@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -139,7 +140,39 @@ class UserDAOTest {
 		}
 	}
 
+	
+		//sql 오류가 나는지.
+		@Test
+		@DisplayName("SQL 테스트 1")
+		void SQLTest1() {
+			
+			
+			SQLException exception = assertThrows(SQLException.class, () ->{
+				String query = "SELECT sysddsdsaate FROM dualdsadsa";
 
+				pstmt = conn.prepareStatement(query);
+
+				rs = pstmt.executeQuery(query);
+
+				while(rs.next()) {
+					String curDate = rs.getString(1);
+					curDate = curDate.substring(0, curDate.lastIndexOf(":"));
+
+					System.out.println(curDate);
+
+					Date date = new Date();
+
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+					System.out.println(format.format(date));
+
+					assertTrue(curDate.equals(format.format(date)));
+				}	
+				
+		});
+			System.out.println(exception.getMessage());
+		}
+	
 	@Test
 	@DisplayName("udao selectUser")
 	void udaoSelectUserTest1() {
@@ -156,7 +189,7 @@ class UserDAOTest {
 				() -> assertTrue(user.getName().equals("김동인")),
 				() -> assertTrue(user.getEmail().equals("aaa@naver.com")),
 				() -> assertTrue(user.getPhoneNum().equals("1027375157")),
-				() -> assertTrue(user.getDateOfBirth().toString().equals("2020-10-10"))
+				() -> assertTrue(user.getDateOfBirth().toString().equals("2020-10-12"))
 
 				);
 
@@ -184,7 +217,7 @@ class UserDAOTest {
 
 		System.out.println(userList);
 
-		UserVO user = udao.selectUser("abc");
+		UserVO user = udao.selectUser("kjuioq");
 
 		System.out.println(user);
 

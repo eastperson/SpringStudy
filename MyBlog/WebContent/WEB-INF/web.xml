@@ -9,5 +9,23 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
+  <jsp-config>
+  	<jsp-property-group>
+  		<url-pattern></url-pattern>
+  		<include-prelude></include-prelude>
+  		<include-coda></include-coda>
+  	</jsp-property-group>
+  </jsp-config>
+  <servlet>
+  	<servlet-name>listener</servlet-name>
+  	<servlet-class>me.ep.listener.ContextLister</servlet-class>
+  	<init-param>
+  		<param-name>DB_DRIVER</param-name>
+  		<param-value>oracle.jdbc.driver.OracleDriver</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>listener</servlet-name>
+  	<url-pattern></url-pattern>
+  </servlet-mapping>
 </web-app>

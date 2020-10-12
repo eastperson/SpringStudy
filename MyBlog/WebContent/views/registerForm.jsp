@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/registerForm.css">
+    <link rel="stylesheet" href="/css/index.css?ver=1">
+    <link rel="stylesheet" href="/css/registerForm.css?ver=1">
 </head>
 <body>
 <%@ include file="/include/header.jspf" %>
@@ -25,7 +25,7 @@
     </div>
 <form action="/RegisterAction" method="post" id="register_action" class="form">
 	<div class="radio">
-            <h2>등급 선택</h2>
+        <h2>등급 선택</h2>
             <input type="radio" name="grade" value="Diamond"><span>Diamond</span><br/>
             <input type="radio" name="grade" value="Platinum"><span>Platinum</span><br/>
             <input type="radio" name="grade" value="Gold"><span>Gold</span><br/>
@@ -34,31 +34,31 @@
         </div>
         
 	<input id="user_id" type="text" name="user_id" placeholder="아이디">
-	<span id="id_msg"></span><br/>
+	<br/><span id="id_msg" class="check_msg"></span><br/>
 	
 	
 	<input id="user_pw" type="password" name="user_pw" placeholder="비밀번호">
-	<span id="pw_msg"></span><br/>
+	<br/><span id="pw_msg" class="check_msg"></span><br/>
 	
 	
 	<input id="user_pw_check" type="password" name="user_pw_check" placeholder="비밀번호 확인">
-	<span id="pwCheck_msg"></span><br/>
+	<br/><span id="pwCheck_msg" class="check_msg"></span><br/>
 	
 	
 	<input id="name" type="text" name="name" placeholder="이름">
-	<span id="name_msg"></span><br/>
+	<br/><span id="name_msg" class="check_msg"></span><br/>
 	
 	
 	<input id="email" type="email"name="email" placeholder="이메일">
-	<span id="email_msg"></span><br/>
+	<br/><span id="email_msg" class="check_msg"></span><br/>
 	
 	
 	<input id="phoneNum" type="text"name="phoneNum" placeholder="휴대번호">
-	<span id="phoneNum_msg"></span><br/>
+	<br/><span id="phoneNum_msg" class="check_msg"></span><br/>
 	
 	
 	<input id="dateOfBirth" type="date" name="dateOfBirth" placeholder="생년월일" >
-	<span id="dateOfBirth_msg"></span><br/>
+	<br/><span id="dateOfBirth_msg" class="check_msg"></span><br/>
 	
 	<button type="submit" id="form_submit">회원가입</button>
 </form>

@@ -18,6 +18,9 @@ public class UserLoginAction extends HttpServlet {
     
 	UserDAO udao = UserDAO.getInstance();
 	
+	// 1. 매개변수 id의 user가 DB에 저장되어있는지 확인
+	// 2. 입력한 비밀번호가 일치하는지 확인
+	// 위의 두 조건이 맞으면 true 반환
 	boolean isValidUser(String id, String pw) {
 		
 		UserVO user = udao.selectUser(id);
@@ -38,33 +41,34 @@ public class UserLoginAction extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// input 파라미터를 받아온다.
 		String id = request.getParameter("user_id");
 		String pw = request.getParameter("user_pw");
 		
-		System.out.println(id);
-		System.out.println(pw);
+		//이전 경로를 기억해서 toURL의 default 값을 설정한다.
 		String prePath ="/";
 		if(request.getAttribute("prePath") != null)
 			prePath = (String) request.getAttribute("prePath");
-		String toURL = "/";
+		String toURL = prePath;
 		
-		
+		// 로그인 성공
+		// 세션에 회원의 id 저장
 		if(isValidUser(id,pw)) {
-			System.out.println("통과");
+			System.out.println(id + "로그인 성공!");
 			request.setAttribute("loginUser", udao.selectUser(id));
 			request.getSession().setAttribute("id", id);
-			request.setAttribute("prePath", prePath);
-			toURL = prePath;
 		}
-		
+		// 로그인 실패
+		// 실패 msg 전달
+		// prePath는 그대로 전달
 		else {
 			System.out.println("실패");
 			request.setAttribute("msg", "id 혹은 pw가 일치하지 않습니다.");
 			request.setAttribute("prePath", prePath);
 		}
 		
-		RequestDispatcher reqDis = request.getRequestDispatcher(toURL);
-		reqDis.forward(request, response);
+		request.getRequestDispatcher(toURL).forward(request, response);
 	}
 
 }

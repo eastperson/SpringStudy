@@ -21,7 +21,6 @@ public class jdbcTest {
 
 		ResultSet rs = null;
 		
-		
 		String query = "SELECT sysdate FROM dual"; // 시스템의 날짜를 출력한다.
 
 		try {

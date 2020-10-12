@@ -23,6 +23,7 @@ public class UserVO {
 	
 	public UserVO(){}
 
+	// 각 인스턴스변수에 예외 상활을 정의한다.
 	public UserVO(String id, String pw, String name, String email, String phoneNum, Date dateOfBirth) {
 		if(id.length() > 10) 
 			throw new IllegalArgumentException("ID는 10자 이하의 글자로만 저장이 되어야 합니다.");

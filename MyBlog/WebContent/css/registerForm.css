@@ -1,13 +1,16 @@
 .main_box{
     background-color: #353844;
     width : 100vw;
-    height: 1300px;
+    height: 1400px;
     border-top:  #4b4c59 1px solid;
     border-bottom:  #4b4c59 1px solid;
+}
+
+/*
     background-image: url("/img/pat.png"), url("/img/mat.png");
     background-repeat: no-repeat, no-repeat;
-    background-position: -10% 125%, 105% 128%;
-}
+    background-position: -50% 125%, 150% 128%;
+*/
 .content{
     padding-top: 5%;
     position: relative;
@@ -92,3 +95,6 @@
     cursor: pointer;
 }
 
+.check_msg {
+	color : white;
+}

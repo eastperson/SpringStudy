@@ -33,24 +33,24 @@ public class PremiumUserCheckFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession();
-		String toURL;
+		String toURL = httpRequest.getRequestURI();
 		
+		// id값이 없으면 돌려보내기
         if(session.getAttribute("id") == null) {
-        	toURL = "/loginForm.jsp";   
-        	RequestDispatcher reqDis = request.getRequestDispatcher(toURL);
-        	reqDis.forward(request, response); 
+        	request.getRequestDispatcher(toURL).forward(request, response);   
         }
         
+        // id 값이 있으면 DB에서 user 꺼내오기
         UserVO user = udao.selectUser((String) session.getAttribute("id"));
         
-        if(user.getGrade() < GradeVO.PLATINUM) {
-        	toURL = "/loginForm.jsp";
-        	RequestDispatcher reqDis = request.getRequestDispatcher(toURL);
-        	reqDis.forward(request, response); 
+        // user의 등급이 플래티넘 이상일 때,
+        // 해당하는 게시글로 이동(추후 추가)
+        if(user.getGrade() >= GradeVO.PLATINUM) {
+        	toURL = "/board/list.jsp";  
         }
-        	
         
-		
+        request.getRequestDispatcher(toURL).forward(request, response);
+        
 		chain.doFilter(request, response);
 	}
 

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebFilter(filterName="LoginCheckFilter", urlPatterns= { "/views/board/*" })
+@WebFilter(filterName="LoginCheckFilter", urlPatterns= { "/views/board/*", "/views/myPage.jsp", "/views/userList.jsp" })
 public class LoginCheckFilter implements Filter {
 
 
@@ -30,11 +30,10 @@ public class LoginCheckFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession();
 
-        if(session.getAttribute("id") == null) {
-        	RequestDispatcher reqDis = request.getRequestDispatcher("/");
-        	reqDis.forward(request, response);        	        	
-        }
-		
+		// 세션이 없으면 이전 경로로 보내벼린다.
+        if(session.getAttribute("id") == null) 
+        	request.getRequestDispatcher(httpRequest.getRequestURI()).forward(request, response);
+        	        	        	
 		chain.doFilter(request, response);
 	}
 

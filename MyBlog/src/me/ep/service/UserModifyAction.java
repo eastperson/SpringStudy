@@ -15,24 +15,30 @@ import javax.servlet.http.HttpServletResponse;
 import me.ep.dao.UserDAO;
 import me.ep.domain.UserVO;
 
-@WebServlet("/RegisterAction")
-public class UserRegisterAction extends HttpServlet {
+@WebServlet("/UserModifyAction")
+public class UserModifyAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	// 싱글톤 dao를 불러온다.
 	UserDAO udao = UserDAO.getInstance();
 	
-	// 저장하기 전에 DB안에 user가 있는지 확인한다.
-	// user id가 같은 기존 고객이 있으면 false
-	boolean isValidRegisterUser(UserVO user) {
-		
-		if(udao.selectUser(user.getId()) != null)
+	// 매개변수 user가 DB에 저장되어있는지.
+	public boolean isValidModifyUser(UserVO user) {
+	
+		if(udao.selectUser(user.getId()) == null)
 			return false;
 		
 		return true;
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// GET 방식으로 접근하면 
+		// attribute 값을 변경해서 전달
+		request.setAttribute("modify", "true");
+		request.getRequestDispatcher("/views/myPage.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//이전 경로를 기억해서 toURL의 default 값을 설정한다.
 		String prePath ="/";
@@ -41,14 +47,14 @@ public class UserRegisterAction extends HttpServlet {
 		String toURL = prePath;
 		
 		// user의 각 정보를 받아온다.
-		String id = request.getParameter("user_id");
-		String pw = request.getParameter("user_pw");
+		// 변경 페이지의 id input은 readonly 설정으로 되어있다.
+		String id = request.getParameter("info_id");
+		String pw = request.getParameter("info_pw");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String phoneNum = request.getParameter("phoneNum").replaceAll("-", "");
 		String dateOfBirth = request.getParameter("dateOfBirth");
 		Date date;
-		
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth);
 		} catch (ParseException e) {
@@ -56,27 +62,18 @@ public class UserRegisterAction extends HttpServlet {
 			return;
 		}  
 		
-		
+		// 변경될  user정보로 객체를 생성해준다.
 		UserVO user = new UserVO(id,pw,name,email,phoneNum,date);
 		
-		
-		// 등록 가능한 user인지 확인 완료하면
-		// 세션에 아이디를 저장한다.(로그인 상태 유지)
-		if(isValidRegisterUser(user)) {
-			udao.insertUser(user);
-			request.getSession().setAttribute("id", user.getId());
-		} 
-		
-		// msg와 이동 경로를 바꿔준다.
-		else {
-			request.setAttribute("msg", "이미 존재하는 ID가 있습니다.");
-			toURL = "/views/registerForm.jsp";
+		// DB에 user가 있는지 확인하고 user가 있으면
+		// 해당 정보로 정보를 바꿔준다.
+		if(isValidModifyUser(user)) {
+			udao.updateUser(user);
+			System.out.println("업데이트 완료");
+			toURL = "/views/myPage.jsp";
 		}
+		
 		request.getRequestDispatcher(toURL).forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

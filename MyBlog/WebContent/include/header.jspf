@@ -3,10 +3,8 @@
 <%
 String logState = "<li><a href='/views/registerForm.jsp'>Join</a></li>";
 if(request.getSession().getAttribute("id") != null)
-	logState = "<li><a href='/LogoutAction'>Logout</a></li>" + "<li><div id='my_pagelist'><a class='drop_btn' href='/views/myPage.jsp'>MyPage</a><div class='dropdown_mypagelist'><!-- dropdown mypageList -->"
-			+"<a href='#'>Info</a><a href='#'>cart</a><a href='#'>my content</a><a href='#'>goods</a></div><!-- end dropdown mypageList --></div></li>";
-
-
+	logState = "<li><a href='/LogoutAction'>Logout</a></li>" + "<li><div id='my_pagelist'><a class='drop_btn' href='#'>MyPage</a><div class='dropdown_mypagelist'><!-- dropdown mypageList -->"
+			+"<a href='/views/myPage.jsp'>Info</a><a href='/views/userList.jsp'>회원 리스트</a><a href='#'>my content</a><a href='#'>goods</a></div><!-- end dropdown mypageList --></div></li>";
 %>
     <div id="blank_box"><span>My Blog</span></div>
     <header id="header_box"><!-- header box-->

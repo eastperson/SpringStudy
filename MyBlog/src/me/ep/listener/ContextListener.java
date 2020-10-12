@@ -29,6 +29,9 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         
+    	// 서블릿 컨텍스트를 만들어준다.
+    	// 서블릿 컨텍스트는 웹 어플리케이션 내에이쓴 모든 서블릿을 관리하며 정보를 공유하는 역할을 한다.
+    	// 
     	ServletContext sc = event.getServletContext();
         
     	try {
@@ -37,7 +40,13 @@ public class ContextListener implements ServletContextListener {
 			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 			
 			UserDAO udao = new UserDAO();
+			
+			// udao와 DB를 연결시켜준다.
 			udao.setConnection(conn);
+			
+			// 서블릿 컨텍스트에 udao를 저장한다.
+			// 하나의 웹 어플리케이션 안에 있는 모든 서블릿은 서블릿 컨텍스트에 저장되어있는 udao를 쓸 수 있다.
+			// 가져올 때는 get으로
 			sc.setAttribute("udao", udao);
 			System.out.println("리스너가 정상 작동합니다.");
 			

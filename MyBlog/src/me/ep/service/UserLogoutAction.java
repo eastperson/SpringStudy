@@ -13,9 +13,11 @@ public class UserLogoutAction extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 세션에 id attribute가 있으면, 세션 만료
 		if(request.getSession().getAttribute("id") != null)
 			request.getSession().invalidate();
 		
+		// 이전 경로로 이동
 		String toURL = "/";
 		if(request.getParameter("prePath") != null)
 			toURL = request.getParameter("prePath");
