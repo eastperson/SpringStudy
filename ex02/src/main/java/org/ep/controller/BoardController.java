@@ -22,6 +22,7 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class BoardController {
 	
+	// 게시판 서비스 로직을 이용하기 위해 선언을 해준다.
 	private BoardService service;
 	
 //	@GetMapping("/list")
@@ -31,6 +32,8 @@ public class BoardController {
 //		model.addAttribute("list", service.getList());
 //	}
 	
+	// get방식으로 '/list'에 접근하면  다음과 같은 로직이 진행된다.
+	// 
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		
@@ -45,6 +48,7 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 	
+	
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		
@@ -57,13 +61,15 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	//
 	@GetMapping({"/get", "/modify"})
-	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cir, Model model) {
+	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
 		
 		log.info("/get or modif	y");
 		model.addAttribute("board", service.get(bno));
 	}
 	
+	//
 	@PostMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		

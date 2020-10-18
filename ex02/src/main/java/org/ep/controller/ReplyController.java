@@ -3,6 +3,7 @@ package org.ep.controller;
 import java.util.List;
 
 import org.ep.domain.Criteria;
+import org.ep.domain.ReplyPageDTO;
 import org.ep.domain.ReplyVO;
 import org.ep.service.ReplyService;
 import org.springframework.http.HttpStatus;
@@ -44,19 +45,20 @@ public class ReplyController {
 		// 삼항 연산자 처리
 	}
 	
-	@GetMapping(value = "/pages/{bno}/{page}", produces = {MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(
-				@PathVariable("page") int page,
-				@PathVariable("bno") Long bno) {
+	@GetMapping(value = "/pages/{bno}/{page}",
+			produces = {MediaType.APPLICATION_XML_VALUE,
+					MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page,
+			@PathVariable("bno") Long bno){
 		
-		log.info("getList.........");
+		Criteria cri = new Criteria(page,10);
 		
-		Criteria cri = new Criteria(page, 10);	
+		log.info("get Reply List bno :" + bno);
 		
-		log.info(cri);
+		log.info("cri:" + cri);
 		
-		return new ResponseEntity<>(service.getList(cri, bno), HttpStatus.OK);
+		return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
+		
 	}
 	
 	@GetMapping(value ="/{rno}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
