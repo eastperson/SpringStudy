@@ -1,0 +1,9 @@
+<%@ page import="me.ep.domain.UserVO, me.ep.dao.UserDAO"%>
+<%
+UserDAO udao = UserDAO.getInstance();
+String id = (String) request.getSession().getAttribute("id");
+if(id != null)
+	response.sendRedirect("/");	
+
+UserVO user = udao.selectUser(id);
+%>

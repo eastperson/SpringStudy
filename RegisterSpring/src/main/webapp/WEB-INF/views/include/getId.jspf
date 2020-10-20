@@ -1,0 +1,5 @@
+<%
+String id = "";
+if(request.getSession().getAttribute("id") != null)
+	id = (String) request.getSession().getAttribute("id");
+%>

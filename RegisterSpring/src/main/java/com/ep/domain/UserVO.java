@@ -6,12 +6,14 @@ import com.ep.domain.Grade;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import com.ep.domain.UserVO;
 
 @Getter
 @ToString
 @EqualsAndHashCode
+@Setter
 public class UserVO {
 	private String id;
 	private String pw;
@@ -22,6 +24,8 @@ public class UserVO {
 	private Date inDate;
 	private Date updateDate;
 	private Grade grade;
+	
+	
 	
 	public UserVO(){}
 
@@ -56,4 +60,10 @@ public class UserVO {
 		this.updateDate = updateDate;
 		this.grade = grade;
 	}
+	
+	public UserVO(String id, String pw, String name, String email, String phoneNum, Date dateOfBirth, Grade grade) {
+		this(id, pw, name, email, phoneNum, dateOfBirth);
+		this.grade = grade;
+	}
+	
 }

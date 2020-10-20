@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
+	@Override
 	public boolean isValidRegisterUser(UserVO user) {
 		if(userMapper.selectUser(user.getId()) == null)
 			return true;
@@ -55,6 +56,14 @@ public class UserServiceImpl implements UserService {
 		
 		return 1 == userMapper.updateUser(user);
 	}
+	
+	@Override
+	public boolean isValidModifyUser(UserVO user) {
+		if(userMapper.selectUser(user.getId()) != null)
+			return true;
+		
+		return false;
+	}
 
 	@Override
 	public boolean remove(String userId) {
@@ -74,15 +83,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserVO login(String userId, String pw) {
 		
+		log.info("user service : login...");
+		
 		if(loginValidCheck(userId,pw))
 			return userMapper.selectUser(userId);
 		
 		
-		return userMapper.selectUser(userId);
+		return null;
 	}
 
 	@Override
 	public boolean loginValidCheck(String userId, String pw) {
+		
+		log.info("user service : loginValidCheck...");
 		
 		if(userMapper.selectUser(userId) == null) {
 			return false;
@@ -97,11 +110,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean logout(HttpServletRequest request,String userId) {
+	public void logout(HttpSession session) {
 		
-		HttpSession session = request.getSession();
+		log.info("user service : logout...");
 		
-		return userId.equals(session.getAttribute("id"));
+		if(session.getAttribute("id") != null)
+			session.invalidate();
+
 	}
 	
 	

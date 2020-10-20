@@ -13,7 +13,7 @@
 	<result property="dateOfBirth"	column="dateOfBirth"/>
 	<result property="inDate"	column="in_date"/>
 	<result property="updateDate"	column="up_date"/>
-	<result property="grade"	column="grande"/>
+	<!--  <result property="grade"	column="grade"/>-->
 </resultMap>
 
 		<select id="selectUser" resultMap="USERVO">
@@ -25,16 +25,15 @@
 		</select>
 		
 		<insert id="insertUser">	
-			INSERT INTO user_info(user_id,password,name,email,phone,dateOfBirth,in_date,up_date,grade)
+			INSERT INTO user_info(user_id,password,name,email,phone,dateOfBirth,in_date,up_date)<!--  ,grade-->
 			VALUES(#{id},#{pw},#{name},#{email},#{phoneNum},#{dateOfBirth}
-			,#{inDate},#{updateDate},#{grade})		
+			,#{inDate},#{updateDate})		<!-- ,#{grade} -->
 		</insert>
 		
 		<update id="updateUser">
 			UPDATE user_info
 			SET password = #{pw}, name = #{name}, email = #{email},
-			phone = #{phoneNum}, in_date = #{inDate}, up_date= #{updateDate},
-			grade = #{grade}
+			phone = #{phoneNum}, in_date = #{inDate}, up_date= #{updateDate}<!--  grade = #{grade}-->
 			WHERE
 			user_id = #{id}
 		</update>

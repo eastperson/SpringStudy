@@ -1,0 +1,71 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/include/getPrePath.jspf" %>
+<%@ include file="/WEB-INF/views/include/getMsg.jspf" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+    <link rel="stylesheet" href="/resources/css/index.css?ver=1">
+    <link rel="stylesheet" href="/resources/css/registerForm.css?ver=1">
+</head>
+<body>
+<%@ include file="/WEB-INF/views/include/header.jspf" %>
+<main class="main_box"> <!-- main_box -->
+    <div class="content"> <!-- content -->
+        <div class="instruction">
+        <h1>AI 아카데미 등록을 환영합니다.</h1>
+        <p>            
+            Pando members get full access to every article published on Pando, including our full archive. You’ll also get free access to Pando Monthly events, each event’s live video stream and our full video archive.
+        </p>
+        <p>
+            To activate your membership immediately, enter your payment details and subscription preferences below.
+        </p>
+    </div>
+<form action="/users/register" method="post" id="register_action" class="form">
+	<div class="radio">
+        <h2>등급 선택</h2>
+            <input type="radio" name="grade" value="DIAMOND"><span>Diamond</span><br/>
+            <input type="radio" name="grade" value="PLATINUM"><span>Platinum</span><br/>
+            <input type="radio" name="grade" value="GOLD"><span>Gold</span><br/>
+            <input type="radio" name="grade" value="SILVER"><span>Silver</span><br/>
+            <input type="radio" name="grade" value="BRONZE"><span>Bronze</span><br/>
+        </div>
+        
+	<input id="user_id" type="text" name="id" placeholder="아이디">
+	<br/><span id="id_msg" class="check_msg"></span><br/>
+	
+	
+	<input id="user_pw" type="password" name="pw" placeholder="비밀번호">
+	<br/><span id="pw_msg" class="check_msg"></span><br/>
+	
+	
+	<input id="user_pw_check" type="password" name="user_pw_check" placeholder="비밀번호 확인">
+	<br/><span id="pwCheck_msg" class="check_msg"></span><br/>
+	
+	
+	<input id="name" type="text" name="name" placeholder="이름">
+	<br/><span id="name_msg" class="check_msg"></span><br/>
+	
+	
+	<input id="email" type="email"name="email" placeholder="이메일">
+	<br/><span id="email_msg" class="check_msg"></span><br/>
+	
+	
+	<input id="phoneNum" type="text"name="phoneNum" placeholder="휴대번호">
+	<br/><span id="phoneNum_msg" class="check_msg"></span><br/>
+	
+	
+	<input id="dateOfBirth" type="date" name="dateOfBirth" placeholder="생년월일" >
+	<br/><span id="dateOfBirth_msg" class="check_msg"></span><br/>
+	
+	<button type="submit" id="form_submit">회원가입</button>
+</form>
+<h1><%=msg %></h1>
+</div> <!-- end content -->
+</main> <!-- end main_box -->
+<%@ include file="/WEB-INF/views/include/footer.jspf" %>
+<script type="text/javascript" src="/resources/js/registerFormCheck.js"></script>
+</body>
+</html>
