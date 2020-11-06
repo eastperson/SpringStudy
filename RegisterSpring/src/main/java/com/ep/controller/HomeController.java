@@ -55,6 +55,29 @@ public class HomeController {
 	}
 	
 	
+	@GetMapping("/test1")
+	public String test(Model model, RedirectAttributes rttr) {
+		
+//		model.addAttribute("modelTest", "test1 success");
+//		rttr.addFlashAttribute("flashTest","test1 success");
+		
+		System.out.println("/test1");
+		
+		return "test";
+	}
+	
+	@GetMapping("/test2")
+	public String test2(Model model, RedirectAttributes rttr) {
+		
+		model.addAttribute("modelTest", "test2 success");
+		rttr.addFlashAttribute("flashTest","test2 success");
+		
+		System.out.println("/test2");
+		
+		return "redirect:/test1";
+	}
+	
+	
 	
 	
 }

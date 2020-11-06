@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/include/getPrePath.jspf" %>
-<%@ include file="/WEB-INF/views/include/getMsg.jspf" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +61,7 @@
 	
 	<button type="submit" id="form_submit">회원가입</button>
 </form>
-<h1><%=msg %></h1>
+<h1>${msg}</h1>
 </div> <!-- end content -->
 </main> <!-- end main_box -->
 <%@ include file="/WEB-INF/views/include/footer.jspf" %>

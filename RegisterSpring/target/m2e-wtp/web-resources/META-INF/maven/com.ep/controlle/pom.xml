@@ -33,7 +33,13 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-
+		<!-- log4j에 대한 라이브러리  -->
+				<!-- https://mvnrepository.com/artifact/org/bgee/log4jdbc-log4j2/log4jdbc-log4j2-jdbc -->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+			<version>1.16</version>
+		</dependency>
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -122,6 +128,7 @@
 			<artifactId>spring-test</artifactId>
 			<version>5.0.7.RELEASE</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>

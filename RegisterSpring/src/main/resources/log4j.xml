@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.ep.controlle">
+	<logger name="com.ep.controller">
 		<level value="info" />
 	</logger>
 	

@@ -139,7 +139,7 @@
                                 </div>
                                 <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.modal -->
+                            <!-- / -->
 					
 					<!-- /.panel-heading -->
 					<div class="panel-body">

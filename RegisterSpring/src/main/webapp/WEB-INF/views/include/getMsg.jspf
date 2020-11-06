@@ -1,5 +1,0 @@
-<%
-String msg = "";
-if(request.getAttribute("msg") != null)
-	msg = (String) request.getAttribute("msg");
-%>

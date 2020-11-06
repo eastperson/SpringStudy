@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD  Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dealight.mapper.ReservationMapper">
+
+	<select id="findAll"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+	</select>
+
+
+	<select id="findById"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+		where id = #{id}
+	</select>
+
+	<insert id="insert">
+		INSERT
+		INTO tbl_rsvd(id, store_id, user_id, htdl_id,
+		aprv_no, pnum, time, stus_cd, tot_amt, tot_qty)
+		VALUES
+		(seq_rsvd.nextval,#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty})
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+			select seq_rsvd.nextval from dual
+		</selectKey>
+		INSERT
+		INTO tbl_rsvd(id, store_id, user_id, htdl_id, aprv_no, pnum,
+		time, stus_cd, tot_amt, tot_qty)
+		VALUES
+		(#{id},#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty})
+	</insert>
+
+	<update id="update">
+		UPDATE tbl_rsvd
+		SET
+		store_id = #{storeId},
+		user_id =
+		#{userId},
+		htdl_id = #{htdlId},
+		aprv_no = #{aprvNo},
+		pnum = #{pnum},
+		time
+		= #{time},
+		stus_cd = #{stusCd},
+		tot_amt = #{totAmt},
+		tot_qty = #{totQty}
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		DELETE
+		FROM tbl_rsvd
+		WHERE id = #{id}
+	</delete>
+
+
+</mapper>

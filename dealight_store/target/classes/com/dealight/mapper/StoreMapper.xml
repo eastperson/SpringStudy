@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD  Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dealight.mapper.StoreMapper">
+
+	<select id="findAll" resultType="com.dealight.domain.StoreVO">
+		SELECT
+		*
+		FROM tbl_store
+	</select>
+
+
+	<select id="findById" resultType="com.dealight.domain.StoreVO">
+		SELECT
+		*
+		FROM tbl_store
+		where
+		store_id = #{storeId}
+	</select>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="storeId" order="BEFORE"
+			resultType="long">
+			select seq_store.nextval from dual
+		</selectKey>
+
+		INSERT
+		INTO tbl_store(store_id,store_nm,telno,cls_cd)
+		VALUES
+		(#{storeId},#{storeNm},#{telno},#{clsCd})
+	</insert>
+
+	<insert id="insert">
+
+		INSERT
+		INTO tbl_store(store_id,store_nm,telno,cls_cd)
+		VALUES
+		(seq_store.nextval,#{storeNm},#{telno},#{clsCd})
+	</insert>
+
+	<update id="update">
+		UPDATE tbl_store
+		SET
+		store_id = #{storeId},
+		store_nm =
+		#{storeNm},
+		telno = #{telno},
+		cls_cd = #{clsCd}
+		where store_id =
+		#{storeId}
+	</update>
+
+	<delete id="delete">
+		DELETE
+		FROM tbl_store
+		WHERE store_id = #{storeId}
+	</delete>
+
+
+</mapper>

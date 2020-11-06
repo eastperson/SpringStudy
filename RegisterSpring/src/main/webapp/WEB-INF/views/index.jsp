@@ -7,8 +7,6 @@
 <title>My Blog</title>
 <link rel="stylesheet" href="/resources/css/index.css?ver=1" type="text/css">
 <%@ include file="/WEB-INF/views/include/setPrePath.jspf" %>
-<%@ include file="/WEB-INF/views/include/getMsg.jspf" %>
-<%@ include file="/WEB-INF/views/include/getId.jspf" %>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jspf" %>
@@ -29,8 +27,8 @@
                         <button id="btn_join" href="/users/register">JOIN NOW</button>
                     </div> <!-- end button_box -->
                 </form><!-- end form -->
-                <%=msg %><br/>
-                <%=id %>
+                ${msg}<br/>
+                ${id}
             </div> <!-- end login_box -->
             <div class="imagebox">
                 <div class="imagebox_image"><img src="https://via.placeholder.com/200x200" alt=""></div>

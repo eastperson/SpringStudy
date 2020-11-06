@@ -9,9 +9,6 @@
 <c:set var="withdraw" value="" />
 <c:set var="autofocus" value="" />
 <%
-UserVO user = null;
-if(request.getAttribute("user") != null)
-	user = (UserVO) request.getAttribute("user");
 if(request.getAttribute("modify") != null){%>
 	<c:set var="readonly" value="" />
 	<c:set var="method" value="post" />
@@ -21,7 +18,7 @@ if(request.getAttribute("modify") != null){%>
 <%
 }
 %>
-<c:set var="user" value="<%=user %>" />
+<c:set var="user" value="${user }" />
 <!DOCTYPE html>
 <html>
 <head>
