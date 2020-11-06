@@ -14,6 +14,16 @@ public interface WaitingService {
 	// wait mapper - inserSelectKey
 	void registerOnWaiting(WaitingVO waiting);
 	
+	// 웨이팅 가능 여부
+	// 중복 웨이팅, 패널티 고객 합친것
+	boolean isPossibleWaitingUser(String userId);
+	
+	// 중복 웨이팅 방지
+	boolean isCurWaitingUser(String userId);
+	
+	// 패널티 고객 방지
+	boolean isCurPanaltyUser(String userId);
+	
 	// 오프라인 웨이팅 등록
 	// wait mapper - inserSelectKey
 	void registerOffWaiting(WaitingVO waiting);

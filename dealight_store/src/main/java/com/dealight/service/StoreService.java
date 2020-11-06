@@ -4,11 +4,12 @@ import java.util.Date;
 
 public interface StoreService {
 	
-	
+	// 현재 착석 상태 확인
+	String getCurSeatStus(long storeId);
 	
 	// 착석 가능 여부 변경
 	// bstore mapper update
-	boolean seatStusChange(long storeId,String buser_id);
+	boolean changeSeatStus(long storeId,String seatStusCd);
 	
 	
 	// 현재시간?
