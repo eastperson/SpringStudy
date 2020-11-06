@@ -20,6 +20,13 @@
 		where id =
 		#{id}
 	</select>
+	
+	<select id="findByUserId" resultType="com.dealight.domain.WaitingVO">
+		SELECT
+		*
+		FROM tbl_wait
+		where user_id = #{userId} and wait_stus_cd = #{waitStusCd}
+	</select>
 
 	<insert id="insert">
 		INSERT

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dealight.domain.BUserVO;
 import com.dealight.domain.WaitingVO;
 
 import lombok.extern.log4j.Log4j;
@@ -149,6 +148,17 @@ public class WaitingMapperTests {
     	
     	
     	
+    }
+    
+    @Test
+    public void findByUserIdAndStusCd() {
+    	
+    	String userId = "kjuioq";
+    	String waitStusCd = "C";
+    	
+    	WaitingVO list = mapper.findByUserId(userId, waitStusCd);
+    	
+    	log.info(list);
     }
 
 }

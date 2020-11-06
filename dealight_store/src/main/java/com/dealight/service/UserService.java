@@ -11,13 +11,14 @@ public interface UserService {
 	// user mapper - select
 	UserVO read(String userId);
 	
-	// mapper method 필요
 	// read
 	// user mapper - select
+	// 상태가 'y'면 패널티 회원
 	boolean isCurPanalty(String userId); 
 	
+	// 추가 mapper method 필요
 	// 현재 웨이팅 상태중인지
-	// user mapper -
+	// wait mapper - userId로 검색
 	boolean isCurWaiting(String userId);
 	
 	// 회원의 예약정보 가져오기

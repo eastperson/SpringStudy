@@ -17,6 +17,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
+@AllArgsConstructor
 public class StoreServiceImpl implements StoreService {
 
 	@Setter(onMethod_ = @Autowired)
@@ -43,7 +44,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public Date curTime() {
+	public Date getCurTime() {
 		
 		log.info("store service curTime....");
 		
@@ -63,6 +64,18 @@ public class StoreServiceImpl implements StoreService {
 		BStoreVO bstore = bStoreMapper.findByStoreId(store.getStoreId());
 		
 		return bstore.getSeatStusCd();
+	}
+
+	@Override
+	public StoreVO getStore(long storeId) {
+		
+		return storeMapper.findById(storeId);
+	}
+
+	@Override
+	public BStoreVO getBStore(long storeId) {
+		
+		return bStoreMapper.findByStoreId(storeId);
 	}
 
 	

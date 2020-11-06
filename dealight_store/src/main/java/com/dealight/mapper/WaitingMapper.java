@@ -2,8 +2,8 @@ package com.dealight.mapper;
 
 import java.util.List;
 
-import com.dealight.domain.ReservationVO;
-import com.dealight.domain.StoreVO;
+import org.apache.ibatis.annotations.Param;
+
 import com.dealight.domain.WaitingVO;
 
 public interface WaitingMapper {
@@ -16,8 +16,12 @@ public interface WaitingMapper {
 	// read
 	public WaitingVO findById(long id);
 	
+	// read by UserID and stus_cd
+	public WaitingVO findByUserId(@Param("userId") String userId, @Param("waitStusCd") String waitStusCd);
+	
 	// read list
 	public List<WaitingVO> findAll();
+
 	
 	// update
 	public int update(WaitingVO waiting);
