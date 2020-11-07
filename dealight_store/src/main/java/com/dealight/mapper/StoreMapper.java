@@ -15,6 +15,9 @@ public interface StoreMapper {
 	//@Select("SELECT store_id storeId, store_nm storeNm, telno, cls_cd clsCd  FROM tbl_store WHERE store_id = #{storeId}")
 	public StoreVO findById(long storeId);
 	
+	// test
+	// join
+	public List<StoreVO> findByIdJoin(long storeId);
 	
 	public List<StoreVO> findAll();
 	

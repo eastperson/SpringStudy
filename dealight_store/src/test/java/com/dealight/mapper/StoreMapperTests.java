@@ -104,6 +104,20 @@ public class StoreMapperTests {
 		assertTrue(result == 1);
 		
 	}
+	
+	@Test
+	public void test1() {
+		
+		List<StoreVO> list = mapper.findByIdJoin(storeId);
+		
+		log.info(list);
+		
+		log.info(list.get(0));
+		
+		list.stream().forEach(store -> {
+			assertNotNull(store.getNstore());
+		});
+	}
 
 
 

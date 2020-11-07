@@ -27,6 +27,31 @@
 		FROM tbl_wait
 		where user_id = #{userId} and wait_stus_cd = #{waitStusCd}
 	</select>
+	
+	<select id="findByStoreId" resultType="com.dealight.domain.WaitingVO">
+		SELECT
+		*
+		FROM tbl_wait
+		where store_id = #{storeId}
+	</select>
+	
+	<select id="findByStoreIdAndStusCd" resultType="com.dealight.domain.WaitingVO">
+		SELECT
+		*
+		FROM tbl_wait
+		where store_id = #{storeId} and wait_stus_cd = #{waitStusCd}
+	</select>
+	
+	
+	
+	<select id="findByStoreIdAndDate"
+		resultType="com.dealight.domain.WaitingVO">
+		SELECT
+		*
+		FROM tbl_wait
+		where store_id = #{storeId} and
+		TO_CHAR(wait_reg_tm,'YYYYMMDD') = #{date}
+	</select>
 
 	<insert id="insert">
 		INSERT

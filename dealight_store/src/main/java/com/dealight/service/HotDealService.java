@@ -16,7 +16,7 @@ public interface HotDealService {
 	// 핫딜 상세 확인
 	// htdlDtls mapper read
 	// select
-	HotDealDetailVO readDtls(long htdlId);
+	List<HotDealDetailVO> readDtls(long htdlId);
 	
 	// 핫딜 결과 확인
 	// htdlRslt mapper read
@@ -25,6 +25,7 @@ public interface HotDealService {
 	
 	// 핫딜 마감 시간 카운트 다운
 	// 핫딜 마감 시간 - 현재시간
+	// 남은 분
 	int calHtdlEndTm(HotDealVO htdl);
 	
 	// mapper method 필요

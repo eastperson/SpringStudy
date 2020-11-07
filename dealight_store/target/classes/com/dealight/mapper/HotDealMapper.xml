@@ -20,6 +20,23 @@
 		where
 		hotdeal_id = #{hotdealId}
 	</select>
+	
+	<select id="findByStoreId" resultType="com.dealight.domain.HotDealVO">
+		SELECT
+		*
+		FROM tbl_htdl
+		where
+		store_id = #{storeId}
+	</select>
+	
+		<select id="findByStoreIdStusCd" resultType="com.dealight.domain.HotDealVO">
+		SELECT
+		*
+		FROM tbl_htdl
+		where
+		store_id = #{storeId} AND
+		stus_cd = #{stusCd}
+	</select>
 
 	<insert id="insert">
 		INSERT

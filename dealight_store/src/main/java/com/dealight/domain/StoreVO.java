@@ -1,16 +1,10 @@
 package com.dealight.domain;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -18,17 +12,21 @@ import lombok.ToString;
 public class StoreVO {
 	
     // 매장번호 
-    protected long storeId;
+	private long storeId;
 
     // 매장이름
     @NotNull
-    protected String storeNm;
+    private String storeNm;
 
     // 매장전화번호 
-    protected String telno;
+    private String telno;
 
     // 매장분류코드 
-    protected String clsCd;
+    private String clsCd;
+    
+    //     test
+    // composition
+    private NStoreVO nstore;
     
     public static class Builder{
     	

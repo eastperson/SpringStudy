@@ -119,6 +119,17 @@ public class HotDealDetailMapperTests {
     	
     }
     
+    // read
+    //
+    @Test
+    public void findByHtdlIdTest1() {
+    	
+    	List<HotDealDetailVO> list = htdlDtlsMapper.findByHtdlId(htdlId);
+    	
+    	assertNotNull(list);
+    	
+    }
+    
     
     // read list
     @Test

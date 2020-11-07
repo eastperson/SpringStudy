@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.dealight.domain.ReservationVO;
 import com.dealight.domain.WaitingVO;
+
+import lombok.experimental.PackagePrivate;
 
 public interface WaitingMapper {
 	
@@ -15,6 +18,19 @@ public interface WaitingMapper {
 	
 	// read
 	public WaitingVO findById(long id);
+	
+	// read
+	// by store id
+	public List<WaitingVO> findByStoreId(long storeId);
+	
+	// read
+	// by store id and date
+	public List<WaitingVO> findByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
+	
+	// read
+	// by store id and stus_cd
+	public List<WaitingVO> findByStoreIdAndStusCd(@Param("storeId")long storeId,@Param("waitStusCd") String waitStusCd);
+
 	
 	// read by UserID and stus_cd
 	public List<WaitingVO> findByUserId(@Param("userId") String userId, @Param("waitStusCd") String waitStusCd);

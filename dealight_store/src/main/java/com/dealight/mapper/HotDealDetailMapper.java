@@ -18,6 +18,10 @@ public interface HotDealDetailMapper {
 	// read
 	public HotDealDetailVO findBySeq(long htdlSeq);
 	
+	// read
+	// by htdl id
+	public List<HotDealDetailVO> findByHtdlId(long htdlId);
+	
 	// read list
 	public List<HotDealDetailVO> findAll();
 	

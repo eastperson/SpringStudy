@@ -3,6 +3,7 @@ package com.dealight.mapper;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -94,6 +95,65 @@ public class WaitingMapperTests {
     	
     }
     
+    // read
+    // by store id
+    @Test
+    public void findByStoreIdTest1() {
+    	
+    	List<WaitingVO> list = mapper.findByStoreId(storeId);
+    	
+    	assertNotNull(list);
+    	
+    	list.stream().forEach(wait -> {
+    		
+    		assertTrue(wait.getStoreId() == storeId);
+    		
+    	});
+    	
+    }
+    
+    // read
+    // by store id and stus_cd
+    @Test
+    public void findByStoreIdAndStusCdTest1() {
+    	
+    	// C
+    	List<WaitingVO> list = mapper.findByStoreIdAndStusCd(storeId, waitStusCd);
+    	
+    	assertNotNull(list);
+    	
+    	list.stream().forEach(wait -> {
+    		
+    		assertTrue(wait.getStoreId() == storeId);
+    		assertTrue(wait.getWaitStusCd().equalsIgnoreCase("C"));
+    		
+    	});
+    	
+    }
+    
+    // read
+    // by store id and date
+    @Test
+    public void findByStoreIdAndDateTest1() {
+    	
+    	String date = "20201107";
+    	
+    	List<WaitingVO> list = mapper.findByStoreIdAndDate(storeId, date);
+    	
+    	assertNotNull(list);
+    	
+    	String pattern = "yyyyMMdd";
+    	
+    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    	
+    	list.stream().forEach(wait -> {
+    		
+    		assertTrue(wait.getStoreId() == storeId);
+    		assertTrue(simpleDateFormat.format(wait.getWaitRegTm()).equals(date));
+    		
+    	});
+    	
+    }
     
     // read list
     @Test

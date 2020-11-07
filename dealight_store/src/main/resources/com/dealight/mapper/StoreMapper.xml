@@ -6,6 +6,20 @@
 
 <mapper namespace="com.dealight.mapper.StoreMapper">
 
+<resultMap type="com.dealight.domain.NStoreVO" id="NStoreVO">
+    <result column="store_id" property="storeId"/>
+    <result column="break_entm" property="breakEntm"/>
+    <result column="menu" property="menu"/>
+</resultMap>
+
+<resultMap type="com.dealight.domain.StoreVO" id="StoreVO">
+    <result column="store_id" property="storeId"/>
+    <result column="store_nm" property="storeNm"/>
+    <result column="telno" property="telno"/>
+    <result column="cls_cd" property="clsCd"/>
+    <collection property="nstore" resultMap="NStoreVO"/>
+</resultMap>
+
 	<select id="findAll" resultType="com.dealight.domain.StoreVO">
 		SELECT
 		*
@@ -19,6 +33,12 @@
 		FROM tbl_store
 		where
 		store_id = #{storeId}
+	</select>
+	
+	<select id="findByIdJoin" parameterType="com.dealight.domain.StoreVO" resultMap="StoreVO">
+		select s.store_id, s.store_nm, s.telno, s.cls_cd, n.break_entm, n.menu
+		from tbl_store s, tbl_nstore n
+		where s.store_id = n.store_id
 	</select>
 
 	<insert id="insertSelectKey">

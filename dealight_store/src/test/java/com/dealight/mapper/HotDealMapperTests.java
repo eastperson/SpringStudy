@@ -113,6 +113,30 @@ public class HotDealMapperTests {
     	
     }
     
+    // read
+    // by store id
+    @Test
+    public void findByStoreIdTest1() {
+    	
+
+    	List<HotDealVO> list = mapper.findByStoreId(storeId);
+    	
+    	assertNotNull(list);
+    	
+    }
+    
+    // read
+    // by store id and stus cd
+    @Test
+    public void findByStoreStusCdIdTest1() {
+    	
+
+    	List<HotDealVO> list = mapper.findByStoreIdStusCd(storeId, "A");
+    	
+    	assertNotNull(list);
+    	
+    }
+    
     
     // read list
     @Test

@@ -21,6 +21,15 @@
 		FROM tbl_htdl_dtls
 		where htdl_seq = #{htdlSeq}
 	</select>
+	
+	<select id="findByHtdlId"
+		resultType="com.dealight.domain.HotDealDetailVO">
+		SELECT
+		*
+		FROM tbl_htdl_dtls
+		WHERE htdl_id = #{htdlId}
+		
+	</select>
 
 	<insert id="insert">
 		INSERT
