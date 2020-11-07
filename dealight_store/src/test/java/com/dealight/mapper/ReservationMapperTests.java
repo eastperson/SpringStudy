@@ -3,6 +3,10 @@ package com.dealight.mapper;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test;
@@ -11,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dealight.domain.BUserVO;
 import com.dealight.domain.ReservationVO;
+import com.dealight.domain.UserVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -104,6 +108,16 @@ public class ReservationMapperTests {
     	assertNotNull(rsvd);
     }
     
+    // read
+    @Test
+    public void findByUserIdTest1() {
+    	
+
+    	List<ReservationVO> list = mapper.findByUserId(userId);
+    	
+    	assertNotNull(list);
+    }
+    
     
     // read list
     @Test
@@ -117,10 +131,144 @@ public class ReservationMapperTests {
     	
     }
     
+    // read list
+    // find by store
+    @Test
+    public void findRsvdListByStoreTest1() {
+    	List<ReservationVO> list = mapper.findByStoreId(storeId);
+    	
+    	log.info(list);
+    	
+    	assertNotNull(list);
+    	
+    	list.forEach((rsvd) -> {
+    		assertTrue(rsvd.getStoreId() == storeId);
+    	});
+
+    	
+    }
+    
+    // read list
+    // find by store and stus_cd
+    @Test
+    public void findRsvdListByStoreAndStusCdTest1() {
+    	
+    	String curStus = "P";
+    	
+    	List<ReservationVO> list = mapper.findByStoreIdAndCurStus(storeId, curStus);
+    	
+    	log.info(list);
+    	
+    	assertNotNull(list);
+    	
+    	list.forEach((rsvd) -> {
+    		assertTrue(rsvd.getStoreId() == storeId);
+    		assertTrue(rsvd.getStusCd().equals(curStus));
+    	});
+
+    	
+    }
+    
+    // read list
+    // find by store and today
+    @Test
+    public void findRsvdListByStoreTodayTest1() {
+
+    	
+    	LocalDate currentDate = LocalDate.now();
+    	
+    	log.info(currentDate);
+    	
+    	DateTimeFormatter dateTimeForMatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    	
+    	String today = currentDate.format(dateTimeForMatter);
+    	
+    	log.info("today............................." + today);
+    	
+    	List<ReservationVO> list = mapper.findByStoreIdToday(storeId, today);
+    	
+
+    	log.info(list);
+    	
+    	assertNotNull(list);
+    	
+		String pattern = "yyyyMMdd";
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    	
+    	list.forEach((rsvd) -> {
+    		assertTrue(rsvd.getStoreId() == storeId);
+    		assertTrue(simpleDateFormat.format(rsvd.getInDate()).equals(today));
+    	});
+    	 
+    	
+    }
+    
+    // read list
+    // find by store and date
+    @Test
+    public void findRsvdListByStoreAndDateTest1() {
+    	
+    	String date = "20201107";
+    	
+    	List<ReservationVO> list = mapper.findByStoreIdToday(storeId, date);
+
+    	log.info(list);
+    	
+    	assertNotNull(list);
+    	
+		String pattern = "yyyyMMdd";
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    	
+    	list.forEach((rsvd) -> {
+    		assertTrue(rsvd.getStoreId() == storeId);
+    		assertTrue(simpleDateFormat.format(rsvd.getInDate()).equals(date));
+    	});
+    	 
+    	
+    }
+    
+    // read list
+    // find by store and user
+    @Test
+    public void findRsvdListByStoreAndUserTest1() {
+    	List<ReservationVO> list = mapper.findByStoreIdAndUserId(13, "kjuioq");
+    	
+    	log.info(list);
+    	
+    	assertNotNull(list);
+
+    }
+    
+    // read list
+    // find menu cnt by store and date 
+    @Test
+    public void findMenuCntByStoreIdAndDateTest() {
+    	
+    	HashMap<String,Integer> map =  mapper.findMenuCntByStoreIdAndDate(storeId, "20201107");
+    	
+    	log.info(map);
+    	
+    }
+    
+    // read list
+    // find menu cnt by store and date 
+    @Test
+    public void findUserByStoreIdAndDateAndStusTest1() {
+    	
+    	List<UserVO> map =  mapper.findUserByStoreIdAndDateAndStus(storeId, "20201107");
+    	
+    	log.info(map);
+    	
+    }
     
     // update
     @Test
     public void updateTest1() {
+    	
+    	id = 24;
+    	
     	ReservationVO rsvd = new ReservationVO().builder()
     			.id(id)
 				.storeId(storeId)
@@ -130,6 +278,7 @@ public class ReservationMapperTests {
 				.time("¼öÁ¤")
 				.totAmt(totAmt)
 				.totQty(totQty)
+				.stusCd("C")
 				.build();
     	
     	String bf = mapper.findById(id).getTime();

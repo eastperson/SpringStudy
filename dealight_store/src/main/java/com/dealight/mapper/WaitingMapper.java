@@ -17,10 +17,10 @@ public interface WaitingMapper {
 	public WaitingVO findById(long id);
 	
 	// read by UserID and stus_cd
-	public WaitingVO findByUserId(@Param("userId") String userId, @Param("waitStusCd") String waitStusCd);
+	public List<WaitingVO> findByUserId(@Param("userId") String userId, @Param("waitStusCd") String waitStusCd);
 	
 	// read list
-	public List<WaitingVO> findAll();
+	public List<WaitingVO> findAll();	
 
 	
 	// update

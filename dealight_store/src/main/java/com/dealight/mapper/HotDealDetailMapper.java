@@ -3,6 +3,7 @@ package com.dealight.mapper;
 import java.util.List;
 
 import com.dealight.domain.HotDealDetailVO;
+import com.dealight.domain.ReservationDetailVO;
 
 public interface HotDealDetailMapper {
 	
@@ -10,6 +11,9 @@ public interface HotDealDetailMapper {
 	public void insert(HotDealDetailVO htdlDt);
 	
 	public void insertSelectKey(HotDealDetailVO htdlDt);
+	
+	// insert n
+	public int insertHtdlDtls(List<HotDealDetailVO> rsvdDtls);
 	
 	// read
 	public HotDealDetailVO findBySeq(long htdlSeq);

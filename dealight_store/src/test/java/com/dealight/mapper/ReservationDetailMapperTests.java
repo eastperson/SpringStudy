@@ -3,6 +3,7 @@ package com.dealight.mapper;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -30,6 +31,13 @@ public class ReservationDetailMapperTests {
     
     @Autowired
     private ReservationDetailMapper mapper;
+    
+    @Test
+    public void rsvdDtlsDITest() {
+    	
+    	log.info(mapper);
+    	
+    }
     
     // create
     @Test
@@ -95,6 +103,23 @@ public class ReservationDetailMapperTests {
     	
     }
     
+    // read by rsvd id
+    @Test
+    public void findByRsvdIdTest1() {
+    	
+    	List<ReservationDetailVO> list = mapper.findByRsvdId(rsvdId);
+    	
+    	log.info(list);
+    	
+    	assertNotNull(list);
+    	
+    	list.forEach((rsvdDtls) -> {
+    		
+    		assertTrue(rsvdDtls.getRsvdId() == rsvdId); 
+    	});
+    	
+    }
+    
     
     // read list
     @Test
@@ -146,5 +171,54 @@ public class ReservationDetailMapperTests {
     	assertTrue(result == 1);
     	
     }
+    
+    @Test
+    public void insertRsvdDtls() {
+    	
+    	List<ReservationDetailVO> list = new ArrayList<>();
+    	
+    	int bf = mapper.findAll().size();
+    	
+    	ReservationDetailVO rsvdDtls = new ReservationDetailVO().builder()
+				.rsvdId(rsvdId)
+				.rsvdSeq(rsvdtSeq)
+				.menuNm(menuNm)
+				.menuTotQty(menuTotQty)
+				.menuPrc(menuPrc)
+				.build();
+    	
+    	
+    	ReservationDetailVO rsvdDtls2 = new ReservationDetailVO().builder()
+				.rsvdId(rsvdId)
+				.rsvdSeq(rsvdtSeq)
+				.menuNm(menuNm)
+				.menuTotQty(menuTotQty)
+				.menuPrc(menuPrc)
+				.build();
+    	
+    	
+    	ReservationDetailVO rsvdDtls3 = new ReservationDetailVO().builder()
+				.rsvdId(rsvdId)
+				.rsvdSeq(rsvdtSeq)
+				.menuNm(menuNm)
+				.menuTotQty(menuTotQty)
+				.menuPrc(menuPrc)
+				.build();
+    	
+    	list.add(rsvdDtls);
+    	list.add(rsvdDtls2);
+    	list.add(rsvdDtls3);
+    	
+    	
+    	int result = mapper.insertRsvdDtls(list);
+    	
+    	assertTrue(result == 3);
+    	
+    	log.info(result);
+    	
+    	assertTrue(bf + 3 == mapper.findAll().size());
+    	
+    }
+  
 
 }

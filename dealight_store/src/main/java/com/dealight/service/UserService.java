@@ -2,6 +2,8 @@ package com.dealight.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.dealight.domain.ReservationVO;
 import com.dealight.domain.UserVO;
 
@@ -22,10 +24,11 @@ public interface UserService {
 	boolean isCurWaiting(String userId);
 	
 	// 회원의 예약정보 가져오기
-	List<ReservationVO> rsvdListThisUser(UserVO user);
+	List<ReservationVO> getRsvdListThisUser(String userId);
 	
 	// mapper method 필요
 	// 해당 매장의 회원의 예약정보 가져오기 
-	List<ReservationVO> rsvdListStoreUser(long storeId, UserVO user);
+	// '회원'의 '이 매장' 예약 히스토리
+	List<ReservationVO> getRsvdListStoreUser(@Param("storeId") long storeId,@Param("userId") String userId);
 
 }

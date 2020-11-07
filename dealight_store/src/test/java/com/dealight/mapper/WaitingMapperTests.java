@@ -156,9 +156,11 @@ public class WaitingMapperTests {
     	String userId = "kjuioq";
     	String waitStusCd = "C";
     	
-    	WaitingVO list = mapper.findByUserId(userId, waitStusCd);
+    	List<WaitingVO> list = mapper.findByUserId(userId, waitStusCd);
     	
     	log.info(list);
+    	
+    	assertNotNull(list);
     }
 
 }

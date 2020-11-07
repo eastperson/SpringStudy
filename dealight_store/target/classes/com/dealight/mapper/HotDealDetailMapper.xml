@@ -40,6 +40,27 @@
 		VALUES
 		(#{htdlId},#{htdlSeq},#{menuName},#{menuPrice})
 	</insert>
+	
+	<insert id="insertHtdlDtls" parameterType="java.util.List">
+		INSERT ALL
+		<foreach collection="list" item="item">
+		INTO tbl_htdl_dtls
+		(
+		htdl_id,
+		htdl_seq,
+		menu_name,
+		menu_price
+		)
+		VALUES
+		(
+			${item.htdlId},
+			FN_GET_SEQ('seq_htdl_dtls'),
+			'${item.menuName}',
+			${item.menuPrice}
+		)
+		</foreach>
+		SELECT * FROM dual
+	</insert>
 
 	<update id="update">
 		UPDATE tbl_htdl_dtls

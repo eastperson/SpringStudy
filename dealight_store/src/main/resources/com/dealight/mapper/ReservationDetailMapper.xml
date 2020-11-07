@@ -21,6 +21,14 @@
 		FROM tbl_rsvd_dtls
 		where rsvd_seq = #{rsvdSeq}
 	</select>
+	
+	<select id="findByRsvdId"
+		resultType="com.dealight.domain.ReservationDetailVO">
+		SELECT
+		*
+		FROM tbl_rsvd_dtls
+		where rsvd_id = #{rsvdId}
+	</select>
 
 	<insert id="insert">
 		INSERT
@@ -37,7 +45,31 @@
 		INSERT
 		INTO tbl_rsvd_dtls(rsvd_id, rsvd_seq, menu_nm,
 		menu_tot_qty,menu_prc)
-		VALUES(#{rsvdId},#{rsvdSeq},#{menuNm},#{menuTotQty},#{menuPrc})
+		VALUES(#{rsvdId},#{rsvdSeq},#{menuNm},#{menuTotQty},#{menuPrc)
+	</insert>
+
+
+	<insert id="insertRsvdDtls" parameterType="java.util.List">
+		INSERT ALL
+		<foreach collection="list" item="item">
+		INTO tbl_rsvd_dtls
+		(
+		rsvd_id,
+		rsvd_seq,
+		menu_nm,
+		menu_tot_qty,
+		menu_prc
+		)
+		VALUES
+			(
+			${item.rsvdId},
+			FN_GET_SEQ('seq_rsvd_dtls'),
+			'${item.menuNm}',
+			${item.menuTotQty},
+			${item.menuPrc}
+			)
+		</foreach>
+		SELECT * FROM dual
 	</insert>
 
 	<update id="update">

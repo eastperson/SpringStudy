@@ -9,10 +9,17 @@ public interface ReservationDetailMapper {
 	// create
 	public void insert(ReservationDetailVO rsvdDt);
 	
+	// insert
 	public void insertSelectKey(ReservationDetailVO rsvdDt);
+	
+	// insert n
+	public int insertRsvdDtls(List<ReservationDetailVO> rsvdDtls);
 	
 	// read
 	public ReservationDetailVO findBySeq(long rsvdDtSeq);
+	
+	// read by rsvd id
+	public List<ReservationDetailVO> findByRsvdId(long rsvdId);
 	
 	// read list
 	public List<ReservationDetailVO> findAll();
@@ -22,5 +29,6 @@ public interface ReservationDetailMapper {
 	
 	// delete
 	public int delete(long rsvdDtSeq);
+	
 
 }

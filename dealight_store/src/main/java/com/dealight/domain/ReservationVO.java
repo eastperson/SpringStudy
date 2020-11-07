@@ -55,5 +55,7 @@ public class ReservationVO {
     // ÃÑ¸Þ´º¼ö·®
     @NonNull
     private int totQty;
+    
+    private Date inDate;
 
 }

@@ -20,10 +20,8 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class StoreServiceImpl implements StoreService {
 
-	@Setter(onMethod_ = @Autowired)
 	private StoreMapper storeMapper;
 	
-	@Setter(onMethod_ = @Autowired)
 	private BStoreMapper bStoreMapper;
 	
 	@Override

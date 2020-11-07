@@ -22,12 +22,93 @@
 		where id = #{id}
 	</select>
 
+	<select id="findByStoreIdAndUserId"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+		where store_id = #{storeId} and user_id
+		= #{userId}
+	</select>
+
+	<select id="findByStoreId"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+		where store_id = #{storeId}
+	</select>
+
+	<select id="findByStoreIdAndCurStus"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+		where store_id = #{storeId} and stus_cd
+		= #{stusCd}
+	</select>
+
+
+
+	<select id="findByStoreIdToday"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+		where store_id = #{storeId} and
+		TO_CHAR(in_date,'YYYYMMDD') = #{today}
+	</select>
+
+	<select id="findByStoreIdAndDate"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+		where store_id = #{storeId} and
+		TO_CHAR(in_date,'YYYYMMDD') = #{date}
+	</select>
+
+	<select id="findByUserId"
+		resultType="com.dealight.domain.ReservationVO">
+		SELECT
+		*
+		FROM tbl_rsvd
+		where user_id = #{userId}
+	</select>
+
+	<select id="findMenuCntByStoreIdAndDate" resultType="HashMap">
+		select count(*), d.menu_nm
+		from
+		(
+		select id
+		from tbl_rsvd
+		where TO_CHAR(in_date,'YYYYMMDD') = #{date} and
+		store_id = #{storeId}
+		) r, tbl_rsvd_dtls d
+		where r.id = d.rsvd_id
+		GROUP BY menu_nm
+		ORDER BY COUNT(*) desc
+	</select>
+
+	<select id="findUserByStoreIdAndDateAndStus"
+		resultType="com.dealight.domain.UserVO">
+		select *
+		from (
+		select *
+		from tbl_rsvd
+		where store_id = #{storeId}
+		and stus_cd = 'C'
+		and TO_CHAR(in_date,'YYYYMMDD') = #{date}
+		) r, tbl_user u
+		WHERE r.user_id = u.user_id
+	</select>
+
 	<insert id="insert">
 		INSERT
 		INTO tbl_rsvd(id, store_id, user_id, htdl_id,
-		aprv_no, pnum, time, stus_cd, tot_amt, tot_qty)
+		aprv_no, pnum, time, stus_cd, tot_amt, tot_qty,in_date)
 		VALUES
-		(seq_rsvd.nextval,#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty})
+		(seq_rsvd.nextval,#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty},sysdate)
 	</insert>
 
 	<insert id="insertSelectKey">
@@ -36,9 +117,9 @@
 		</selectKey>
 		INSERT
 		INTO tbl_rsvd(id, store_id, user_id, htdl_id, aprv_no, pnum,
-		time, stus_cd, tot_amt, tot_qty)
+		time, stus_cd, tot_amt, tot_qty,in_date)
 		VALUES
-		(#{id},#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty})
+		(#{id},#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty},sysdate)
 	</insert>
 
 	<update id="update">
