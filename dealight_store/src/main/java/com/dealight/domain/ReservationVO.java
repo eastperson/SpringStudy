@@ -1,15 +1,13 @@
 package com.dealight.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +16,7 @@ import lombok.ToString;
 public class ReservationVO {
 	
 	// composition
-	private ReservationDetailVO revdDtls;
+	private List<ReservationDetailVO> rsvdDtlsList;
 	
     // 예약번호 
 	@NonNull

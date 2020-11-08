@@ -315,9 +315,9 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public ReservationVO longFindRsvdByRsvdIdWithDtls(long rsvdId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReservationVO findRsvdByRsvdIdWithDtls(long rsvdId) {
+				
+		return rsvdMapper.findRsvdByRsvdIdWithDtls(rsvdId);
 	}
 	
 	

@@ -317,6 +317,9 @@ public class ReservationMapperTests {
     	assertNotNull(rsvd);
     	
     	log.info(rsvd);
+    	
     }
+    
+
 
 }

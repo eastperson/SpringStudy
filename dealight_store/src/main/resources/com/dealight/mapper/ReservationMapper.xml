@@ -14,6 +14,16 @@
     <result column="menu_tot_qty" property="menuTotQty"/>
     <result column="menu_prc" property="menuPrc"/>
 </resultMap>
+<!-- 
+<resultMap type="rsvdDtlsList" id="rsvdDtlsList">
+	<result column="rsvd_id" property="rsvdId"/>
+    <result column="rsvd_seq" property="rsvdSeq"/>
+    <result column="menu_nm" property="menuNm"/>
+    <result column="menu_tot_qty" property="menuTotQty"/>
+    <result column="menu_prc" property="menuPrc"/>
+	<collection property="rsvdDtls" ofType="com.dealight.domain.ReservationDetailVO" javaType="List"></collection>
+</resultMap>
+ -->
 
 <resultMap type="com.dealight.domain.ReservationVO" id="ReservationVO">
     <result column="id" property="id"/>
@@ -27,7 +37,14 @@
     <result column="tot_amt" property="totAmt"/>
     <result column="tot_qty" property="totQty"/>
     <result column="in_date" property="inDate"/>
-    <collection property="rsvdDtls" resultMap="ReservationDetailVO"/>
+    
+	<collection property="rsvdDtlsList" column="rsvd_id" ofType="com.dealight.domain.ReservationDetailVO">
+		<result column="id" property="rsvdId"/>
+	    <result column="rsvd_seq" property="rsvdSeq"/>
+	    <result column="menu_nm" property="menuNm"/>
+	    <result column="menu_tot_qty" property="menuTotQty"/>
+	    <result column="menu_prc" property="menuPrc"/>
+	</collection>
 </resultMap>
 
 	<select id="findAll"

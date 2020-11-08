@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dealight.domain.BStoreVO;
 import com.dealight.domain.HotDealVO;
+import com.dealight.domain.ReservationVO;
 import com.dealight.domain.StoreVO;
 import com.dealight.service.HotDealService;
 import com.dealight.service.ReservationService;
@@ -50,7 +51,9 @@ public class ManageController {
 	public String reservation(Model model, long rsvdId) {
 		
 		// 예약 상세를 포함한 예약 정보를 가져온다.
+		ReservationVO rsvd = rsvdService.findRsvdByRsvdIdWithDtls(rsvdId);
 		
+		model.addAttribute("rsvd",rsvd);
 		
 		return "/business/manage/reservation";
 	}

@@ -376,4 +376,21 @@ public class ReservationServiceTests {
 		
 	}
 	
+	@Test
+	public void findRsvdByRsvdIdWithDtlsTest1(){
+		
+		ReservationVO rsvd = reservationService.findRsvdByRsvdIdWithDtls(rsvdId);
+		
+		assertNotNull(rsvd);
+		
+		log.info(rsvd);
+		
+		rsvd.getRsvdDtlsList().stream().forEach(rsvdDtls -> {
+			
+			assertTrue(rsvdDtls.getRsvdId() == rsvdId);
+			
+		});
+		
+	}
+	
 }

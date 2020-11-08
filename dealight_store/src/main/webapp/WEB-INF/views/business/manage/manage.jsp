@@ -21,6 +21,24 @@
 <p>웨이팅 현황  : ${waitList }</p>
 <p>매장정보 : ${store}</p>
 <p>예약 리스트 : ${rsvdList }</p>
+<c:forEach items="${rsvdList}" var="rsvd">
+<a href="/business/manage/reservation?rsvdId=${rsvd.id}"><div>
+=====================================
+예약 번호: ${rsvd.id}
+매장 번호: ${rsvd.storeId}
+예약 회원 아이디: ${rsvd.userId}
+핫딜 번호: ${rsvd.htdlId}
+승인 번호: ${rsvd.aprvNo}
+예약 인원: ${rsvd.pnum}
+예약 시간: ${rsvd.time}
+예약 상태: ${rsvd.stusCd}
+예약 총 금액: ${rsvd.totAmt}
+예약 총 수량: ${rsvd.totQty}
+예약 작성 날짜: ${rsvd.inDate}
+=====================================
+</div>
+</a>
+</c:forEach>
 <p>시간대별 예약자 현황 : ${todayRsvdMap }</p>
 -------
 <p>오늘 예약 수 : ${totalTodayRsvd }</p>
