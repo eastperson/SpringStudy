@@ -25,6 +25,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class BusinessControllerTests {
 	
+	@Setter(onMethod_ = @Autowired)
 	private WebApplicationContext ctx;
 	
 	private MockMvc mockMvc;
@@ -37,10 +38,21 @@ public class BusinessControllerTests {
 	
 	@Test
 	public void testList() throws Exception {
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business"))
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());
 	}
 	
+	@Test
+	public void testManage() throws Exception{
+		
+		long storeId = 13;
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/?storeId=" + storeId))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+		
+	}
 }

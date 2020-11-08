@@ -5,11 +5,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
-
+/*
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+*/
 import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Before;
@@ -32,7 +33,7 @@ public class StoreVOTests {
     private String telno = "010-2737-5157";
     private String clsCd = "I";
     
-    private Validator validator;
+    //private Validator validator;
 	// 1. 필수 입력값만 입력하고 매장객체가 생성될 수 있는지.
 	// not null 값만 입력
 	// 필수값 : store_id,store_nm,telno

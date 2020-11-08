@@ -40,7 +40,12 @@ public interface ReservationService {
 	// time = today
 	List<ReservationVO> readTodayCurRsvdList(long storeId);
 	
+	
+	
+	List<ReservationVO> readRsvdListByDate(long storeId,String date);
 
+	
+	
 	// 예약 가능여부 판단하기
 	// "이 시간"에 "이 매장"에서 예약이 가능한지
 	// rsvd_stus = "c", time = this time
@@ -67,7 +72,7 @@ public interface ReservationService {
 	// map으로 해야하나?
 	// 15분 단위로 넣기
 	// HashMap<String rsvdByTime,int count>.
-	HashMap<String,Integer> getRsvdByTimeMap(List<ReservationVO> listByDate);
+	HashMap<String,List<Long>> getRsvdByTimeMap(List<ReservationVO> listByDate);
 	
 	
 	// hour = hour
@@ -80,10 +85,14 @@ public interface ReservationService {
 	
 	
 	// 바로 다음 예약 확인하기
-	ReservationVO readNextRsvd(List<ReservationVO> readTodayCurRsvdList);
+	// 시간순으로 정렬해야함
+	long readNextRsvdId(HashMap<String, List<Long>> getTodayRsvdByTimeMap);
+	
 	
 	// 핫딜인지 아닌지 확인하기
 	boolean isHtdl(ReservationVO rsvd);
+	
+	ReservationVO findRsvdByRsvdId(long rsvdId, List<ReservationVO> readTodayCurRsvdList);
 	
 	
 	// ===============당일 현황판 로직

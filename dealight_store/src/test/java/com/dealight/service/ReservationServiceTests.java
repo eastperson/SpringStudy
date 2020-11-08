@@ -6,7 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -197,7 +200,7 @@ public class ReservationServiceTests {
 		
 		log.info(list);
 		
-		HashMap<String, Integer> map = reservationService.getRsvdByTimeMap(list);
+		HashMap<String, List<Long>> map = reservationService.getRsvdByTimeMap(list);
 		
 		log.info(map);
 		
@@ -208,9 +211,11 @@ public class ReservationServiceTests {
 	public void isReserveThisTimeStoreTest1() {
 		
 		// 2020년 11월 7일 11시 47분 30초
+		// true가 나와야 함
 		//Date date = new Date(120,10,7,11,47,30);
 		
 		// 2020년 11월 7일 12시 12분 30초
+		// false가 나와야 함
 		Date date = new Date(120,10,7,12,12,30);
 
 		int acm = 5;
@@ -223,7 +228,7 @@ public class ReservationServiceTests {
 		
 		log.info(reservationService.getRsvdByTimeMap(list));
 		
-		assertTrue(reservationService.isReserveThisTimeStore(storeId, date, acm));
+		assertTrue(!reservationService.isReserveThisTimeStore(storeId, date, acm));
 		
 		
 	}
@@ -231,15 +236,18 @@ public class ReservationServiceTests {
 	@Test
 	public void readNextRsvdTest1() {
 		
-		List<ReservationVO> list = reservationService.readTodayCurRsvdList(storeId);
+		List<ReservationVO> list = reservationService.readTodayCurRsvdList(0);
+		
+		HashMap<String,List<Long>> map = reservationService.getRsvdByTimeMap(list);
 	
-		ReservationVO rsvd = reservationService.readNextRsvd(list);
-		
-		assertNotNull(rsvd);
-		
-		log.info(rsvd);
-		
-		assertTrue(list.get(0).equals(rsvd));
+		if(list.size()>0) {
+			long rsvdId = reservationService.readNextRsvdId(map);
+			
+			assertNotNull(rsvdId);
+			
+			log.info(rsvdId);
+			
+		}
 		
 	}
 	
@@ -274,6 +282,98 @@ public class ReservationServiceTests {
 		String date = "20201107";
 		
 		reservationService.userListTodayRsvd(storeId, date);
+	}
+	
+	
+	// 예약 시간대 정렬
+	@Test
+	public void test() {
+		
+		String date = "20201107";
+		
+		List<ReservationVO> list = reservationService.getListByDate(storeId, date);
+		
+		HashMap<String, List<Long>> map = reservationService.getRsvdByTimeMap(list);
+				
+		SortedSet<String> keys = new TreeSet<>(map.keySet());
+		
+		log.info("test..............................."+keys);
+		
+		Iterator<String> it = keys.iterator();
+		
+		while(it.hasNext()) {
+			
+			String key = it.next();
+			
+			map.get(key).stream().forEach(rsvdId -> {
+				
+				log.info("test...............key : " + key);
+				log.info("test...............rsvdId : "+rsvdId);
+				
+			});;
+			
+		}
+		
+		
+	}
+	
+	@Test
+	public void readRsvdListByDateTest1() {
+		
+		String date = "20201107";
+		
+		List<ReservationVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
+		
+		assertNotNull(listByDate);
+		
+		log.info(listByDate);
+	}
+	
+	@Test
+	public void readNextRsvdIdTest1() {
+		
+		//List<ReservationVO> listByDate = reservationService.readTodayCurRsvdList(storeId);
+		
+		String date = "20201107";
+		
+		List<ReservationVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
+		
+		log.info("test....................list"+listByDate);
+		
+		HashMap<String,List<Long>> getTodayRsvdByTimeMap = reservationService.getRsvdByTimeMap(listByDate);
+		
+		log.info("test....................map"+getTodayRsvdByTimeMap);
+		
+		long rsvdId = reservationService.readNextRsvdId(getTodayRsvdByTimeMap);
+		
+		log.info("test....................rsvdId"+rsvdId);
+		
+		ReservationVO vo = null;
+		
+		for(ReservationVO rsvd : listByDate) {
+			if(rsvd.getId() == rsvdId)
+				vo = rsvd;
+		}
+		
+		log.info("test....................vo"+vo);
+	}
+	
+	@Test
+	public void findRsvdByRsvdIdTest() {
+		
+		String date = "20201107";
+		
+		List<ReservationVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
+		
+		log.info("test....................list"+listByDate);
+		
+		ReservationVO rsvd = reservationService.findRsvdByRsvdId(44, listByDate);
+		
+		log.info(rsvd);
+		
+		assertNotNull(rsvd);
+		
+		
 	}
 	
 }

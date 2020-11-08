@@ -21,10 +21,11 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class StoreMapperTests {
 
-	private long storeId = 0;
+	private long storeId = 13;
 	private String storeNm = "영동족발";
 	private String telno = "010-2737-5157";
 	private String clsCd = "I";
+	private String userId = "kjuioq";
 
 	@Setter(onMethod_ = @Autowired)
 	private StoreMapper mapper;
@@ -106,19 +107,39 @@ public class StoreMapperTests {
 	}
 	
 	@Test
-	public void test1() {
+	public void findByIdJoinNStoreTest1() {
 		
-		List<StoreVO> list = mapper.findByIdJoin(storeId);
+		StoreVO store = mapper.findByIdJoinNStore(storeId);
+		
+		log.info(store);
+		
+		assertNotNull(store.getNstore());
+	}
+	
+	@Test
+	public void findByIdJoinBStoreTest1() {
+		
+		StoreVO store = mapper.findByIdJoinBStore(storeId);
+		
+		log.info(store);
+		
+		
+		assertNotNull(store.getBstore());
+	
+	}
+
+	@Test
+	public void findByUserIdJoinBStoreTest1() {
+		
+		List<StoreVO> list = mapper.findByUserIdJoinBStore(userId);
 		
 		log.info(list);
 		
-		log.info(list.get(0));
-		
 		list.stream().forEach(store -> {
-			assertNotNull(store.getNstore());
+			assertNotNull(store.getBstore());
+			assertNotNull(store.getBstore().getBuserId().equals(userId));
 		});
 	}
-
 
 
 }

@@ -3,13 +3,13 @@ package com.dealight.service;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.dealight.domain.BStoreVO;
 import com.dealight.domain.StoreVO;
@@ -23,6 +23,9 @@ public class StoreServiceTests {
 
 	@Autowired
 	private StoreService storeService;
+	
+	String userId = "kjuioq";
+	long storeId = 13;
 	
 	@Test
 	public void serviceDITest() {
@@ -84,6 +87,33 @@ public class StoreServiceTests {
 		BStoreVO bstore = storeService.getBStore(13);
 		
 		assertNotNull(bstore);
+		
+	}
+	
+	@Test
+	public void getStoreListByUserIdTest1() {
+		
+		List<StoreVO> list = storeService.getStoreListByUserId(userId);
+		
+		log.info(list);
+		
+		list.stream().forEach(store -> {
+			assertNotNull(store.getBstore());
+			assertTrue(store.getBstore().getBuserId().equals(userId));
+			
+		});
+	}
+	
+	@Test
+	public void findByStoreIdWithBStoreTest() {
+		
+		StoreVO store = storeService.findByStoreIdWithBStore(storeId);
+		
+		log.info(store);
+		
+		assertNotNull(store);
+		
+		assertTrue(store.getStoreId() == storeId);
 		
 	}
 	

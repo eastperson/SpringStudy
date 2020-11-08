@@ -11,6 +11,7 @@
 		SELECT
 		*
 		FROM tbl_rsvd
+		ORDER BY in_date asc
 	</select>
 
 
@@ -20,6 +21,7 @@
 		*
 		FROM tbl_rsvd
 		where id = #{id}
+		ORDER BY in_date asc
 	</select>
 
 	<select id="findByStoreIdAndUserId"
@@ -29,6 +31,7 @@
 		FROM tbl_rsvd
 		where store_id = #{storeId} and user_id
 		= #{userId}
+		ORDER BY in_date asc
 	</select>
 
 	<select id="findByStoreId"
@@ -37,6 +40,7 @@
 		*
 		FROM tbl_rsvd
 		where store_id = #{storeId}
+		ORDER BY in_date asc
 	</select>
 
 	<select id="findByStoreIdAndCurStus"
@@ -46,6 +50,7 @@
 		FROM tbl_rsvd
 		where store_id = #{storeId} and stus_cd
 		= #{stusCd}
+		ORDER BY in_date asc
 	</select>
 
 
@@ -57,6 +62,7 @@
 		FROM tbl_rsvd
 		where store_id = #{storeId} and
 		TO_CHAR(in_date,'YYYYMMDD') = #{today}
+		ORDER BY in_date asc
 	</select>
 
 	<select id="findByStoreIdAndDate"
@@ -66,6 +72,7 @@
 		FROM tbl_rsvd
 		where store_id = #{storeId} and
 		TO_CHAR(in_date,'YYYYMMDD') = #{date}
+		ORDER BY in_date asc
 	</select>
 
 	<select id="findByUserId"
@@ -74,6 +81,7 @@
 		*
 		FROM tbl_rsvd
 		where user_id = #{userId}
+		ORDER BY in_date asc
 	</select>
 
 	<select id="findMenuCntByStoreIdAndDate" resultType="HashMap">
@@ -101,6 +109,7 @@
 		and TO_CHAR(in_date,'YYYYMMDD') = #{date}
 		) r, tbl_user u
 		WHERE r.user_id = u.user_id
+		ORDER BY in_date asc
 	</select>
 
 	<insert id="insert">

@@ -1,6 +1,7 @@
 package com.dealight.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,18 @@ public class StoreServiceImpl implements StoreService {
 	public BStoreVO getBStore(long storeId) {
 		
 		return bStoreMapper.findByStoreId(storeId);
+	}
+
+	@Override
+	public List<StoreVO> getStoreListByUserId(String userId) {
+		
+		return storeMapper.findByUserIdJoinBStore(userId);
+	}
+
+	@Override
+	public StoreVO findByStoreIdWithBStore(long storeId) {
+		
+		return storeMapper.findByIdJoinBStore(storeId);
 	}
 
 	

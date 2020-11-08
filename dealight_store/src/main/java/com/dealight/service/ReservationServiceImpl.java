@@ -3,10 +3,16 @@ package com.dealight.service;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -128,24 +134,23 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 	
 	@Override
-	public HashMap<String, Integer> getRsvdByTimeMap(List<ReservationVO> listByDate) {
+	public HashMap<String, List<Long>> getRsvdByTimeMap(List<ReservationVO> listByDate) {
 		
-		HashMap<String,Integer> map = new HashMap<>();
+		HashMap<String,List<Long>> map = new HashMap<>();
 		
 		listByDate.stream().forEach((rsvd) -> {
 			
 			// C여야 된다.
-			if(!rsvd.getStusCd().equalsIgnoreCase("C"))
+			if(!rsvd.getStusCd().equalsIgnoreCase("P"))
 				return;
-			
-			int cnt = 1;
 			
 			String time = getTime(rsvd.getInDate());
 			String fomatedTime = toRsvdByTimeFormat(time);
-			if(map.get(fomatedTime) != null)
-				cnt = map.get(fomatedTime) + 1;
+			
+			if(map.get(fomatedTime) == null)
+				map.put(fomatedTime, new ArrayList<Long>());
 				
-			map.put(fomatedTime, cnt);
+			map.get(fomatedTime).add(rsvd.getId());
 			
 		});
 		
@@ -172,7 +177,7 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		//log.info("test..................list" + list);
 		
-		HashMap<String,Integer> map = getRsvdByTimeMap(list);
+		HashMap<String,List<Long>> map = getRsvdByTimeMap(list);
 		
 		//log.info("test..................map" + map);
 		
@@ -184,13 +189,52 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		//return false;
 		
-		return map.get(time) == null ? true : map.get(time) < acm ? true : false;
+		return map.get(time) == null ? true : map.get(time).size() < acm ? true : false;
 	}
 
 	@Override
-	public ReservationVO readNextRsvd(List<ReservationVO> readTodayCurRsvdList) {
+	public long readNextRsvdId(HashMap<String, List<Long>> getTodayRsvdByTimeMap) {
 		
-		return readTodayCurRsvdList.get(0);
+		//log.info("Test.................." + getTodayRsvdByTimeMap);
+		
+		SortedSet<String> keys = new TreeSet<>(getTodayRsvdByTimeMap.keySet());
+		
+		//log.info("Test.................." + getTodayRsvdByTimeMap);
+		
+		/*
+		
+		log.info("test..............................."+keys);
+		
+		Iterator<String> it = keys.iterator();
+		
+		while(it.hasNext()) {
+			
+			String key = it.next();
+			
+			map.get(key).stream().forEach(rsvdId -> {
+				
+				log.info("test...............key : " + key);
+				log.info("test...............rsvdId : "+rsvdId);
+				
+			});;
+			
+		}
+		*/
+		
+		//log.info("Test........................keys : " + keys);
+		
+		Iterator it = keys.iterator();
+		
+		String first = "";
+		
+		if(it.hasNext())
+			first = (String) it.next();
+		
+		//log.info("Test......................first" + first);
+		
+		//log.info("test................keys it next : "+getTodayRsvdByTimeMap.get(first));
+		
+		return getTodayRsvdByTimeMap.get(first).stream().sorted().collect(Collectors.toList()).get(0);
 	}
 
 	@Override
@@ -223,7 +267,7 @@ public class ReservationServiceImpl implements ReservationService {
 		readTodayCurRsvdList.stream().forEach((rsvd)->{
 			
 			// C여야 한다.
-			if(rsvd.getStusCd().equalsIgnoreCase("P")) {
+			if(rsvd.getStusCd().equalsIgnoreCase("C")) {
 				
 				cnt.addAndGet(rsvd.getPnum());
 				
@@ -252,6 +296,23 @@ public class ReservationServiceImpl implements ReservationService {
 	public List<UserVO> userListTodayRsvd(long storeId, String date) {
 
 		return rsvdMapper.findUserByStoreIdAndDateAndStus(storeId, date);
+	}
+
+	@Override
+	public List<ReservationVO> readRsvdListByDate(long storeId, String date) {
+		
+		return rsvdMapper.findByStoreIdAndDate(storeId, date);
+	}
+
+	@Override
+	public ReservationVO findRsvdByRsvdId(long rsvdId,List<ReservationVO> readTodayCurRsvdList) {
+		
+		for(ReservationVO rsvd : readTodayCurRsvdList) {
+			if(rsvd.getId() == rsvdId)
+				return rsvd;
+		}
+		
+		return null;
 	}
 
 }

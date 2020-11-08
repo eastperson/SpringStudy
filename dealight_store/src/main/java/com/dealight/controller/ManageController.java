@@ -11,7 +11,6 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @RequestMapping("/business/manage/*")
-@AllArgsConstructor
 public class ManageController {
 	
 	@GetMapping("/dealhistory")

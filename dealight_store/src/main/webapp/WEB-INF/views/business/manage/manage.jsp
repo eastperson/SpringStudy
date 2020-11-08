@@ -10,5 +10,15 @@
 
 <h1>Business Manage Main Page</h1>
 
+<p>today : ${today}</p>
+<p>다음 웨이팅 정보 : ${nextRsvd}</p>
+<p>웨이팅 현황  : ${waitList }</p>
+<p>매장정보 : ${store}</p>
+<p>예약 리스트 : ${rsvdList }</p>
+<p>시간대별 예약자 현황 : ${todayRsvdMap }</p>
+-------
+<p>오늘 예약 수 : ${totalTodayRsvd }</p>
+<p>오늘 예약 인원 수 : ${totalTodayRsvdPnum}</p>
+<p>오늘 선호 메뉴 맵 : ${todayFavMenuMap }</p>
 </body>
 </html>

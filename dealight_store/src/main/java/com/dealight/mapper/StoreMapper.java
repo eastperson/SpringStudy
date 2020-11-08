@@ -17,7 +17,19 @@ public interface StoreMapper {
 	
 	// test
 	// join
-	public List<StoreVO> findByIdJoin(long storeId);
+	public StoreVO findByIdJoinNStore(long storeId);
+	
+	// test
+	// join
+	public StoreVO findByIdJoinBStore(long storeId);
+	
+	// read
+	// by user id
+	public List<StoreVO> findByUserId(String userId);
+	
+	// read
+	// by user id join bstore
+	public List<StoreVO> findByUserIdJoinBStore(String userId);
 	
 	public List<StoreVO> findAll();
 	

@@ -48,7 +48,6 @@ public class ReservationMapperTests {
     	ReservationVO rsvd = new ReservationVO().builder()
 				.id(id)
 				.storeId(storeId)
-				.userId(userId)
 				.htdlId(htdlId)
 				.pnum(pnum)
 				.time(time)

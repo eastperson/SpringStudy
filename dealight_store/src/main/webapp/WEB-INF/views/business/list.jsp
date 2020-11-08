@@ -10,5 +10,7 @@
 
 <h1>Business List Page</h1>
 
+<h2>${userId}</h2>
+
 </body>
 </html>

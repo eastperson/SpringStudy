@@ -1,6 +1,6 @@
 package com.dealight.domain;
 
-import javax.validation.constraints.NotNull;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ public class StoreVO {
 	private long storeId;
 
     // 매장이름
-    @NotNull
+    //@NotNull
     private String storeNm;
 
     // 매장전화번호 
@@ -24,9 +24,11 @@ public class StoreVO {
     // 매장분류코드 
     private String clsCd;
     
-    //     test
     // composition
     private NStoreVO nstore;
+    
+    // composition
+    private BStoreVO bstore;
     
     public static class Builder{
     	
