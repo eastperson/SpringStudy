@@ -28,6 +28,19 @@ public interface StoreService {
 	List<StoreVO> getStoreListByUserId(String userId);
 	
 	
+	// 매장 등록하기
+	void registerStoreAndBStore(StoreVO store);
+	
+	
+	// 매장 수정하기
+	boolean modifyStore(StoreVO store);
+	
+	
+	boolean modifyBStore(StoreVO store);
+	
+	// 필요 x
+	boolean modifyNStore(StoreVO store);
+	
 	// ===============매장 수정 로직
 	
 	

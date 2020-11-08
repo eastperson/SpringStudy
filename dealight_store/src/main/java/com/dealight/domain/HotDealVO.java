@@ -17,6 +17,9 @@ import lombok.ToString;
 @Builder
 public class HotDealVO {
 	
+	// composition
+	private HotDealDetailVO htdlDtls;
+	
 	// ÇÖµô¹øÈ£ 
 	@NonNull
     private long hotdealId;

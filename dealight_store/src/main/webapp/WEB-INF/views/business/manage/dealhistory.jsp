@@ -10,5 +10,22 @@
 
 <h1>Business Hotdeal History Page</h1>
 
+<c:forEach items="${htdlList}" var="htdl">
+	--------------------------------------------------------
+	<div>
+	<h2>ÇÖµô ÀÌ¸§ : <c:out value="${htdl.name}" /></h2>
+	<h2>ÇÖµô ÇÒÀÎ·ü : <c:out value="${htdl.dcRate}" /></h2>
+	<h2>ÇÖµô ½ÃÀÛ ½Ã°£ : <c:out value="${htdl.startTm}" /></h2>
+	<h2>ÇÖµô ¸¶°¨ ½Ã°£ : <c:out value="${htdl.endTm}" /></h2>
+	<h2>ÇÖµô Á¦ÇÑ ÀÎ¿ø : <c:out value="${htdl.lmtPnum}" /></h2>
+	<h2>ÇÖµô ¼Ò°³ : <c:out value="${htdl.intro}" /></h2>
+	<h2>ÇÖµô ÀÌÀü °¡°Ý : <c:out value="${htdl.befPrice}" /></h2>
+	<h2>ÇÖµô Â÷°¨ ºñ¿ë : <c:out value="${htdl.ddct}" /></h2>
+	<h2>ÇÖµô ÇöÀç ÀÎ¿ø : <c:out value="${htdl.curPnum}" /></h2>
+	<h2>ÇÖµô ÇöÀç »óÅÂ : <c:out value="${htdl.stusCd}" /></h2>
+	</div>
+	--------------------------------------------------------
+</c:forEach>
+
 </body>
 </html>

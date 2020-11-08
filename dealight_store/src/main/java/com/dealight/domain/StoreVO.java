@@ -30,12 +30,17 @@ public class StoreVO {
     // composition
     private BStoreVO bstore;
     
+    // composition
+    private MenuVO menu;
+    
     public static class Builder{
     	
         // 필수입력값
         private long storeId;
         private String storeNm;
         private String telno;
+        private BStoreVO bstore;
+        private NStoreVO nstore;
 
         // 선택입력값 
         private String clsCd;
@@ -48,6 +53,20 @@ public class StoreVO {
 		
 	}
 
+	public Builder setBStore(BStoreVO bstore){
+
+		this.bstore = bstore;
+
+		return this;
+	}
+	
+	public Builder setNStore(NStoreVO nstore){
+
+		this.nstore = nstore;
+
+		return this;
+	}
+	
 	public Builder setClsCd(String clsCd){
 
 		this.clsCd = clsCd;
@@ -63,6 +82,8 @@ public class StoreVO {
 		store.storeNm = storeNm;
 		store.telno = telno;
 		store.clsCd = clsCd;
+		store.bstore = bstore;
+		store.nstore = nstore;
 		
 		return store;
 

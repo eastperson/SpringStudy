@@ -10,8 +10,10 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dealight.domain.BUserVO;
 import com.dealight.domain.HotDealDetailVO;
@@ -26,7 +28,7 @@ import lombok.extern.log4j.Log4j;
 public class HotDealDetailMapperTests {
 	
 	// 필수입력값
-    private long hotdealId = 1;
+    private long hotdealId = 25;
     private String name = "돈까스세트";
     private long storeId = 13;
     private double dcRate = 0.5;
@@ -196,6 +198,8 @@ public class HotDealDetailMapperTests {
     	
     }
     
+    //@Transactional
+    //@Rollback(false)
     @Test
     public void insertRsvdDtls() {
     	
@@ -216,6 +220,9 @@ public class HotDealDetailMapperTests {
 				.curPnum(curPnum)
 				.build();
     	
+    	htdlMapper.insertSelectKey(htdl);
+    	
+    	htdlId = htdl.getHotdealId();
     	
     	HotDealDetailVO htdlDtls = new HotDealDetailVO().builder()
 				.htdlId(htdlId)

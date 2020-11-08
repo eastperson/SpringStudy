@@ -34,6 +34,7 @@ public class BusinessControllerTests {
 	public void setUp() {
 		
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+		
 	}
 	
 	@Test
@@ -50,6 +51,34 @@ public class BusinessControllerTests {
 		long storeId = 13;
 		
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/?storeId=" + storeId))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+		
+	}
+	
+	@Test
+	public void testGetRegister() throws Exception{
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/register"))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+	}
+	
+	@Test
+	public void testPostRegister() throws Exception{
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/business/register?"+"storeId=244&storeNm=±Ëπ‰√µ±π&telno=00000&clsCd=c&buserId&openTm=09:30&closeTm=22:00"))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+	}
+	
+	@Test
+	public void testGetDealHistory() throws Exception{
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/business/manage/dealhistory"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());

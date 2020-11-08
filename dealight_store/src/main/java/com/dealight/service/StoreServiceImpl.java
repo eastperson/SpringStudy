@@ -3,17 +3,16 @@ package com.dealight.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dealight.domain.BStoreVO;
+import com.dealight.domain.NStoreVO;
 import com.dealight.domain.StoreVO;
 import com.dealight.mapper.BStoreMapper;
+import com.dealight.mapper.NStoreMapper;
 import com.dealight.mapper.StoreMapper;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -24,6 +23,8 @@ public class StoreServiceImpl implements StoreService {
 	private StoreMapper storeMapper;
 	
 	private BStoreMapper bStoreMapper;
+	
+	private NStoreMapper nStoreMapper;
 	
 	@Override
 	public boolean changeSeatStus(long storeId,String seatStusCd) {
@@ -89,6 +90,52 @@ public class StoreServiceImpl implements StoreService {
 		return storeMapper.findByIdJoinBStore(storeId);
 	}
 
+	@Override
+	public void registerStoreAndBStore(StoreVO store) {
+		
+		storeMapper.insertSelectKey(store);
+		
+		log.info(store);
+		
+		BStoreVO bstore = store.getBstore();
+		
+		log.info(bstore);
+		
+		bstore.setStoreId(store.getStoreId());
+		
+		bStoreMapper.insert(bstore);
+	}
+
 	
-	
+	// store update를 할 때는 
+	// 포함관계인 nstore, bstore를 모두 업데이트 해줘야 한다.
+	@Override
+	public boolean modifyStore(StoreVO store) {
+		
+		storeMapper.update(store);
+		BStoreVO bstore = store.getBstore(); 
+		bStoreMapper.update(bstore);
+
+		return storeMapper.update(store) == 1;
+	}
+
+	@Override
+	public boolean modifyBStore(StoreVO store) {
+		
+		storeMapper.update(store);
+		BStoreVO bstore = store.getBstore(); 
+		bStoreMapper.update(bstore);
+		
+		return storeMapper.update(store) == 1;
+	}
+
+	@Override
+	public boolean modifyNStore(StoreVO store) {
+
+		storeMapper.update(store);
+		NStoreVO nstore = store.getNstore(); 
+		nStoreMapper.update(nstore);
+		
+		return storeMapper.update(store) == 1;
+	}
 }

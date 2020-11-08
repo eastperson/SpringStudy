@@ -17,6 +17,9 @@ import lombok.ToString;
 @Builder
 public class ReservationVO {
 	
+	// composition
+	private ReservationDetailVO revdDtls;
+	
     // 예약번호 
 	@NonNull
     private long id;

@@ -44,7 +44,7 @@ public interface ReservationService {
 	
 	List<ReservationVO> readRsvdListByDate(long storeId,String date);
 
-	
+	ReservationVO longFindRsvdByRsvdIdWithDtls(long rsvdId);
 	
 	// 예약 가능여부 판단하기
 	// "이 시간"에 "이 매장"에서 예약이 가능한지

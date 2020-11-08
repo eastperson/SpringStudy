@@ -117,4 +117,63 @@ public class StoreServiceTests {
 		
 	}
 	
+	@Test
+	public void registerStoreTest1() {
+		
+		
+	}
+	
+	@Test
+	public void modifyStoreTest1() {
+		
+		StoreVO store = storeService.getStore(storeId);
+		
+		log.info(store);
+		
+		store.setStoreNm("수정");
+		
+		assertTrue(storeService.modifyStore(store));
+		
+		store = storeService.findByStoreIdWithBStore(storeId);
+		
+		log.info(store);
+		
+	}
+	
+	@Test
+	public void modifyBStoreTest1() {
+		
+		StoreVO store = storeService.findByStoreIdWithBStore(storeId);
+		
+		log.info(store);
+		
+		store.getBstore().setHldy("수정");
+		
+		assertTrue(storeService.modifyStore(store));
+		
+		store = storeService.findByStoreIdWithBStore(storeId);
+		
+		log.info(store);
+		
+	}
+	
+	@Test
+	public void registerStoreAndBStoreTest2() {
+		
+		BStoreVO bstore = new BStoreVO().builder()
+				.closeTm("22:00")
+				.storeIntro("안녕하세요!")
+				.openTm("09:00")
+				.buserId("aaa")
+				.build();
+		
+		StoreVO store = new StoreVO.Builder(-1, "대머리칼국수", "000-0000-1321")
+				.setBStore(bstore)
+				.build();
+		
+		storeService.registerStoreAndBStore(store);
+		
+		log.info(store);
+		
+	}
 }

@@ -6,6 +6,30 @@
 
 <mapper namespace="com.dealight.mapper.ReservationMapper">
 
+
+<resultMap type="com.dealight.domain.ReservationDetailVO" id="ReservationDetailVO">
+    <result column="rsvd_id" property="rsvdId"/>
+    <result column="rsvd_seq" property="rsvdSeq"/>
+    <result column="menu_nm" property="menuNm"/>
+    <result column="menu_tot_qty" property="menuTotQty"/>
+    <result column="menu_prc" property="menuPrc"/>
+</resultMap>
+
+<resultMap type="com.dealight.domain.ReservationVO" id="ReservationVO">
+    <result column="id" property="id"/>
+    <result column="store_id" property="storeId"/>
+    <result column="user_id" property="userId"/>
+    <result column="htdl_id" property="htdlId"/>
+    <result column="aprv_no" property="aprvNo"/>
+    <result column="pnum" property="pnum"/>
+    <result column="time" property="time"/>
+    <result column="stus_cd" property="stusCd"/>
+    <result column="tot_amt" property="totAmt"/>
+    <result column="tot_qty" property="totQty"/>
+    <result column="in_date" property="inDate"/>
+    <collection property="rsvdDtls" resultMap="ReservationDetailVO"/>
+</resultMap>
+
 	<select id="findAll"
 		resultType="com.dealight.domain.ReservationVO">
 		SELECT
@@ -110,6 +134,13 @@
 		) r, tbl_user u
 		WHERE r.user_id = u.user_id
 		ORDER BY in_date asc
+	</select>
+	
+	<select id="findRsvdByRsvdIdWithDtls" parameterType="com.dealight.domain.ReservationVO" resultMap="ReservationVO">
+		SELECT r.id, r.store_id, r.user_id, r.htdl_id, r.aprv_no, r.pnum, r.time, r.stus_cd, r.tot_amt, r.tot_qty,
+				r.in_date, d.rsvd_seq, d.menu_nm, d.menu_tot_qty, d.menu_prc
+		FROM tbl_rsvd r, tbl_rsvd_dtls d
+		WHERE r.id = d.rsvd_id and r.id = #{rsvdId}
 	</select>
 
 	<insert id="insert">

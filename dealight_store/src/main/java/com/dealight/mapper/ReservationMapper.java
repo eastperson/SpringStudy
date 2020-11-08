@@ -42,6 +42,10 @@ public interface ReservationMapper {
 	// read by store and date and menu count ORDER BY count
 	public List<UserVO> findUserByStoreIdAndDateAndStus(@Param("storeId") long storeId, @Param("date") String date);
 	
+	// read by rsvd id 
+	// join rsvd dtls
+	public ReservationVO findRsvdByRsvdIdWithDtls(long rsvdId);
+	
 	// read list
 	public List<ReservationVO> findAll();
 	

@@ -37,8 +37,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	private ReservationDetailMapper rsvdDtlsMapper;
 	
-	
-	
+		
 	@Override
 	public ReservationVO read(long rsvdId) {
 		
@@ -314,5 +313,13 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		return null;
 	}
+
+	@Override
+	public ReservationVO longFindRsvdByRsvdIdWithDtls(long rsvdId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }

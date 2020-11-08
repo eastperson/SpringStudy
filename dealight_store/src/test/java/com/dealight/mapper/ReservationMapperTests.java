@@ -306,5 +306,17 @@ public class ReservationMapperTests {
     	assertTrue(result == 1);
     	
     }
+    
+    @Test
+    public void findRsvdByRsvdIdWithDtlsTest1() {
+    	
+    	long rsvdId = 9;
+    	
+    	ReservationVO rsvd = mapper.findRsvdByRsvdIdWithDtls(rsvdId);
+    	
+    	assertNotNull(rsvd);
+    	
+    	log.info(rsvd);
+    }
 
 }

@@ -16,6 +16,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserVO {
+	
+	// composition
+	private BUserVO buser;
 
 	// 회원아이디 
 	private String userId;
