@@ -110,7 +110,7 @@ public class ManageController {
 		
 		long id = wait.getId();
 		
-		return "redirect:/business/manage/waiting?waitId="+id;
+		return "redirect:/business/manage/?storeId="+storeId;
 	}
 	
 	
@@ -161,21 +161,21 @@ public class ManageController {
 	}
 	
 	@GetMapping("/enter")
-	public String enter(Model model,long storeId,long waitingId) {
+	public String enter(Model model,long storeId,long waitId) {
 		
 		log.info("business menu modify..");
 		
-		waitService.enterWating(waitingId);
+		waitService.enterWating(waitId);
 		
 		return "redirect:/business/manage?storeId="+storeId;
 	}
 	
 	@GetMapping("/noshow")
-	public String noshow(Model model,long storeId,long waitingId) {
+	public String noshow(Model model,long storeId,long waitId) {
 		
 		log.info("business menu modify..");
 		
-		waitService.panaltyWaiting(waitingId);	
+		waitService.panaltyWaiting(waitId);	
 		
 		return "redirect:/business/manage?storeId="+storeId;
 	}

@@ -178,4 +178,18 @@ public class WaitingServiceTests {
 		
 	}
 	
+	@Test
+	public void readNextWaitTest() {
+		
+		long storeId = 13;
+		
+		List<WaitingVO> curStoreWaitiList = waitingService.curStoreWaitList(storeId, "W");
+		
+		log.info(curStoreWaitiList);
+		
+		WaitingVO wait = waitingService.readNextWait(curStoreWaitiList);
+		
+		log.info(wait);
+	}
+	
 }

@@ -41,7 +41,6 @@ public interface ReservationService {
 	List<ReservationVO> readTodayCurRsvdList(long storeId);
 	
 	
-	
 	List<ReservationVO> readRsvdListByDate(long storeId,String date);
 
 	ReservationVO findRsvdByRsvdIdWithDtls(long rsvdId);

@@ -124,6 +124,8 @@ public class BusinessController {
 		// 현재 웨이팅 상태인 웨이팅 리스트를 가져온다.
 		List<WaitingVO> waitList = waitService.curStoreWaitList(storeId, "W");
 		
+		// 바로 다음 웨이팅을 가져온다.
+		WaitingVO nextWait = waitService.readNextWait(waitList);
 		
 		// 오늘 예약 대기자 명단을 가져온다.
 		HashMap<String,List<Long>> todayRsvdMap = rsvdService.getRsvdByTimeMap(rsvdList);
@@ -160,6 +162,7 @@ public class BusinessController {
 		model.addAttribute("rsvdList", rsvdList);
 		model.addAttribute("waitList", waitList);
 		model.addAttribute("storeId",storeId);
+		model.addAttribute("nextWait",nextWait);
 		
 		//현황판
 		model.addAttribute("totalTodayRsvd",totalTodayRsvd);

@@ -20,9 +20,9 @@
 
 <p>다음 예약 정보 : ${nextRsvd}</p>
 
-<p>다음 웨이팅 정보 : </p>
-<a href="/business/manage/enter?waitId=${nextRsvd.id}&storeId=${storeId}">입장(update 기능추가 필요)</a> </br>
-<a href="/business/manage/noshow?waitId=${nextRsvd.id}&storeId=${storeId}">노쇼(update 기능추가 필요)</a>
+<p>다음 웨이팅 정보 : ${nextWait}</p>
+<a href="/business/manage/enter?waitId=${nextWait.id}&storeId=${storeId}">입장</a> </br>
+<a href="/business/manage/noshow?waitId=${nextWait.id}&storeId=${storeId}">노쇼</a>
 
 <p>현재 착석 가능 여부 : ${store.bstore.seatStusCd}</p>
 

@@ -66,7 +66,7 @@ public interface WaitingService {
 	int calWaitingTime(List<WaitingVO> curStoreWaitiList, long waitingId, int avgTime);
 	
 	// 바로 다음 웨이팅 객체 가져오기
-	 WaitingVO readNextWaitId(List<WaitingVO> curStoreWaitiList);
+	 WaitingVO readNextWait(List<WaitingVO> curStoreWaitiList);
 	
 
 
