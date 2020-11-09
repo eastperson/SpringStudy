@@ -33,7 +33,6 @@
 <h2>웨이팅 리스트</h2>
 
 <c:if test="${not empty waitList}">
-
 <c:forEach items="${waitList}" var="wait">
 <a href="/business/manage/waiting?waitId=${wait.id}"><div>
 웨이팅 번호 : ${wait.id}
@@ -51,6 +50,7 @@
  
 
 <p>매장정보 : ${store}</p>
+<p>라스트 오더 시간 : ${lastOrder}</p>
 
 
 <h2>예약리스트</h2>

@@ -139,6 +139,7 @@ public class WaitingServiceImpl implements WaitingService {
 	@Override
 	public WaitingVO readNextWait(List<WaitingVO> curStoreWaitiList) {
 		
+		// null check
 		if(curStoreWaitiList == null)
 			return null;
 		if(curStoreWaitiList.size() == 0)

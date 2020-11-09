@@ -66,7 +66,10 @@ public class ManageController {
 		// 예약 상세를 포함한 예약 정보를 가져온다.
 		ReservationVO rsvd = rsvdService.findRsvdByRsvdIdWithDtls(rsvdId);
 		
+		List<ReservationVO> rsvdList = userService.getRsvdListStoreUser(rsvd.getStoreId(), rsvd.getUserId());
+		
 		model.addAttribute("rsvd",rsvd);
+		model.addAttribute("rsvdList",rsvdList);
 		
 		return "/business/manage/reservation";
 	}

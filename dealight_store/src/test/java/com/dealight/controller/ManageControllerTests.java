@@ -10,6 +10,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import lombok.Setter;
@@ -75,8 +76,42 @@ public class ManageControllerTests {
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());
-		
 	}
 	
+	@Test
+	public void testGetModifyStoreInfo() throws Exception {
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/modify")
+				.param("storeId", "13"))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+	}
+	
+	@Transactional
+	@Test
+	public void testPostModifyStoreInfo() throws Exception {
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/waiting/register")
+				.param("storeId", "13")
+				.param("storeNm", "¼öÁ¤")
+				.param("telno", "031-753-4444")
+				.param("openTm", "09:30")
+				.param("closeTm", "21:30")
+				.param("breakSttm", "")
+				.param("breakEntm", "")
+				.param("lastOrdTm", "")
+				.param("n1SeatNo", "")
+				.param("n2SeatNo", "")
+				.param("n4SeatNo", "")
+				.param("storeIntro", "")
+				.param("avgMealTm", "")
+				.param("hldy", "")
+				.param("acmPnum", "")
+				)
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+	}
 	
 }

@@ -63,7 +63,6 @@ public class BusinessController {
 		
 		List<StoreVO> list = storeService.getStoreListByUserId(userId);
 		
-		
 		model.addAttribute("storeList", list);
 		
 		return "/business/list";
@@ -115,6 +114,9 @@ public class BusinessController {
 		// store 정보를 가져온다.(Bstore 조인)
 		StoreVO store = storeService.findByStoreIdWithBStore(storeId);
 		
+		// 라스트 오더 시간 정보를 가져온다.
+		String lastOrder = store.getBstore().getLastOrdTm();
+		
 		// 현재 데이터 생성(시간포함)
 		Date today = new Date();
 		
@@ -163,6 +165,7 @@ public class BusinessController {
 		model.addAttribute("waitList", waitList);
 		model.addAttribute("storeId",storeId);
 		model.addAttribute("nextWait",nextWait);
+		model.addAttribute("lastOrder",lastOrder);
 		
 		//현황판
 		model.addAttribute("totalTodayRsvd",totalTodayRsvd);

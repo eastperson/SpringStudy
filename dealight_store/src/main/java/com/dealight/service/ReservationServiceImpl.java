@@ -329,7 +329,4 @@ public class ReservationServiceImpl implements ReservationService {
 				
 		return rsvdMapper.findRsvdByRsvdIdWithDtls(rsvdId);
 	}
-	
-	
-
 }

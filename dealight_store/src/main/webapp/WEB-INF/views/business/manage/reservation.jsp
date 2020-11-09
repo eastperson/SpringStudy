@@ -24,7 +24,8 @@
 <h6>예약 총 수량: ${rsvd.totQty}</h6>
 <h6>예약 작성 날짜: ${rsvd.inDate}</h6>
 
-
+<h2>예약 상세</h2>
+<c:if test="${not empty rsvd.rsvdDtlsList}">
 <c:forEach items="${rsvd.rsvdDtlsList}" var="dtls">
 <div>
 =====================================
@@ -36,6 +37,23 @@
 =====================================
 </div>
 </c:forEach>
+</c:if>
 
+<c:if test="${not empty rsvdList}">
+<h2>예약 히스토리</h2>
+<c:forEach items="${rsvdList}" var="bfRsvd">
+<h6>예약 번호: ${bfRsvd.id}</h6>
+<h6>매장 번호: ${bfRsvd.storeId}</h6>
+<h6>예약 회원 아이디: ${bfRsvd.userId}</h6>
+<h6>핫딜 번호: ${bfRsvd.htdlId}</h6>
+<h6>승인 번호: ${bfRsvd.aprvNo}</h6>
+<h6>예약 인원: ${bfRsvd.pnum}</h6>
+<h6>예약 시간: ${bfRsvd.time}</h6>
+<h6>예약 상태: ${bfRsvd.stusCd}</h6>
+<h6>예약 총 금액: ${bfRsvd.totAmt}</h6>
+<h6>예약 총 수량: ${bfRsvd.totQty}</h6>
+<h6>예약 작성 날짜: ${bfRsvd.inDate}</h6>
+</c:forEach>
+</c:if>
 </body>
 </html>
