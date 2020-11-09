@@ -122,11 +122,11 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public boolean modifyBStore(StoreVO store) {
 		
-		storeMapper.update(store);
+		int result = storeMapper.update(store);
 		BStoreVO bstore = store.getBstore(); 
-		bStoreMapper.update(bstore);
+		int result2 = bStoreMapper.update(bstore);
 		
-		return storeMapper.update(store) == 1;
+		return result == 1 && result2 == 1;
 	}
 
 	@Override
@@ -137,5 +137,11 @@ public class StoreServiceImpl implements StoreService {
 		nStoreMapper.update(nstore);
 		
 		return storeMapper.update(store) == 1;
+	}
+
+	@Override
+	public List<StoreVO> findByUserId(String userId) {
+		
+		return storeMapper.findByUserId(userId);
 	}
 }

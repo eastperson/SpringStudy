@@ -233,6 +233,16 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		//log.info("test................keys it next : "+getTodayRsvdByTimeMap.get(first));
 		
+		// 오늘 예약 명단이 없으면 -1리턴
+		if(first.equals(""))
+			return -1;
+		if(getTodayRsvdByTimeMap == null)
+			return -1;
+		if(getTodayRsvdByTimeMap.get(first) == null)
+			return -1;
+		if(getTodayRsvdByTimeMap.get(first).stream().sorted().collect(Collectors.toList()).get(0) == null)
+			return -1;
+		
 		return getTodayRsvdByTimeMap.get(first).stream().sorted().collect(Collectors.toList()).get(0);
 	}
 

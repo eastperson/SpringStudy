@@ -153,7 +153,6 @@ public class HotDealMapperTests {
     }
     
     
-    
     // update
     @Test
     public void updateTest1() {

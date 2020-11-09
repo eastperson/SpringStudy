@@ -1,14 +1,12 @@
 package com.dealight.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dealight.domain.UserVO;
 import com.dealight.domain.WaitingVO;
 import com.dealight.mapper.UserMapper;
 import com.dealight.mapper.WaitingMapper;
@@ -28,7 +26,15 @@ public class WaitingServiceImpl implements WaitingService {
 	@Override
 	public WaitingVO read(long waitingId) {
 
-		return waitMapper.findById(waitingId);
+		WaitingVO wait = waitMapper.findById(waitingId);
+		
+		//UserVO user = userMapper.findById(wait.getUserId());
+		
+		//wait.setCustTelno(user.getTelno());
+		
+		//wait.setCustNm(user.getName());
+		
+		return wait;
 	}
 
 	@Override
@@ -120,6 +126,12 @@ public class WaitingServiceImpl implements WaitingService {
 	public int calWaitingTime(List<WaitingVO> curStoreWaitiList, long waitingId, int avgTime) {
 		
 		return calWatingOrder(curStoreWaitiList, waitingId) * avgTime;
+	}
+
+	@Override
+	public WaitingVO readNextWaitId(List<WaitingVO> curStoreWaitiList) {
+
+		return curStoreWaitiList.stream().filter(w -> w.getWaitStusCd().equals("C")).
 	}
 
 }

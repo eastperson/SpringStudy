@@ -1,5 +1,6 @@
 package com.dealight.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.dealight.domain.WaitingVO;
@@ -63,6 +64,9 @@ public interface WaitingService {
 	// 현재 '이 웨이팅'이 식사까지 얼만큼의 시간이 소요되는지
 	// 반환의 단위는 '초'
 	int calWaitingTime(List<WaitingVO> curStoreWaitiList, long waitingId, int avgTime);
+	
+	// 바로 다음 웨이팅 객체 가져오기
+	 WaitingVO readNextWaitId(List<WaitingVO> curStoreWaitiList);
 	
 
 

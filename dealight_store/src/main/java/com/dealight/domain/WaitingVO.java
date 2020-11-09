@@ -27,7 +27,8 @@ public class WaitingVO {
 
     // 웨이팅접수시간 
     @NonNull
-    private Date waitRegTm;
+    @Builder.Default
+    private Date waitRegTm = new Date();
 
     // 웨이팅인원
     @NonNull

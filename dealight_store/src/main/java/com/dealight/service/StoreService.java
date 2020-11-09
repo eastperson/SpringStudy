@@ -27,6 +27,10 @@ public interface StoreService {
 	
 	List<StoreVO> getStoreListByUserId(String userId);
 	
+	// read
+	// by user id
+	List<StoreVO> findByUserId(String userId);
+	
 	
 	// 매장 등록하기
 	void registerStoreAndBStore(StoreVO store);

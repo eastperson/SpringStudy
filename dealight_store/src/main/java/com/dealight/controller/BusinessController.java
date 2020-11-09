@@ -124,10 +124,11 @@ public class BusinessController {
 		// 현재 웨이팅 상태인 웨이팅 리스트를 가져온다.
 		List<WaitingVO> waitList = waitService.curStoreWaitList(storeId, "W");
 		
+		
 		// 오늘 예약 대기자 명단을 가져온다.
 		HashMap<String,List<Long>> todayRsvdMap = rsvdService.getRsvdByTimeMap(rsvdList);
 		
-		long nextId = rsvdService.readNextRsvdId(todayRsvdMap);
+		Long nextId = rsvdService.readNextRsvdId(todayRsvdMap);
 		
 		// 바로 다음 예약자를 가져온다.
 		ReservationVO nextRsvd = rsvdService.findRsvdByRsvdId(nextId, rsvdList);

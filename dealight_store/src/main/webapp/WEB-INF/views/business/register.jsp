@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>매장 등록</title>
 </head>
 <body>
 
@@ -12,18 +12,18 @@
 <form action="/business/register" method="post">
 
 	<label id="storeNm">매장명</label>
-	<input name="storeNm">
+	<input name="storeNm"></br>
 	
 	<label id="telno">전화번호</label>
-	<input name="telno">
+	<input name="telno"></br>
 	
 	<input name="buserId" value="${userId}" type="hidden">
 	
 	<label id="openTm">시작시간</label>
-	<input name="openTm">
+	<input name="openTm"></br>
 	
 	<label id="closeTm">마감시간</label>
-	<input name="closeTm">
+	<input name="closeTm"></br>
 	
 	<button type="submit">제출하기</button>
 </form>
