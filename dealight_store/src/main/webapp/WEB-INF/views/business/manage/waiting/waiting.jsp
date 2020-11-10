@@ -1,26 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¿şÀÌÆÃ »ó¼¼</title>
+<title>ì›¨ì´íŒ… ìƒì„¸</title>
 </head>
 <body>
 
 <h1>Business Waiting Page</h1>
 
-<h5>¿şÀÌÆÃ ¹øÈ£ : ${wait.id}</h5>
-<h5>¸ÅÀå ¹øÈ£ : ${wait.storeId}</h5>
-<h5>È¸¿ø ¾ÆÀÌµğ : ${wait.userId}</h5>
-<h5>¿şÀÌÆÃ Á¢¼ö½Ã°£ : ${wait.waitRegTm}</h5>
-<h5>¿şÀÌÆÃ ÀÎ¿ø : ${wait.waitPnum}</h5>
-<h5>¿şÀÌÆÃ °í°´ ¿¬¶ôÃ³ : ${wait.custTelno}</h5>
-<h5>¿şÀÌÆÃ °í°´ ÀÌ¸§ : ${wait.custNm}</h5>
-<h5>¿şÀÌÆÃ »óÅÂ : ${wait.waitStusCd}</h5>
-<h5>¿şÀÌÆÃ µî·Ï ³¯Â¥ : ${wait.inDate}</h5>
+<h5>ì›¨ì´íŒ… ë²ˆí˜¸ : ${wait.id}</h5>
+<h5>ë§¤ì¥ ë²ˆí˜¸ : ${wait.storeId}</h5>
+<h5>íšŒì› ì•„ì´ë”” : ${wait.userId}</h5>
+<h5>ì›¨ì´íŒ… ì ‘ìˆ˜ì‹œê°„ : ${wait.waitRegTm}</h5>
+<h5>ì›¨ì´íŒ… ì¸ì› : ${wait.waitPnum}</h5>
+<h5>ì›¨ì´íŒ… ê³ ê° ì—°ë½ì²˜ : ${wait.custTelno}</h5>
+<h5>ì›¨ì´íŒ… ê³ ê° ì´ë¦„ : ${wait.custNm}</h5>
+<h5>ì›¨ì´íŒ… ìƒíƒœ : ${wait.waitStusCd}</h5>
+<h5>ì›¨ì´íŒ… ë“±ë¡ ë‚ ì§œ : ${wait.inDate}</h5>
+
+<h2>í˜„ì¬ ëŒ€ê¸° ìˆœì„œ : ${order}ë²ˆì§¸</h2>
+<h2>í˜„ì¬ ì˜ˆìƒ ëŒ€ê¸° ì‹œê°„ : ${waitTime}ë¶„</h2>
 
 </body>
 </html>

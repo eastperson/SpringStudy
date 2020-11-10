@@ -115,7 +115,7 @@ public class WaitingServiceTests {
 	@Test
 	public void enterWatingTest1() {
 		
-		assertTrue(waitingService.enterWating(waitingId));
+		assertTrue(waitingService.enterWaiting(waitingId));
 		
 		assertTrue(waitingService.read(waitingId).getWaitStusCd().equals("E"));
 	}

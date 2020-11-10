@@ -37,14 +37,10 @@ public interface StoreService {
 	
 	
 	// 매장 수정하기
+	// bstore 포함
 	boolean modifyStore(StoreVO store);
 	
-	
-	boolean modifyBStore(StoreVO store);
-	
-	// 필요 x
-	boolean modifyNStore(StoreVO store);
-	
+
 	// ===============매장 수정 로직
 	
 	

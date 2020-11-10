@@ -90,6 +90,13 @@
 		where id
 		= #{id}
 	</update>
+	
+	<update id="changeWaitStusCd">
+		UPDATE tbl_wait
+		SET
+		wait_stus_cd = #{waitStusCd}
+		WHERE id = #{id}
+	</update>
 
 	<delete id="delete">
 		DELETE

@@ -47,6 +47,35 @@
 	</collection>
 </resultMap>
 
+<resultMap type="com.dealight.domain.UserWithRsvdDTO" id="UserWithRsvdDTO">
+	
+	<result column="id" property="id"/>
+    <result column="store_id" property="storeId"/>
+    <result column="htdl_id" property="htdlId"/>
+    <result column="aprv_no" property="aprvNo"/>
+    <result column="pnum" property="pnum"/>
+    <result column="time" property="time"/>
+    <result column="stus_cd" property="stusCd"/>
+    <result column="tot_amt" property="totAmt"/>
+    <result column="tot_qty" property="totQty"/>
+    <result column="in_date" property="inDate"/>
+	
+	<result column="user_id" property="userId"/>
+	<result column="name" property="name"/>
+	<result column="email" property="email"/>
+	<result column="telno" property="telno"/>
+	<result column="sex" property="sex"/>
+	<result column="brdt" property="brdt"/>
+	<result column="photo_src" property="photoSrc"/>
+	<result column="sns_lgin_yn" property="snsLginYn"/>
+	<result column="cls_cd" property="clsCd"/>
+	<result column="pm_stus" property="pmStus"/>
+	<result column="pm_cnt" property="pmCnt"/>
+	<result column="pm_expi" property="pmExpi"/>
+</resultMap>
+
+
+
 	<select id="findAll"
 		resultType="com.dealight.domain.ReservationVO">
 		SELECT
@@ -126,7 +155,7 @@
 	</select>
 
 	<select id="findMenuCntByStoreIdAndDate" resultType="HashMap">
-		select count(*), d.menu_nm
+		select d.menu_nm,count(*)
 		from
 		(
 		select id
@@ -139,14 +168,15 @@
 		ORDER BY COUNT(*) desc
 	</select>
 
-	<select id="findUserByStoreIdAndDateAndStus"
-		resultType="com.dealight.domain.UserVO">
-		select *
+	<select id="findUserByStoreIdAndDate"
+		resultType="com.dealight.domain.UserWithRsvdDTO" >
+		select r.id, r.store_id, r.htdl_id, r.aprv_no, r.pnum, r.time, r.stus_cd, r.tot_amt, r.tot_qty, r.in_date,
+				u.user_id, u.name, u.pwd, u.email, u.telno, u.brdt, u.sex, u.photo_src, u.sns_lgin_yn, u.cls_cd, u.pm_stus, u.pm_cnt, u.pm_expi
 		from (
 		select *
 		from tbl_rsvd
 		where store_id = #{storeId}
-		and stus_cd = 'C'
+		and stus_cd = 'C' OR stus_cd = 'L'
 		and TO_CHAR(in_date,'YYYYMMDD') = #{date}
 		) r, tbl_user u
 		WHERE r.user_id = u.user_id

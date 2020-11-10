@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.dealight.domain.ReservationDetailVO;
 import com.dealight.domain.ReservationVO;
-import com.dealight.domain.UserVO;
+import com.dealight.domain.UserWithRsvdDTO;
 
 public interface ReservationService {
 	
@@ -40,9 +40,10 @@ public interface ReservationService {
 	// time = today
 	List<ReservationVO> readTodayCurRsvdList(long storeId);
 	
-	
+	// read
 	List<ReservationVO> readRsvdListByDate(long storeId,String date);
 
+	// read
 	ReservationVO findRsvdByRsvdIdWithDtls(long rsvdId);
 	
 	// 예약 가능여부 판단하기
@@ -103,10 +104,10 @@ public interface ReservationService {
 	int totalTodayRsvdPnum(List<ReservationVO> readTodayCurRsvdList);
 	
 	// 당일 선호 메뉴
-	HashMap<String,Integer> todayFavMenu(long storeId);
+	List<HashMap<String,Integer>> todayFavMenu(long storeId);
 	
 	// 당일 예약 고객 리스트
-	List<UserVO> userListTodayRsvd(long storeId, String date);
+	List<UserWithRsvdDTO> userListTodayRsvd(long storeId);
 	
 	// 주 이용 시간대
 	// 일단 제외

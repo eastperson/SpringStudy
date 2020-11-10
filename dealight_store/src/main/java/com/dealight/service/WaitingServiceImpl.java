@@ -40,6 +40,12 @@ public class WaitingServiceImpl implements WaitingService {
 	@Override
 	public long registerOnWaiting(WaitingVO waiting) {
 		
+		String userId = waiting.getUserId();
+		
+		// user가 웨이팅이 가능하지 않다면?
+		if(!isPossibleWaitingUser(userId))
+			return -1;
+		
 		waitMapper.insertSelectKey(waiting);
 		
 		// 등록된 웨이팅 번호를 반환한다.
@@ -80,34 +86,22 @@ public class WaitingServiceImpl implements WaitingService {
 	@Override
 	public boolean cancelWaiting(long waitingId) {
 		
-		WaitingVO waiting = waitMapper.findById(waitingId);
-		
-		// 웨이팅 상태를 C(취소)로 바꿔놓는다.
-		waiting.setWaitStusCd("C");
-		
-		return waitMapper.update(waiting) == 1;
+		// 웨이팅 상태를 C(입장)로 바꿔놓는다.
+		return waitMapper.changeWaitStusCd(waitingId, "C") == 1;
 	}
 
 	@Override
-	public boolean enterWating(long waitingId) {
-		
-		WaitingVO waiting = waitMapper.findById(waitingId);
-		
+	public boolean enterWaiting(long waitingId) {
+
 		// 웨이팅 상태를 E(입장)로 바꿔놓는다.
-		waiting.setWaitStusCd("E");
-		
-		return waitMapper.update(waiting) == 1;
+		return waitMapper.changeWaitStusCd(waitingId, "E") == 1;
 	}
 
 	@Override
 	public boolean panaltyWaiting(long waitingId) {
-		
-		WaitingVO waiting = waitMapper.findById(waitingId);
-		
-		// 웨이팅 상태를 P(패널티)로 바꿔놓는다.
-		waiting.setWaitStusCd("P");
-		
-		return waitMapper.update(waiting) == 1;
+
+		// 웨이팅 상태를 P(패널티)로 바꿔놓는다.	
+		return waitMapper.changeWaitStusCd(waitingId, "P") == 1;
 	}
 
 	@Override

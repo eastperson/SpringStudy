@@ -30,17 +30,8 @@ public class StoreServiceImpl implements StoreService {
 	public boolean changeSeatStus(long storeId,String seatStusCd) {
 		
 		log.info("store service changeSeatStus....");
-
-		StoreVO store = storeMapper.findById(storeId);
 		
-		if(!store.getClsCd().equals("B"))
-			return false;
-		
-		BStoreVO bstore = bStoreMapper.findByStoreId(store.getStoreId());
-		
-		bstore.setSeatStusCd(seatStusCd);
-		
-		return bStoreMapper.update(bstore) == 1;
+		return bStoreMapper.changeSeatStus(storeId, seatStusCd) == 1;
 	}
 
 	@Override
@@ -90,6 +81,7 @@ public class StoreServiceImpl implements StoreService {
 		return storeMapper.findByIdJoinBStore(storeId);
 	}
 
+	// mapper 2번
 	@Override
 	public void registerStoreAndBStore(StoreVO store) {
 		
@@ -109,34 +101,15 @@ public class StoreServiceImpl implements StoreService {
 	
 	// store update를 할 때는 
 	// 포함관계인 nstore, bstore를 모두 업데이트 해줘야 한다.
+	// mapper 2번
 	@Override
 	public boolean modifyStore(StoreVO store) {
-		
-		storeMapper.update(store);
-		BStoreVO bstore = store.getBstore(); 
-		bStoreMapper.update(bstore);
-
-		return storeMapper.update(store) == 1;
-	}
-
-	@Override
-	public boolean modifyBStore(StoreVO store) {
 		
 		int result = storeMapper.update(store);
 		BStoreVO bstore = store.getBstore(); 
 		int result2 = bStoreMapper.update(bstore);
-		
+
 		return result == 1 && result2 == 1;
-	}
-
-	@Override
-	public boolean modifyNStore(StoreVO store) {
-
-		storeMapper.update(store);
-		NStoreVO nstore = store.getNstore(); 
-		nStoreMapper.update(nstore);
-		
-		return storeMapper.update(store) == 1;
 	}
 
 	@Override

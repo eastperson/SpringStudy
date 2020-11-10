@@ -48,6 +48,7 @@ public class ManageController {
 	@Setter(onMethod_ = @Autowired)
 	private UserService userService;
 	
+	// 쿼리문 1
 	@GetMapping("/dealhistory")
 	public String dealHistory(Model model,long storeId,HttpServletRequest request) {
 		
@@ -60,6 +61,7 @@ public class ManageController {
 		return "/business/manage/dealhistory";
 	}
 	
+	// 쿼리문 2
 	@GetMapping("/reservation")
 	public String reservation(Model model, long rsvdId) {
 		
@@ -75,6 +77,7 @@ public class ManageController {
 	}
 	
 	// 웨이팅 상세
+	// 쿼리문 1
 	@GetMapping("/waiting")
 	public String waiting(Model model, long waitId) {
 		
@@ -84,11 +87,24 @@ public class ManageController {
 		
 		log.info(wait);
 		
+		// 해당 매장에 현재 상태가 W인 리스트를 가져온다.
+		List<WaitingVO> curStoreWaitiList = waitService.curStoreWaitList(wait.getStoreId(), "W");
+		
+		// 해당 웨이팅 번호의 현재 대기 순서를 보여준다.
+		int order = waitService.calWatingOrder(curStoreWaitiList, wait.getId());
+		
+		// 해당 웨이팅 번호의 현대 예상 대기 시간을 보여준다.
+		// 대기시간은 일단 임의로 15로 지정했다.
+		int waitTime = waitService.calWaitingTime(curStoreWaitiList, wait.getId(), 15);
+		
 		model.addAttribute("wait",wait);
+		model.addAttribute("order",order);
+		model.addAttribute("waitTime", waitTime);
 		
 		return "/business/manage/waiting/waiting";
 	}
 	
+	// 쿼리문 0
 	@GetMapping("/waiting/register")
 	public String waitingRegister(Model model, long storeId) {
 		
@@ -102,6 +118,7 @@ public class ManageController {
 		return "/business/manage/waiting/register";
 	}
 	
+	// 쿼리문 1
 	@PostMapping("/waiting/register")
 	public String waitingRegister(Model model, WaitingVO wait,HttpServletRequest request,long storeId) {
 		
@@ -116,7 +133,7 @@ public class ManageController {
 		return "redirect:/business/manage/?storeId="+storeId;
 	}
 	
-	
+	// 쿼리문 1
 	@GetMapping("/modify")
 	public String storeModify(Model model,Long storeId, HttpServletRequest request) {
 		
@@ -125,7 +142,7 @@ public class ManageController {
 		// 세션에 있는 userId를 불러온다.
 		String userId = (String) session.getAttribute("userId");
 		
-		log.info("business store modify..");
+		log.info("business store modify get..");
 		
 		if(storeId == null) {
 			storeId = (Long) request.getAttribute("storeId");
@@ -139,14 +156,21 @@ public class ManageController {
 		return "/business/manage/modify/modify";
 	}
 	
+	// 쿼리문 2
 	@PostMapping("/modify")
 	public String storeModify(Model model,StoreVO store,BStoreVO bstore,RedirectAttributes rttr) {
 		
-		log.info("business store modify..");
+		log.info("business store modify post..");
 		
 		rttr.addFlashAttribute("msg","수정 완료");
 		
-		if(!storeService.modifyBStore(store)) {
+		//log.info("store................" + store);
+		
+		//log.info("bstore................" + bstore);
+		
+		store.setBstore(bstore);
+		
+		if(!storeService.modifyStore(store)) {
 			rttr.addFlashAttribute("storeId",store.getStoreId());
 			rttr.addFlashAttribute("msg", "수정 오류");
 			return "redirect:/business/manage/modify?storeId="+store.getStoreId();
@@ -163,16 +187,18 @@ public class ManageController {
 		return "/business/manage/modify/menu";
 	}
 	
+	// 쿼리문 1
 	@GetMapping("/enter")
 	public String enter(Model model,long storeId,long waitId) {
 		
 		log.info("business menu modify..");
 		
-		waitService.enterWating(waitId);
+		waitService.enterWaiting(waitId);
 		
 		return "redirect:/business/manage?storeId="+storeId;
 	}
 	
+	// 쿼리문 1
 	@GetMapping("/noshow")
 	public String noshow(Model model,long storeId,long waitId) {
 		

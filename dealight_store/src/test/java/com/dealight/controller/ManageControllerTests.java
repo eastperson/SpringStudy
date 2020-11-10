@@ -61,7 +61,7 @@ public class ManageControllerTests {
 	public void testGetWaiting() throws Exception {
 		
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/waiting")
-				.param("waitId", "49"))
+				.param("waitId", "141"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());
@@ -88,30 +88,33 @@ public class ManageControllerTests {
 				.getModelMap());
 	}
 	
-	@Transactional
+	//@Transactional
 	@Test
 	public void testPostModifyStoreInfo() throws Exception {
 		
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/waiting/register")
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/business/manage/modify")
 				.param("storeId", "13")
-				.param("storeNm", "수정")
+				.param("storeNm", "테스트")
 				.param("telno", "031-753-4444")
+				.param("buserId", "kjuioq")
 				.param("openTm", "09:30")
 				.param("closeTm", "21:30")
-				.param("breakSttm", "")
-				.param("breakEntm", "")
-				.param("lastOrdTm", "")
-				.param("n1SeatNo", "")
-				.param("n2SeatNo", "")
-				.param("n4SeatNo", "")
-				.param("storeIntro", "")
-				.param("avgMealTm", "")
-				.param("hldy", "")
-				.param("acmPnum", "")
-				)
-				.andReturn()
+				.param("breakSttm", "15:00")
+				.param("breakEntm", "16:00")
+				.param("lastOrdTm", "21:00")
+				.param("n1SeatNo", "8")
+				.param("n2SeatNo", "10")
+				.param("n4SeatNo", "5")
+				.param("storeIntro", "수정")
+				.param("avgMealTm", "30")
+				.param("hldy", "수정")
+				.param("acmPnum", "40")
+				).andReturn()
 				.getModelAndView()
-				.getModelMap());
+				//.getModelMap());
+				.getViewName();
+		
+		log.info(resultPage);
 	}
 	
 }

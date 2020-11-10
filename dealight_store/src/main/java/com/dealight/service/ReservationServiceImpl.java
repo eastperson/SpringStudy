@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.dealight.domain.ReservationDetailVO;
 import com.dealight.domain.ReservationVO;
 import com.dealight.domain.UserVO;
+import com.dealight.domain.UserWithRsvdDTO;
 import com.dealight.mapper.ReservationDetailMapper;
 import com.dealight.mapper.ReservationMapper;
 
@@ -259,13 +259,13 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		readTodayCurRsvdList.stream().forEach((rsvd)->{
 			
-			// C여야 한다.
-			if(rsvd.getStusCd().equalsIgnoreCase("C"))
+			// C 혹은 L여야 한다.
+			if(rsvd.getStusCd().equalsIgnoreCase("C") || rsvd.getStusCd().equalsIgnoreCase("L"))
 				cnt.incrementAndGet();
 				
 		});
 		
-		return cnt.getAcquire();
+		return cnt.get();
 	}
 
 	@Override
@@ -275,8 +275,8 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		readTodayCurRsvdList.stream().forEach((rsvd)->{
 			
-			// C여야 한다.
-			if(rsvd.getStusCd().equalsIgnoreCase("C")) {
+			// C 혹은 L이어야 한다.
+			if(rsvd.getStusCd().equalsIgnoreCase("C") || rsvd.getStusCd().equalsIgnoreCase("L")) {
 				
 				cnt.addAndGet(rsvd.getPnum());
 				
@@ -288,23 +288,42 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public HashMap<String,Integer> todayFavMenu(long storeId) {
+	public List<HashMap<String,Integer>> todayFavMenu(long storeId) {
 		
 		LocalDate currentDate = LocalDate.now();
     	
     	DateTimeFormatter dateTimeForMatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     	
     	String date = currentDate.format(dateTimeForMatter);
-
+    	/*
+    	List<HashMap<String,Integer>> list = rsvdMapper.findMenuCntByStoreIdAndDate(storeId, date);
+    	
+    	Collections.sort(list, new Comparator<HashMap<String,Integer>>() {
+    		@Override
+    		public int compare(HashMap<String,Integer> m1, HashMap<String,Integer> m2) {
+    			
+    			String key1 = m1.keySet().iterator().next();
+    			String key2 = m2.keySet().iterator().neRxt();
+    			
+    			return (Integer) (m1.get(key1) - m2.get(key2));
+    		}
+    	});
+		*/
 		return rsvdMapper.findMenuCntByStoreIdAndDate(storeId, date);
 	}
 
 
 
 	@Override
-	public List<UserVO> userListTodayRsvd(long storeId, String date) {
+	public List<UserWithRsvdDTO> userListTodayRsvd(long storeId) {
+		LocalDate currentDate = LocalDate.now();
+    	
+    	DateTimeFormatter dateTimeForMatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    	
+    	String date = currentDate.format(dateTimeForMatter);
+		
 
-		return rsvdMapper.findUserByStoreIdAndDateAndStus(storeId, date);
+		return rsvdMapper.findUserByStoreIdAndDate(storeId, date);
 	}
 
 	@Override

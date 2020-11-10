@@ -9,10 +9,12 @@ public interface WaitingService {
 	
 	// 웨이팅 상세 보기
 	// wait dtls mapper - select
+	// read
 	WaitingVO read(long waitingId);
 	
 	// 온라인 웨이팅 등록
 	// wait mapper - inserSelectKey
+	// insert
 	long registerOnWaiting(WaitingVO waiting);
 	
 	// 웨이팅 가능 여부
@@ -27,6 +29,7 @@ public interface WaitingService {
 	
 	// 오프라인 웨이팅 등록
 	// wait mapper - inserSelectKey
+	// insert
 	long registerOffWaiting(WaitingVO waiting);
 	
 	// 웨이팅 취소
@@ -37,7 +40,7 @@ public interface WaitingService {
 	// 웨이팅 입장
 	// 웨이팅 clsCd waitStusCd = "E" 
 	// wait mapper - update
-	boolean enterWating(long waitingId);
+	boolean enterWaiting(long waitingId);
 	
 	// 웨이팅 노쇼
 	// 웨이팅 clsCd waitStusCd = "P" 
@@ -66,7 +69,7 @@ public interface WaitingService {
 	int calWaitingTime(List<WaitingVO> curStoreWaitiList, long waitingId, int avgTime);
 	
 	// 바로 다음 웨이팅 객체 가져오기
-	 WaitingVO readNextWait(List<WaitingVO> curStoreWaitiList);
+	WaitingVO readNextWait(List<WaitingVO> curStoreWaitiList);
 	
 
 

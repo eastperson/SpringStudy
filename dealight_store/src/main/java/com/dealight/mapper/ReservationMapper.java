@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.dealight.domain.ReservationVO;
 import com.dealight.domain.UserVO;
+import com.dealight.domain.UserWithRsvdDTO;
 
 public interface ReservationMapper {
 
@@ -37,10 +38,10 @@ public interface ReservationMapper {
 	public List<ReservationVO> findByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
 	
 	// read by store and date and menu count ORDER BY count
-	public HashMap<String, Integer> findMenuCntByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
+	public List<HashMap<String, Integer>> findMenuCntByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
 	
 	// read by store and date and menu count ORDER BY count
-	public List<UserVO> findUserByStoreIdAndDateAndStus(@Param("storeId") long storeId, @Param("date") String date);
+	public List<UserWithRsvdDTO> findUserByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
 	
 	// read by rsvd id 
 	// join rsvd dtls

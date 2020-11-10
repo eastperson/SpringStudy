@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dealight.domain.BStoreVO;
 import com.dealight.domain.ReservationVO;
 import com.dealight.domain.StoreVO;
-import com.dealight.domain.UserVO;
+import com.dealight.domain.UserWithRsvdDTO;
 import com.dealight.domain.WaitingVO;
 import com.dealight.service.HotDealService;
 import com.dealight.service.ReservationService;
@@ -46,6 +45,7 @@ public class BusinessController {
 	@Autowired
 	private HotDealService htdlService;
 	
+	// 쿼리문 1
 	@GetMapping("/")
 	public String list(Model model,HttpServletRequest request) {
 		
@@ -54,7 +54,7 @@ public class BusinessController {
 		HttpSession session = request.getSession();
 		
 		// 로그인 세션 됐다고 가정
-		session.setAttribute("userId", "kjuioq");
+		session.setAttribute("userId", "lim");
 		
 		// 세션의 아이디를 받는다.
 		String userId = (String) session.getAttribute("userId");
@@ -68,6 +68,7 @@ public class BusinessController {
 		return "/business/list";
 	}
 	
+	// 쿼리문 0
 	@GetMapping("/register")
 	public String storeRegister(Model model,HttpServletRequest request) {
 		
@@ -81,7 +82,6 @@ public class BusinessController {
 		
 		return "/business/register";
 	}
-	
 	
 	@PostMapping("/register")
 	public String waitingRegister(Model model,StoreVO store, BStoreVO bstore, RedirectAttributes rttr) {
@@ -101,6 +101,7 @@ public class BusinessController {
 		return "redirect:/business/";
 	}
 	
+	// 쿼리문 4 -> 페이지 분리하면 각 2개
 	@GetMapping("/manage")
 	public String manage(Model model, long storeId,HttpServletRequest request) {
 		
@@ -121,9 +122,11 @@ public class BusinessController {
 		Date today = new Date();
 		
 		// 매장에 오늘 기준으로 현재 예약상태인 예약 리스트를 가져온다. 
+		// 쿼리
 		List<ReservationVO> rsvdList = rsvdService.readTodayCurRsvdList(storeId);
 		
 		// 현재 웨이팅 상태인 웨이팅 리스트를 가져온다.
+		// 쿼리
 		List<WaitingVO> waitList = waitService.curStoreWaitList(storeId, "W");
 		
 		// 바로 다음 웨이팅을 가져온다.
@@ -132,6 +135,7 @@ public class BusinessController {
 		// 오늘 예약 대기자 명단을 가져온다.
 		HashMap<String,List<Long>> todayRsvdMap = rsvdService.getRsvdByTimeMap(rsvdList);
 		
+		// 다음 예약자 id를 가져온다.
 		Long nextId = rsvdService.readNextRsvdId(todayRsvdMap);
 		
 		// 바로 다음 예약자를 가져온다.
@@ -144,7 +148,8 @@ public class BusinessController {
 		int totalTodayRsvdPnum = rsvdService.totalTodayRsvdPnum(rsvdList);
 		
 		// 오늘 선택된 메뉴의 map을 가져온다.
-		HashMap<String,Integer> todayFavMenuMap = rsvdService.todayFavMenu(storeId);
+		// 쿼리
+		List<HashMap<String,Integer>> todayFavMenuMap = rsvdService.todayFavMenu(storeId);
 		
 		String pattern = "yyyyMMdd";
     	
@@ -153,7 +158,8 @@ public class BusinessController {
     	String date = simpleDateFormat.format(today);
 		
 		// 오늘 예약한 고객 리스트를 가져온다.
-		List<UserVO> todayRsvdUserList = rsvdService.userListTodayRsvd(storeId, date);
+    	// 쿼리
+		List<UserWithRsvdDTO> todayRsvdUserList = rsvdService.userListTodayRsvd(storeId);
 		
 		
 		

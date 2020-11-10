@@ -2,6 +2,8 @@ package com.dealight.domain;
 
 
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +32,7 @@ public class StoreVO {
     // composition
     private BStoreVO bstore;
     
-    // composition
-    private MenuVO menu;
+
     
     public static class Builder{
     	

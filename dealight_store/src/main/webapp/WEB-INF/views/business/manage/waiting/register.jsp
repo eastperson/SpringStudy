@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¿ÀÇÁ¶óÀÎ ¿þÀÌÆÃ µî·Ï</title>
+<title>ì˜¤í”„ë¼ì¸ ì›¨ì´íŒ… ë“±ë¡</title>
 </head>
 <body>
 
@@ -14,22 +14,22 @@
 
 <form action="/business/manage/waiting/register?storeId=${storeId}" method="post">
 
-	<label id="custNm">°í°´ ÀÌ¸§</label>
+	<label id="custNm">ê³ ê° ì´ë¦„</label>
 	<input name="custNm"></br>
 	
-	<label id="custTelno">°í°´ ¿¬¶ôÃ³</label>
+	<label id="custTelno">ê³ ê° ì—°ë½ì²˜</label>
 	<input name="custTelno"></br>
 	
-	<label id="waitPnum">¿þÀÌÆÃ ÀÎ¿ø</label>
+	<label id="waitPnum">ì›¨ì´íŒ… ì¸ì›</label>
 	<input name="waitPnum"></br>
 
-	<label id="curTime">ÇöÀç½Ã°£</label>
+	<label id="curTime">í˜„ìž¬ì‹œê°„</label>
 	<input name="curTime" value="${curTime}" hidden>
-	<h2>ÇöÀç ½Ã°£ : ${curTime}</h2>
+	<h2>í˜„ìž¬ ì‹œê°„ : ${curTime}</h2>
 	
 	<input name="storeId" value="${storeId}" hidden>
 
-	<button type="submit">Á¦ÃâÇÏ±â</button>
+	<button type="submit">ì œì¶œí•˜ê¸°</button>
 </form>
 
 </body>

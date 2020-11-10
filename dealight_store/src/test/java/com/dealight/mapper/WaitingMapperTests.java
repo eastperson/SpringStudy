@@ -222,5 +222,29 @@ public class WaitingMapperTests {
     	
     	assertNotNull(list);
     }
+    
+    @Test
+    public void changeWaitStusCdTest1() {
+    	
+    	String waitStusCd = "W";
+    	
+    	id = 58;
+    	
+    	WaitingVO wait = mapper.findById(id);
+    	
+    	log.info(wait);
+    	
+    	int result = mapper.changeWaitStusCd(wait.getId(), waitStusCd);
+    	
+    	assertTrue(result==1);
+    	
+    	wait = mapper.findById(id);
+    	
+    	log.info(wait);
+    	
+    	assertTrue(wait.getWaitStusCd().equals(waitStusCd));
+    	
+    	
+    }
 
 }

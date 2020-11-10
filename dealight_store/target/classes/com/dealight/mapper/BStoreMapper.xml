@@ -57,6 +57,12 @@
 		#{acmPnum}
 		where store_id = #{storeId}
 	</update>
+	
+	<update id="changeSeatStus">
+		UPDATE tbl_bstore
+		SET seat_stus_cd = #{seatStusCd}
+		WHERE store_id = #{storeId}
+	</update>
 
 	<delete id="delete">
 		DELETE

@@ -31,10 +31,16 @@ public interface StoreMapper {
 	// by user id join bstore
 	public List<StoreVO> findByUserIdJoinBStore(String userId);
 	
+	// read all
+	// by store id
+	// bstore, menu, eval, img, loc, tag, option
+	public StoreVO findAllStoreById(long storeId);
+	
 	public List<StoreVO> findAll();
 	
 	//Update
 	public int update(StoreVO store);
+	
 	
 	//Delete
 	public int delete(long storeId);

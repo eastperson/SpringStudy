@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¸ÅÀå ¼öÁ¤</title>
+<title>ë§¤ìž¥ ìˆ˜ì •</title>
 </head>
 <body>
 
@@ -16,59 +16,57 @@ ${msg}
 
 <form action="/business/manage/modify" method="post">
 
-	<label id="storeNm">¸ÅÀå¸í</label>
-	<input name="storeNm" value="${store.storeNm}"></br>
+	<input name="storeId" value="${store.storeId}" hidden>
+
+	<label id="storeNm">ë§¤ìž¥ëª…</label>
+	<input name="storeNm" value="${store.storeNm}" readonly></br>
 	
-	<label id="telno">ÀüÈ­¹øÈ£</label>
+	<label id="telno">ì „í™”ë²ˆí˜¸</label>
 	<input name="telno" value="${store.telno}"></br>
 	
-	<input name="buserId" value="${userId}" type="hidden">
-	
-	<label id="openTm">½ÃÀÛ½Ã°£</label>
+	<label id="openTm">ì‹œìž‘ì‹œê°„</label>
 	<input name="openTm" value="${store.bstore.openTm}"></br>
 	
-	<label id="closeTm">¸¶°¨½Ã°£</label>
+	<label id="closeTm">ë§ˆê°ì‹œê°„</label>
 	<input name="closeTm" value="${store.bstore.closeTm}"></br>
 	
-	<label id="buserId">»ç¾÷ÀÚ È¸¿ø ¾ÆÀÌµð</label>
+	<label id="buserId">ì‚¬ì—…ìž íšŒì› ì•„ì´ë””</label>
 	<input name="buserId" value="${store.bstore.buserId}" readonly></br>
 	
-	<label id="breakSttm">ºê·¹ÀÌÅ©Å¸ÀÓ½ÃÀÛ½Ã°£</label>
+	<label id="breakSttm">ë¸Œë ˆì´í¬íƒ€ìž„ì‹œìž‘ì‹œê°„</label>
 	<input name="breakSttm" value="${store.bstore.breakSttm}"></br>
 	
-	<label id="breakEntm">ºê·¹ÀÌÅ©Å¸ÀÓ¸¶°¨½Ã°£</label>
+	<label id="breakEntm">ë¸Œë ˆì´í¬íƒ€ìž„ë§ˆê°ì‹œê°„</label>
 	<input name="breakEntm" value="${store.bstore.breakEntm}"></br>
 	
-	<label id="lastOrdTm">¶ó½ºÆ®¿À´õ ½Ã°£</label>
+	<label id="lastOrdTm">ë¼ìŠ¤íŠ¸ì˜¤ë” ì‹œê°„</label>
 	<input name="lastOrdTm" value="${store.bstore.lastOrdTm}"></br>
 	
-	<label id="n1SeatNo">1ÀÎ Å×ÀÌºí °³¼ö</label>
+	<label id="n1SeatNo">1ì¸ í…Œì´ë¸” ê°œìˆ˜</label>
 	<input name="n1SeatNo" value="${store.bstore.n1SeatNo}"></br>
 	
-	<label id="n2SeatNo">2ÀÎ Å×ÀÌºí °³¼ö</label>
+	<label id="n2SeatNo">2ì¸ í…Œì´ë¸” ê°œìˆ˜</label>
 	<input name="n2SeatNo" value="${store.bstore.n2SeatNo}"></br>
 	
-	<label id="n4SeatNo">4ÀÎ Å×ÀÌºí °³¼ö</label>
+	<label id="n4SeatNo">4ì¸ í…Œì´ë¸” ê°œìˆ˜</label>
 	<input name="n4SeatNo" value="${store.bstore.n4SeatNo}"></br>
 	
-	<label id="storeIntro">¸ÅÀå¼Ò°³</label>
+	<label id="storeIntro">ë§¤ìž¥ì†Œê°œ</label>
 	<input name="storeIntro" value="${store.bstore.storeIntro}"></br>
 	
-	<label id="avgMealTm">¸ÅÀåÆò±Õ½Ä»ç½Ã°£</label>
+	<label id="avgMealTm">ë§¤ìž¥í‰ê· ì‹ì‚¬ì‹œê°„</label>
 	<input name="avgMealTm" value="${store.bstore.avgMealTm}" readonly></br>
 	
-	<label id="hldy">¸ÅÀåÈÞ¹«ÀÏ</label>
+	<label id="hldy">ë§¤ìž¥íœ´ë¬´ì¼</label>
 	<input name="hldy" value="${store.bstore.hldy}"></br>
 	
-	<label id="acmPnum">¸ÅÀå¼ö¿ëÀÎ¿ø</label>
+	<label id="acmPnum">ë§¤ìž¥ìˆ˜ìš©ì¸ì›</label>
 	<input name="acmPnum" value="${store.bstore.acmPnum}"></br>
 	
-	<input name="storeId" value="${storeId}" hidden>
-	
-	<button type="submit">Á¦ÃâÇÏ±â</button>
+	<button type="submit">ì œì¶œí•˜ê¸°</button>
 </form>
 
-<h2><a href="/business/manage/menu?storeId=${store.storeId}" }>¸Þ´º¼öÁ¤</a></h2>
+<h2><a href="/business/manage/menu?storeId=${store.storeId}" }>ë©”ë‰´ìˆ˜ì •</a></h2>
 
 </body>
 </html>

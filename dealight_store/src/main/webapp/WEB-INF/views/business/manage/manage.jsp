@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¸ÅÀå °ü¸®</title>
+<title>ë§¤ì¥ ê´€ë¦¬</title>
 </head>
 <body>
 
@@ -15,86 +15,85 @@
 <h1><a href="/business/manage/dealhistory?storeId=${storeId}">Deal History</a></h1>
 
 
-<p>ÇöÀç ³¯Â¥ : <fmt:formatDate pattern="yyyy-MM-dd" value="${today}" /></p>
-<p>ÇöÀç ½Ã°£ : <fmt:formatDate pattern="HH:mm:ss" value="${today}" /></p>
+<p>í˜„ì¬ ë‚ ì§œ : <fmt:formatDate pattern="yyyy-MM-dd" value="${today}" /></p>
+<p>í˜„ì¬ ì‹œê°„ : <fmt:formatDate pattern="HH:mm:ss" value="${today}" /></p>
 
-<p>´ÙÀ½ ¿¹¾à Á¤º¸ : ${nextRsvd}</p>
+<p>ë‹¤ìŒ ì˜ˆì•½ ì •ë³´ : ${nextRsvd}</p>
 
-<p>´ÙÀ½ ¿şÀÌÆÃ Á¤º¸ : ${nextWait}</p>
-<a href="/business/manage/enter?waitId=${nextWait.id}&storeId=${storeId}">ÀÔÀå</a> </br>
-<a href="/business/manage/noshow?waitId=${nextWait.id}&storeId=${storeId}">³ë¼î</a>
+<p>ë‹¤ìŒ ì›¨ì´íŒ… ì •ë³´ : ${nextWait}</p>
+<a href="/business/manage/enter?waitId=${nextWait.id}&storeId=${storeId}">ì…ì¥</a> </br>
+<a href="/business/manage/noshow?waitId=${nextWait.id}&storeId=${storeId}">ë…¸ì‡¼</a>
 
-<p>ÇöÀç Âø¼® °¡´É ¿©ºÎ : ${store.bstore.seatStusCd}</p>
+<p>í˜„ì¬ ì°©ì„ ê°€ëŠ¥ ì—¬ë¶€ : ${store.bstore.seatStusCd}</p>
 
-<p><a href="/business/manage/waiting/register?storeId=${storeId}">¿ÀÇÁ¶óÀÎ ¿şÀÌÆÃ µî·Ï</a></p>
+<p><a href="/business/manage/waiting/register?storeId=${storeId}">ì˜¤í”„ë¼ì¸ ì›¨ì´íŒ… ë“±ë¡</a></p>
 
-<p><a href="/business/manage/modify?storeId=${storeId}">¸ÅÀå Á¤º¸ ¼öÁ¤</a></p>
+<p><a href="/business/manage/modify?storeId=${storeId}">ë§¤ì¥ ì •ë³´ ìˆ˜ì •</a></p>
 
-<h2>¿şÀÌÆÃ ¸®½ºÆ®</h2>
+<h2>ì›¨ì´íŒ… ë¦¬ìŠ¤íŠ¸</h2>
 
 <c:if test="${not empty waitList}">
 <c:forEach items="${waitList}" var="wait">
+=====================================</br>
 <a href="/business/manage/waiting?waitId=${wait.id}"><div>
-¿şÀÌÆÃ ¹øÈ£ : ${wait.id}
-¸ÅÀå ¹øÈ£ : ${wait.storeId}
-È¸¿ø ¾ÆÀÌµğ : ${wait.userId}
-¿şÀÌÆÃ Á¢¼ö½Ã°£ : ${wait.waitRegTm}
-¿şÀÌÆÃ ÀÎ¿ø = ${wait.waitPnum}
-°í°´ ¿¬¶ôÃ³ = ${wait.custTelno }
-°í°´ ÀÌ¸§ = ${wait.custNm }
-¿şÀÌÆÃ »óÅÂ = ${wait.waitStusCd}
+ì›¨ì´íŒ… ë²ˆí˜¸ : ${wait.id}</br>
+ë§¤ì¥ ë²ˆí˜¸ : ${wait.storeId}</br>
+íšŒì› ì•„ì´ë”” : ${wait.userId}</br>
+ì›¨ì´íŒ… ì ‘ìˆ˜ì‹œê°„ : ${wait.waitRegTm}</br>
+ì›¨ì´íŒ… ì¸ì› = ${wait.waitPnum}</br>
+ê³ ê° ì—°ë½ì²˜ = ${wait.custTelno }</br>
+ê³ ê° ì´ë¦„ = ${wait.custNm }</br>
+ì›¨ì´íŒ… ìƒíƒœ = ${wait.waitStusCd}</br>
 </div>
 </a>
 </c:forEach>
 </c:if>
  
 
-<p>¸ÅÀåÁ¤º¸ : ${store}</p>
-<p>¶ó½ºÆ® ¿À´õ ½Ã°£ : ${lastOrder}</p>
+<p>ë§¤ì¥ì •ë³´ : ${store}</p>
+<p>ë¼ìŠ¤íŠ¸ ì˜¤ë” ì‹œê°„ : ${lastOrder}</p>
 
 
-<h2>¿¹¾à¸®½ºÆ®</h2>
+<h2>ì˜ˆì•½ë¦¬ìŠ¤íŠ¸</h2>
 <c:if test="${not empty rsvdList}">
 <c:forEach items="${rsvdList}" var="rsvd">
 <a href="/business/manage/reservation?rsvdId=${rsvd.id}"><div>
-=====================================
-¿¹¾à ¹øÈ£: ${rsvd.id}
-¸ÅÀå ¹øÈ£: ${rsvd.storeId}
-¿¹¾à È¸¿ø ¾ÆÀÌµğ: ${rsvd.userId}
-ÇÖµô ¹øÈ£: ${rsvd.htdlId}
-½ÂÀÎ ¹øÈ£: ${rsvd.aprvNo}
-¿¹¾à ÀÎ¿ø: ${rsvd.pnum}
-¿¹¾à ½Ã°£: ${rsvd.time}
-¿¹¾à »óÅÂ: ${rsvd.stusCd}
-¿¹¾à ÃÑ ±İ¾×: ${rsvd.totAmt}
-¿¹¾à ÃÑ ¼ö·®: ${rsvd.totQty}
-¿¹¾à ÀÛ¼º ³¯Â¥: ${rsvd.inDate}
-=====================================
+=====================================</br>
+ì˜ˆì•½ ë²ˆí˜¸: ${rsvd.id}</br>
+ë§¤ì¥ ë²ˆí˜¸: ${rsvd.storeId}</br>
+ì˜ˆì•½ íšŒì› ì•„ì´ë””: ${rsvd.userId}</br>
+í•«ë”œ ë²ˆí˜¸: ${rsvd.htdlId}</br>
+ìŠ¹ì¸ ë²ˆí˜¸: ${rsvd.aprvNo}</br>
+ì˜ˆì•½ ì¸ì›: ${rsvd.pnum}</br>
+ì˜ˆì•½ ì‹œê°„: ${rsvd.time}</br>
+ì˜ˆì•½ ìƒíƒœ: ${rsvd.stusCd}</br>
+ì˜ˆì•½ ì´ ê¸ˆì•¡: ${rsvd.totAmt}</br>
+ì˜ˆì•½ ì´ ìˆ˜ëŸ‰: ${rsvd.totQty}</br>
+ì˜ˆì•½ ì‘ì„± ë‚ ì§œ: ${rsvd.inDate}</br>
 </div>
 </a>
 </c:forEach>
 </c:if>
 
-<p>½Ã°£´ëº° ¿¹¾àÀÚ ÇöÈ² : ${todayRsvdMap }</p>
+<p>ì‹œê°„ëŒ€ë³„ ì˜ˆì•½ì í˜„í™© : ${todayRsvdMap }</p>
 -------
-<p>¿À´Ã ¿¹¾à ¼ö : ${totalTodayRsvd }</p>
-<p>¿À´Ã ¿¹¾à ÀÎ¿ø ¼ö : ${totalTodayRsvdPnum}</p>
-<p>¿À´Ã ¼±È£ ¸Ş´º ¸Ê : ${todayFavMenuMap }</p>
+<p>ì˜¤ëŠ˜ ì˜ˆì•½ ìˆ˜ : ${totalTodayRsvd }</p>
+<p>ì˜¤ëŠ˜ ì˜ˆì•½ ì¸ì› ìˆ˜ : ${totalTodayRsvdPnum}</p>
+<p>ì˜¤ëŠ˜ ì„ í˜¸ ë©”ë‰´ ë§µ : ${todayFavMenuMap }</p>
 
-<h2>¿À´Ã ¿¹¾à È¸¿ø</h2>
+<h2>ì˜¤ëŠ˜ ì˜ˆì•½ íšŒì›</h2>
 <c:if test="${not empty todayRsvdUserList}">
 <c:forEach items="${todayRsvdUserList}" var="user">
 <div>
-==========================================
-È¸¿ø ¾ÆÀÌµğ : ${userId}
-È¸¿ø ÀÌ¸§ : ${name}
-È¸¿ø ÀÌ¸ŞÀÏ : ${email}
-È¸¿ø ÀüÈ­¹øÈ£ : ${telno}
-»ı³â ¿ùÀÏ : ${brdt}
-¼ºº° : ${sex }
-È¸¿ø ÇÁ·ÎÇÊ »çÁø : ${photoSrc}
-ÆĞ³ÎÆ¼ È¸¿ø ¿©ºÎ : ${pmStus}
-==========================================
+==========================================</br>
+íšŒì› ì•„ì´ë”” : ${user.userId}</br>
+íšŒì› ì´ë¦„ : ${user.name}</br>
+íšŒì› ì´ë©”ì¼ : ${user.email}</br>
+íšŒì› ì „í™”ë²ˆí˜¸ : ${user.telno}</br>
+ìƒë…„ ì›”ì¼ : ${user.brdt}</br>
+ì„±ë³„ : ${user.sex }</br>
+íšŒì› í”„ë¡œí•„ ì‚¬ì§„ : ${user.photoSrc}</br>
+íŒ¨ë„í‹° íšŒì› ì—¬ë¶€ : ${user.pmStus}</br>
 </div>
 </c:forEach>
 </c:if>

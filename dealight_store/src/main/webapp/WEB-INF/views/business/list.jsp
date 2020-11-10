@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>¸ÅÀå ¸®½ºÆ®</title>
+<title>ë§¤ìž¥ ë¦¬ìŠ¤íŠ¸</title>
 </head>
 <body>
 
@@ -14,16 +14,16 @@
 
 <h2>${userId}</h2>
 
-<h2><a href="/business/register">µî·ÏÇÏ±â</a></h2>
+<h2><a href="/business/register">ë“±ë¡í•˜ê¸°</a></h2>
 
 <c:forEach items="${storeList}" var="store">
 ============================================
 	<a href='/business/manage/?storeId=${store.storeId}'><div>
-	<h2>¸ÅÀå ÀÌ¸§ : <c:out value="${store.storeNm}" /></h2>
-	<h2>¸ÅÀå ÀüÈ­¹øÈ£ : <c:out value="${store.telno}" /></h2>
-	<h2>¸ÅÀå ¼ÒÀ¯ÀÚ ¾ÆÀÌµð : <c:out value="${store.bstore.buserId}" /></h2>
-	<h2>¸ÅÀå ¿µ¾÷ ½ÃÀÛ ½Ã°£ : <c:out value="${store.bstore.openTm}" /></h2>
-	<h2>¸ÅÀå ¿µ¾÷ Á¾·á ½Ã°£ : <c:out value="${store.bstore.closeTm}" /></h2>
+	<h2>ë§¤ìž¥ ì´ë¦„ : <c:out value="${store.storeNm}" /></h2>
+	<h2>ë§¤ìž¥ ì „í™”ë²ˆí˜¸ : <c:out value="${store.telno}" /></h2>
+	<h2>ë§¤ìž¥ ì†Œìœ ìž ì•„ì´ë”” : <c:out value="${store.bstore.buserId}" /></h2>
+	<h2>ë§¤ìž¥ ì˜ì—… ì‹œìž‘ ì‹œê°„ : <c:out value="${store.bstore.openTm}" /></h2>
+	<h2>ë§¤ìž¥ ì˜ì—… ì¢…ë£Œ ì‹œê°„ : <c:out value="${store.bstore.closeTm}" /></h2>
 	</div></a>
 ============================================</br>
 </c:forEach>

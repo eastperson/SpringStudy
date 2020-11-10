@@ -16,7 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dealight.domain.ReservationVO;
-import com.dealight.domain.UserVO;
+import com.dealight.domain.UserWithRsvdDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -245,7 +245,7 @@ public class ReservationMapperTests {
     @Test
     public void findMenuCntByStoreIdAndDateTest() {
     	
-    	HashMap<String,Integer> map =  mapper.findMenuCntByStoreIdAndDate(storeId, "20201107");
+    	List<HashMap<String,Integer>> map =  mapper.findMenuCntByStoreIdAndDate(101, "20201110");
     	
     	log.info(map);
     	
@@ -256,7 +256,7 @@ public class ReservationMapperTests {
     @Test
     public void findUserByStoreIdAndDateAndStusTest1() {
     	
-    	List<UserVO> map =  mapper.findUserByStoreIdAndDateAndStus(storeId, "20201107");
+    	List<UserWithRsvdDTO> map =  mapper.findUserByStoreIdAndDate(storeId, "20201107");
     	
     	log.info(map);
     	

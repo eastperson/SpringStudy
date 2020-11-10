@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -110,7 +111,7 @@ public class ReservationServiceTests {
 	@Test
 	public void readRsvdTodayTest1() {
 		
-		List<ReservationVO> list = reservationService.readTodayCurRsvdList(storeId);
+		List<ReservationVO> list = reservationService.readTodayCurRsvdList(101);
 		
 		assertNotNull(list);
 		
@@ -263,6 +264,8 @@ public class ReservationServiceTests {
 	@Test
 	public void totalTodayRsvdTest() {
 		
+		storeId = 101;
+		
 		List<ReservationVO> readTodayCurRsvdList = reservationService.readTodayCurRsvdList(storeId);
 		
 		log.info(reservationService.totalTodayRsvd(readTodayCurRsvdList));
@@ -270,6 +273,8 @@ public class ReservationServiceTests {
 	
 	@Test
 	public void totalTodayRsvdPnumTest() {
+		
+		storeId = 101;
 		
 		List<ReservationVO> readTodayCurRsvdList = reservationService.readTodayCurRsvdList(storeId);
 		
@@ -279,9 +284,9 @@ public class ReservationServiceTests {
 	@Test
 	public void userListTodayRsvdTest() {
 		
-		String date = "20201107";
+		storeId = 101;
 		
-		reservationService.userListTodayRsvd(storeId, date);
+		reservationService.userListTodayRsvd(storeId);
 	}
 	
 	
@@ -389,6 +394,17 @@ public class ReservationServiceTests {
 			
 			assertTrue(rsvdDtls.getRsvdId() == rsvdId);
 			
+		});
+		
+	}
+	
+	@Test
+	public void todayFavMenuTest1(){
+		
+		List<HashMap<String,Integer>> list = reservationService.todayFavMenu(101);
+		
+		list.stream().forEach(map -> {
+			log.info(map);
 		});
 		
 	}

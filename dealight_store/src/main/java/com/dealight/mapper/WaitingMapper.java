@@ -42,6 +42,10 @@ public interface WaitingMapper {
 	// update
 	public int update(WaitingVO waiting);
 	
+	// update
+	// changeWaitStusCd
+	public int changeWaitStusCd(@Param("id") long id, @Param("waitStusCd") String waitStusCd);
+	
 	// delete
 	public int delete(long id);
 

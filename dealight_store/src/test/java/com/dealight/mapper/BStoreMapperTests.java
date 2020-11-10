@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dealight.domain.BStoreVO;
+import com.dealight.domain.StoreVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -152,5 +153,25 @@ public class BStoreMapperTests {
     	
     	assertNull(b);
     }
+    
+	
+	@Test
+	public void changeSeatStusTest1() {
+		
+		BStoreVO bstore =  mapper.findByStoreId(storeId);
+		
+		log.info(bstore);
+		
+		seatStusCd = "R";
+		
+		int result = mapper.changeSeatStus(storeId, seatStusCd);
+		
+		assertTrue(result == 1);
+		
+		bstore =  mapper.findByStoreId(storeId);
+		
+		assertTrue(bstore.getSeatStusCd().equals(seatStusCd));
+		
+	}
 
 }

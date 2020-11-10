@@ -48,7 +48,7 @@ public class BusinessControllerTests {
 	@Test
 	public void testManage() throws Exception{
 		
-		long storeId = 13;
+		long storeId = 101;
 		
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/?storeId=" + storeId))
 				.andReturn()
@@ -68,8 +68,14 @@ public class BusinessControllerTests {
 	
 	@Test
 	public void testPostRegister() throws Exception{
-		
-		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/business/register?"+"storeId=244&storeNm=±Ëπ‰√µ±π&telno=00000&clsCd=c&buserId&openTm=09:30&closeTm=22:00"))
+		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/business/register")
+				.param("storeId", "244")
+				.param("storeNm", "±Ëπ‰√µ±π")
+				.param("telno", "000-0000-0000")
+				.param("clsCd", "C")
+				.param("buserId", "aaa")
+				.param("openTm", "09:30")
+				.param("closeTm", "22:00"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());

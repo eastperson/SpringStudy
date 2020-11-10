@@ -52,7 +52,7 @@ public class StoreServiceTests {
 	public void seatStusChangeTests1() {
 		
 		long storeId = 13;
-		String seatStusCd = "G";
+		String seatStusCd = "B";
 		
 		String stus = storeService.getCurSeatStus(storeId);
 		
@@ -63,6 +63,8 @@ public class StoreServiceTests {
 		stus = storeService.getCurSeatStus(storeId);
 		
 		log.info(stus);
+		
+		assertTrue(stus.equals(seatStusCd));
 	}
 	
 	@Test
