@@ -67,7 +67,7 @@ public class NStoreMapperTests {
     	
 		NStoreVO nstore = new NStoreVO().builder()
 				.storeId(storeId)
-				.breakEntm(breakEntm)
+				.bizTm(breakEntm)
 				.menu(menu)
 				.build();
 		
@@ -83,19 +83,19 @@ public class NStoreMapperTests {
     	
 		NStoreVO nstore = new NStoreVO().builder()
 				.storeId(storeId)
-				.breakEntm("13:00")
+				.bizTm("13:00")
 				.menu(menu)
 				.build();
 		
 		log.info(nstore);
 		
-		String bf = mapper.findByStoreId(storeId).getBreakEntm();
+		String bf = mapper.findByStoreId(storeId).getBizTm();
 		
 		int result = -100;
-		if(!bf.equals(nstore.getBreakEntm()))
+		if(!bf.equals(nstore.getBizTm()))
 			result = mapper.update(nstore);
-		if(bf.equals(nstore.getBreakEntm())) {
-			nstore.setBreakEntm("14:00");
+		if(bf.equals(nstore.getBizTm())) {
+			nstore.setBizTm("14:00");
 			result = mapper.update(nstore);
 		}
 		
@@ -106,7 +106,7 @@ public class NStoreMapperTests {
 		
 		log.info(nstore);
 		
-		assertTrue(!bf.equals(nstore.getBreakEntm()));
+		assertTrue(!bf.equals(nstore.getBizTm()));
 		
     	
     }
@@ -116,7 +116,7 @@ public class NStoreMapperTests {
     	
 		NStoreVO nstore = new NStoreVO().builder()
 				.storeId(14)
-				.breakEntm("14:00")
+				.bizTm("14:00")
 				.menu(menu)
 				.build();
     	

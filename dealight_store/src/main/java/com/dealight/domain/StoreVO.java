@@ -32,6 +32,19 @@ public class StoreVO {
     // composition
     private BStoreVO bstore;
     
+    
+    // 추가!!
+    private StoreLocVO loc;
+    
+    private StoreEvalVO eval;
+    
+    private List<StoreImgVO> imgs;
+    
+    // 추가!!
+    
+    private int curRsvdNum;
+    private int curWaitNum;
+    
 
     
     public static class Builder{

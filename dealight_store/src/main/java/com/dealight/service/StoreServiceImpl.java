@@ -4,10 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.dealight.domain.AllStoreVO;
 import com.dealight.domain.BStoreVO;
 import com.dealight.domain.NStoreVO;
 import com.dealight.domain.StoreVO;
+import com.dealight.mapper.AllStoreMapper;
 import com.dealight.mapper.BStoreMapper;
 import com.dealight.mapper.NStoreMapper;
 import com.dealight.mapper.StoreMapper;
@@ -25,6 +29,8 @@ public class StoreServiceImpl implements StoreService {
 	private BStoreMapper bStoreMapper;
 	
 	private NStoreMapper nStoreMapper;
+	
+	private AllStoreMapper allStoreMapper;
 	
 	@Override
 	public boolean changeSeatStus(long storeId,String seatStusCd) {
@@ -94,6 +100,7 @@ public class StoreServiceImpl implements StoreService {
 		log.info(bstore);
 		
 		bstore.setStoreId(store.getStoreId());
+
 		
 		bStoreMapper.insert(bstore);
 	}
@@ -116,5 +123,11 @@ public class StoreServiceImpl implements StoreService {
 	public List<StoreVO> findByUserId(String userId) {
 		
 		return storeMapper.findByUserId(userId);
+	}
+
+	@Override
+	public AllStoreVO findAllStoreInfoByStoreId(long storeId) {
+		
+		return allStoreMapper.findAllStoreByStoreId(storeId);
 	}
 }

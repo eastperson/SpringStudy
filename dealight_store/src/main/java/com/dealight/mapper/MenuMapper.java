@@ -2,7 +2,7 @@ package com.dealight.mapper;
 
 import java.util.List;
 
-import com.dealight.domain.HotDealVO;
+import com.dealight.domain.HtdlVO;
 import com.dealight.domain.MenuVO;
 
 public interface MenuMapper {

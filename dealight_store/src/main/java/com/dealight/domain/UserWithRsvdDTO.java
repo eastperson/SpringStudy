@@ -54,7 +54,7 @@ public class UserWithRsvdDTO {
 		// 패널티만료일자 
 		private Date pmExpi;
 		// composition
-		private List<ReservationDetailVO> rsvdDtlsList;
+		private List<RsvdDtlsVO> rsvdDtlsList;
 		
 	    // 예약번호 
 		@NonNull

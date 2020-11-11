@@ -17,7 +17,14 @@
 
 <p>현재 날짜 : <fmt:formatDate pattern="yyyy-MM-dd" value="${today}" /></p>
 <p>현재 시간 : <fmt:formatDate pattern="HH:mm:ss" value="${today}" /></p>
-
+<form id="seatStusForm" action="/business/manage/seat" method="post">
+	<input name="seatStusColor" id="color_value" value="" hidden>
+	<input name="storeId" value="${storeId}" hidden>
+	<button id="btn_seat_green">Green</button>
+	<button id="btn_seat_yellow">Yellow</button>
+	<button id="btn_seat_red">Red</button></br>
+	${curSeatStus}
+</form>
 <p>다음 예약 정보 : ${nextRsvd}</p>
 
 <p>다음 웨이팅 정보 : ${nextWait}</p>
@@ -97,6 +104,26 @@
 </div>
 </c:forEach>
 </c:if>
+ <script type="text/javascript">
+ window.onload = function () {
+ const btn_seat_green = document.querySelector("#btn_seat_green"),
+ 		btn_seat_yellow = document.querySelector("#btn_seat_yellow"),
+ 		btn_seat_red = document.querySelector("#btn_seat_red"),
+ 		color_value = document.querySelector("#color_value"),
+ 		form_seat_stus = document.querySelector("#seatStusForm");
  
+ btn_seat_green.onclick = () => {change_stus('G', form_seat_stus);};
+ btn_seat_yellow.onclick = () => {change_stus('Y', form_seat_stus);};
+ btn_seat_red.onclick = () => {change_stus('R', form_seat_stus);};
+ 
+ }
+ 
+ function change_stus(color, form_seat_stus){
+	 event.preventDefault()
+	 color_value.value=color;
+	 form_seat_stus.submit();
+	 return false;
+ }
+ </script>
 </body>
 </html>

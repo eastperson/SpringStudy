@@ -14,13 +14,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dealight.domain.AllStoreVO;
 import com.dealight.domain.BStoreVO;
-import com.dealight.domain.HotDealVO;
-import com.dealight.domain.ReservationVO;
+import com.dealight.domain.HtdlVO;
+import com.dealight.domain.MenuVO;
+import com.dealight.domain.RsvdVO;
+import com.dealight.domain.RevwVO;
+import com.dealight.domain.StoreImgVO;
+import com.dealight.domain.StoreTagVO;
 import com.dealight.domain.StoreVO;
+import com.dealight.domain.UserWithRsvdDTO;
 import com.dealight.domain.WaitingVO;
-import com.dealight.service.HotDealService;
-import com.dealight.service.ReservationService;
+import com.dealight.service.HtdlService;
+import com.dealight.service.RsvdService;
 import com.dealight.service.StoreService;
 import com.dealight.service.UserService;
 import com.dealight.service.WaitingService;
@@ -37,10 +43,10 @@ public class ManageController {
 	private StoreService storeService;
 	
 	@Setter(onMethod_ = @Autowired)
-	private ReservationService rsvdService;
+	private RsvdService rsvdService;
 	
 	@Setter(onMethod_ = @Autowired)
-	private HotDealService htdlService;
+	private HtdlService htdlService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private WaitingService waitService;
@@ -54,7 +60,7 @@ public class ManageController {
 		
 		log.info("business manage..");
 		
-		List<HotDealVO> htdlList = htdlService.readAllStoreHtdlList(storeId);
+		List<HtdlVO> htdlList = htdlService.readAllStoreHtdlList(storeId);
 		
 		model.addAttribute("htdlList",htdlList);
 		
@@ -66,9 +72,11 @@ public class ManageController {
 	public String reservation(Model model, long rsvdId) {
 		
 		// 예약 상세를 포함한 예약 정보를 가져온다.
-		ReservationVO rsvd = rsvdService.findRsvdByRsvdIdWithDtls(rsvdId);
+		RsvdVO rsvd = rsvdService.findRsvdByRsvdIdWithDtls(rsvdId);
 		
-		List<ReservationVO> rsvdList = userService.getRsvdListStoreUser(rsvd.getStoreId(), rsvd.getUserId());
+		log.info("rsvd.............................................................."+rsvd);
+		
+		List<RsvdVO> rsvdList = userService.getRsvdListStoreUser(rsvd.getStoreId(), rsvd.getUserId());
 		
 		model.addAttribute("rsvd",rsvd);
 		model.addAttribute("rsvdList",rsvdList);
@@ -112,6 +120,15 @@ public class ManageController {
 		
 		Date curTime = new Date();
 		
+		List<WaitingVO> waitList = waitService.curStoreWaitList(storeId, "W");
+		
+		int curWaitNum = waitList.size();
+		int curWaitTime = curWaitNum * 15;
+		
+		model.addAttribute("curWaitNum",curWaitNum);
+		model.addAttribute("curWaitTime",curWaitTime);
+		
+		
 		model.addAttribute("curTime", curTime);
 		model.addAttribute("storeId", storeId);
 		
@@ -127,6 +144,7 @@ public class ManageController {
 		wait.setStoreId(storeId);
 		
 		waitService.registerOffWaiting(wait);
+		
 		
 		long id = wait.getId();
 		
@@ -148,7 +166,22 @@ public class ManageController {
 			storeId = (Long) request.getAttribute("storeId");
 		}
 		
-		StoreVO store = storeService.findByStoreIdWithBStore(storeId);
+		AllStoreVO store = storeService.findAllStoreInfoByStoreId(storeId);
+		
+		log.info("All store......................"+store);
+		
+		if(store != null) {
+			List<MenuVO> menuList = store.getMenuList();
+			List<StoreImgVO> imgList = store.getImgList();
+			List<RevwVO> revwList = store.getRevwList();
+			List<StoreTagVO> tagList = store.getTagList();
+			model.addAttribute("menuList",menuList);
+			model.addAttribute("imgList",imgList);
+			model.addAttribute("revwList",revwList);
+			model.addAttribute("tagList",tagList);
+			model.addAttribute("lti", store.getLt());
+		}
+		
 		
 		model.addAttribute("store", store);
 		model.addAttribute("userId",userId);
@@ -205,6 +238,14 @@ public class ManageController {
 		log.info("business menu modify..");
 		
 		waitService.panaltyWaiting(waitId);	
+		
+		return "redirect:/business/manage?storeId="+storeId;
+	}
+	
+	@PostMapping("/seat")
+	public String seatStus(Model model,long storeId, String seatStusColor) {
+		
+		storeService.changeSeatStus(storeId, seatStusColor);
 		
 		return "redirect:/business/manage?storeId="+storeId;
 	}

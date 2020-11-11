@@ -81,8 +81,9 @@ public class ManageControllerTests {
 	@Test
 	public void testGetModifyStoreInfo() throws Exception {
 		
+		
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/modify")
-				.param("storeId", "13"))
+				.param("storeId", "101"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());

@@ -31,6 +31,9 @@
 
 	<button type="submit">제출하기</button>
 </form>
-
+<div>
+현재 웨이팅 인원 : ${curWaitNum}팀</br>
+예상 대기 시간 : ${curWaitTime}분
+</div>
 </body>
 </html>

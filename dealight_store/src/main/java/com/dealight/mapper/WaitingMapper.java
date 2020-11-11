@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.dealight.domain.ReservationVO;
+import com.dealight.domain.RsvdVO;
 import com.dealight.domain.WaitingVO;
 
 import lombok.experimental.PackagePrivate;

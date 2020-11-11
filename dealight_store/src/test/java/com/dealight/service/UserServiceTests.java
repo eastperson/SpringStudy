@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dealight.domain.ReservationVO;
+import com.dealight.domain.RsvdVO;
 import com.dealight.domain.UserVO;
 
 import lombok.extern.log4j.Log4j;
@@ -65,7 +65,7 @@ public class UserServiceTests {
 	@Test
 	public void rsvdListByUserTest1() {
 		
-		List<ReservationVO> list = userService.getRsvdListThisUser(userId);
+		List<RsvdVO> list = userService.getRsvdListThisUser(userId);
 		
 		log.info(list);
 		
@@ -81,7 +81,7 @@ public class UserServiceTests {
 	public void rsvdListStoreUserTests() {
 		
 		
-		List<ReservationVO> list = userService.getRsvdListStoreUser(storeId, userId);
+		List<RsvdVO> list = userService.getRsvdListStoreUser(storeId, userId);
 		
 		log.info(list);
 		

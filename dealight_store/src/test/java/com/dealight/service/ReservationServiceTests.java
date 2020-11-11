@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dealight.domain.ReservationDetailVO;
-import com.dealight.domain.ReservationVO;
+import com.dealight.domain.RsvdDtlsVO;
+import com.dealight.domain.RsvdVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,7 +29,7 @@ import lombok.extern.log4j.Log4j;
 public class ReservationServiceTests {
 
 	@Autowired
-	private ReservationService reservationService;
+	private RsvdService reservationService;
 	
 	long storeId = 13;
 	long rsvdId = 9;
@@ -50,7 +50,7 @@ public class ReservationServiceTests {
 	@Test
 	public void readByRsvdIdTest1() {
 		
-		ReservationVO rsvd = reservationService.read(rsvdId);
+		RsvdVO rsvd = reservationService.read(rsvdId);
 		
 		assertNotNull(rsvd);
 		
@@ -61,7 +61,7 @@ public class ReservationServiceTests {
 	@Test
 	public void readDetailByRsvdIdTest1() {
 		
-		List<ReservationDetailVO> list = reservationService.readDetail(rsvdId);
+		List<RsvdDtlsVO> list = reservationService.readDetail(rsvdId);
 		
 		assertNotNull(list);
 		
@@ -77,7 +77,7 @@ public class ReservationServiceTests {
 	@Test
 	public void readListReservationByStoreIdTest1() {
 		
-		List<ReservationVO> list = reservationService.readAllRsvdList(storeId);
+		List<RsvdVO> list = reservationService.readAllRsvdList(storeId);
 		
 		assertNotNull(list);
 		
@@ -93,7 +93,7 @@ public class ReservationServiceTests {
 	@Test
 	public void readListCurReservationByStoreIdTest1() {
 		
-		List<ReservationVO> list = reservationService.readCurRsvdList(storeId);
+		List<RsvdVO> list = reservationService.readCurRsvdList(storeId);
 		
 		assertNotNull(list);
 		
@@ -111,7 +111,7 @@ public class ReservationServiceTests {
 	@Test
 	public void readRsvdTodayTest1() {
 		
-		List<ReservationVO> list = reservationService.readTodayCurRsvdList(101);
+		List<RsvdVO> list = reservationService.readTodayCurRsvdList(101);
 		
 		assertNotNull(list);
 		
@@ -136,7 +136,7 @@ public class ReservationServiceTests {
 		
 		String date = "20201107";
 		
-		List<ReservationVO> list = reservationService.getListByDate(storeId, date);
+		List<RsvdVO> list = reservationService.getListByDate(storeId, date);
 		
 		assertNotNull(list);
 		
@@ -159,7 +159,7 @@ public class ReservationServiceTests {
 	@Test
 	public void getTimeTest1() {
 		
-		List<ReservationVO> list = reservationService.readTodayCurRsvdList(storeId);
+		List<RsvdVO> list = reservationService.readTodayCurRsvdList(storeId);
 		
 		list.forEach((rsvd) -> {
 			log.info(reservationService.getTime(rsvd.getInDate()));
@@ -170,7 +170,7 @@ public class ReservationServiceTests {
 	@Test
 	public void calTimeMinutesTest1() {
 		
-		List<ReservationVO> list = reservationService.readTodayCurRsvdList(storeId);
+		List<RsvdVO> list = reservationService.readTodayCurRsvdList(storeId);
 		
 		list.forEach((rsvd) -> {
 			String time = reservationService.getTime(rsvd.getInDate());
@@ -197,7 +197,7 @@ public class ReservationServiceTests {
 		
 		String date = "20201107";
 		
-		List<ReservationVO> list = reservationService.getListByDate(storeId, date);
+		List<RsvdVO> list = reservationService.getListByDate(storeId, date);
 		
 		log.info(list);
 		
@@ -223,7 +223,7 @@ public class ReservationServiceTests {
 		
 		log.info(date);
 		
-		List<ReservationVO> list = reservationService.getListByDate(storeId, "20201107");
+		List<RsvdVO> list = reservationService.getListByDate(storeId, "20201107");
 		
 		log.info(list);
 		
@@ -237,7 +237,7 @@ public class ReservationServiceTests {
 	@Test
 	public void readNextRsvdTest1() {
 		
-		List<ReservationVO> list = reservationService.readTodayCurRsvdList(0);
+		List<RsvdVO> list = reservationService.readTodayCurRsvdList(0);
 		
 		HashMap<String,List<Long>> map = reservationService.getRsvdByTimeMap(list);
 	
@@ -255,7 +255,7 @@ public class ReservationServiceTests {
 	@Test
 	public void isHtdlTest1() {
 		
-		ReservationVO rsvd = reservationService.read(50);
+		RsvdVO rsvd = reservationService.read(50);
 		
 		assertTrue(reservationService.isHtdl(rsvd));
 		
@@ -266,7 +266,7 @@ public class ReservationServiceTests {
 		
 		storeId = 101;
 		
-		List<ReservationVO> readTodayCurRsvdList = reservationService.readTodayCurRsvdList(storeId);
+		List<RsvdVO> readTodayCurRsvdList = reservationService.readTodayCurRsvdList(storeId);
 		
 		log.info(reservationService.totalTodayRsvd(readTodayCurRsvdList));
 	}
@@ -276,7 +276,7 @@ public class ReservationServiceTests {
 		
 		storeId = 101;
 		
-		List<ReservationVO> readTodayCurRsvdList = reservationService.readTodayCurRsvdList(storeId);
+		List<RsvdVO> readTodayCurRsvdList = reservationService.readTodayCurRsvdList(storeId);
 		
 		log.info(reservationService.totalTodayRsvdPnum(readTodayCurRsvdList));
 	}
@@ -296,7 +296,7 @@ public class ReservationServiceTests {
 		
 		String date = "20201107";
 		
-		List<ReservationVO> list = reservationService.getListByDate(storeId, date);
+		List<RsvdVO> list = reservationService.getListByDate(storeId, date);
 		
 		HashMap<String, List<Long>> map = reservationService.getRsvdByTimeMap(list);
 				
@@ -327,7 +327,7 @@ public class ReservationServiceTests {
 		
 		String date = "20201107";
 		
-		List<ReservationVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
+		List<RsvdVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
 		
 		assertNotNull(listByDate);
 		
@@ -341,7 +341,7 @@ public class ReservationServiceTests {
 		
 		String date = "20201107";
 		
-		List<ReservationVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
+		List<RsvdVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
 		
 		log.info("test....................list"+listByDate);
 		
@@ -353,9 +353,9 @@ public class ReservationServiceTests {
 		
 		log.info("test....................rsvdId"+rsvdId);
 		
-		ReservationVO vo = null;
+		RsvdVO vo = null;
 		
-		for(ReservationVO rsvd : listByDate) {
+		for(RsvdVO rsvd : listByDate) {
 			if(rsvd.getId() == rsvdId)
 				vo = rsvd;
 		}
@@ -368,11 +368,11 @@ public class ReservationServiceTests {
 		
 		String date = "20201107";
 		
-		List<ReservationVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
+		List<RsvdVO> listByDate = reservationService.readRsvdListByDate(storeId, date);
 		
 		log.info("test....................list"+listByDate);
 		
-		ReservationVO rsvd = reservationService.findRsvdByRsvdId(44, listByDate);
+		RsvdVO rsvd = reservationService.findRsvdByRsvdId(44, listByDate);
 		
 		log.info(rsvd);
 		
@@ -384,7 +384,7 @@ public class ReservationServiceTests {
 	@Test
 	public void findRsvdByRsvdIdWithDtlsTest1(){
 		
-		ReservationVO rsvd = reservationService.findRsvdByRsvdIdWithDtls(rsvdId);
+		RsvdVO rsvd = reservationService.findRsvdByRsvdIdWithDtls(rsvdId);
 		
 		assertNotNull(rsvd);
 		

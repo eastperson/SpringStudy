@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dealight.domain.WaitingVO;
+import com.dealight.mapper.WaitingMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -23,6 +24,9 @@ public class WaitingServiceTests {
 
 	@Autowired
 	private WaitingService waitingService;
+	
+	@Autowired
+	private WaitingMapper waitMapper;
 	
 	
 	@Test 
@@ -49,7 +53,7 @@ public class WaitingServiceTests {
 		
 		WaitingVO waiting = new WaitingVO().builder()
 				.storeId(13)
-				.userId("kjuioq")
+				.userId("a")
 				.waitPnum(3)
 				.waitRegTm(new Date())
 				.custTelno("010-2737-3333")
@@ -60,6 +64,8 @@ public class WaitingServiceTests {
 		waitingService.registerOnWaiting(waiting);
 		
 		long result = waiting.getId();
+		log.info("size.................................."+waitMapper.findAll().size());
+		log.info("result................................"+result);
 		
 		//assertTrue(result == 49);
 		

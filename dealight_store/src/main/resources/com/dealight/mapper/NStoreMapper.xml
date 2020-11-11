@@ -23,15 +23,15 @@
 
 	<insert id="insert">
 		INSERT
-		INTO tbl_nstore(store_id,break_entm,menu)
+		INTO tbl_nstore(store_id,biz_tm,menu)
 		VALUES
-		(#{storeId},#{breakEntm},#{menu})
+		(#{storeId},#{bizTm},#{menu})
 	</insert>
 
 	<update id="update">
 		UPDATE tbl_nstore
 		SET
-		break_entm = #{breakEntm},
+		biz_tm = #{bizTm},
 		menu =
 		#{menu}
 		where store_id = #{storeId}

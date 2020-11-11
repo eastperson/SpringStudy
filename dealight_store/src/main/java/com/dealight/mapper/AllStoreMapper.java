@@ -1,10 +1,12 @@
 package com.dealight.mapper;
 
-import com.dealight.domain.AllStoreDTO;
+import java.util.List;
+
+import com.dealight.domain.AllStoreVO;
 
 public interface AllStoreMapper {
 	
 	// read
-	AllStoreDTO findAllStoreByStoreId(long storeId);
+	AllStoreVO findAllStoreByStoreId(long storeId);
 
 }

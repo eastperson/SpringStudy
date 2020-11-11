@@ -18,7 +18,7 @@ public class WaitingVO {
 	@NonNull
     private long id;
 
-    // 매장번호 
+    // 매장번호
     @NonNull
     private long storeId;
 

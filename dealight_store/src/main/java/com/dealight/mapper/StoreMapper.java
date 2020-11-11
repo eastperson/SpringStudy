@@ -44,5 +44,7 @@ public interface StoreMapper {
 	
 	//Delete
 	public int delete(long storeId);
+	
+	
 
 }

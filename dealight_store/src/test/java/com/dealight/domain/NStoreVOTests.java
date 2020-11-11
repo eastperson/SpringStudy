@@ -10,7 +10,7 @@ public class NStoreVOTests {
 
 	// nstore °´Ã¼
 	private long storeId = 1;
-	private String breakEntm = "21:00";
+	private String bizTm = "21:00";
 	private String menu = "µ·±î½º";
 	
 	// store °´Ã¼
@@ -27,11 +27,11 @@ public class NStoreVOTests {
 	public void nstoreGenerateTest1() {
 		NStoreVO nstore = new NStoreVO.NStoreVOBuilder()
 				.storeId(storeId)
-				.breakEntm(breakEntm)
+				.bizTm(bizTm)
 				.build();
 
 		assertTrue(nstore.getStoreId() == storeId);
-		assertTrue(nstore.getBreakEntm().equals(breakEntm));
+		assertTrue(nstore.getBizTm().equals(bizTm));
 		assertNull(nstore.getMenu());
 		assertNotNull(nstore);
 
@@ -42,12 +42,12 @@ public class NStoreVOTests {
 	public void nstoreGenerateTest2() {
 		NStoreVO nstore = new NStoreVO.NStoreVOBuilder()
 				.storeId(storeId)
-				.breakEntm(breakEntm)
+				.bizTm(bizTm)
 				.menu(menu)
 				.build();
 
 		assertTrue(nstore.getStoreId() == storeId);
-		assertTrue(nstore.getBreakEntm().equals(breakEntm));
+		assertTrue(nstore.getBizTm().equals(bizTm));
 		assertTrue(nstore.getMenu().equals(menu));
 		assertNotNull(nstore);
 

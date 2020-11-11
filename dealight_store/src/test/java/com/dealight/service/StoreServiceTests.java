@@ -8,9 +8,12 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.dealight.domain.AllStoreVO;
 import com.dealight.domain.BStoreVO;
 import com.dealight.domain.StoreVO;
 
@@ -160,7 +163,9 @@ public class StoreServiceTests {
 	}
 	
 	@Test
-	public void registerStoreAndBStoreTest2() {
+	@Transactional
+	@Rollback(false)
+	public void registerStoreAndBStoreTest2() throws Exception {
 		
 		BStoreVO bstore = new BStoreVO().builder()
 				.closeTm("22:00")
@@ -174,8 +179,20 @@ public class StoreServiceTests {
 				.build();
 		
 		storeService.registerStoreAndBStore(store);
+
 		
-		log.info(store);
+	}
+	
+	@Test
+	public void findAllStoreByStoreIdTest1() {
+		
+		storeId = 101;
+		
+		AllStoreVO allStore = storeService.findAllStoreInfoByStoreId(storeId);
+		
+		assertNotNull(allStore);
+		
+		log.info(allStore);
 		
 	}
 }

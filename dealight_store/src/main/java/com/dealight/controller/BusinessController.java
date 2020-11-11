@@ -1,6 +1,7 @@
 package com.dealight.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dealight.domain.BStoreVO;
-import com.dealight.domain.ReservationVO;
+import com.dealight.domain.RsvdVO;
 import com.dealight.domain.StoreVO;
 import com.dealight.domain.UserWithRsvdDTO;
 import com.dealight.domain.WaitingVO;
-import com.dealight.service.HotDealService;
-import com.dealight.service.ReservationService;
+import com.dealight.service.HtdlService;
+import com.dealight.service.RsvdService;
 import com.dealight.service.StoreService;
 import com.dealight.service.WaitingService;
 
@@ -37,13 +38,13 @@ public class BusinessController {
 	private StoreService storeService;
 	
 	@Autowired
-	private ReservationService rsvdService;
+	private RsvdService rsvdService;
 	
 	@Autowired
 	private WaitingService waitService;
 	
 	@Autowired
-	private HotDealService htdlService;
+	private HtdlService htdlService;
 	
 	// 쿼리문 1
 	@GetMapping("/")
@@ -62,6 +63,11 @@ public class BusinessController {
 		model.addAttribute("userId", userId);
 		
 		List<StoreVO> list = storeService.getStoreListByUserId(userId);
+		list.stream().forEach((store)->{
+			long id = store.getStoreId();
+			store.setCurWaitNum(waitService.curStoreWaitList(id, "W").size());
+			store.setCurRsvdNum(rsvdService.readTodayCurRsvdList(id).size());
+		});
 		
 		model.addAttribute("storeList", list);
 		
@@ -123,8 +129,8 @@ public class BusinessController {
 		
 		// 매장에 오늘 기준으로 현재 예약상태인 예약 리스트를 가져온다. 
 		// 쿼리
-		List<ReservationVO> rsvdList = rsvdService.readTodayCurRsvdList(storeId);
-		
+		List<RsvdVO> rsvdList = rsvdService.readTodayCurRsvdList(storeId);
+
 		// 현재 웨이팅 상태인 웨이팅 리스트를 가져온다.
 		// 쿼리
 		List<WaitingVO> waitList = waitService.curStoreWaitList(storeId, "W");
@@ -139,7 +145,7 @@ public class BusinessController {
 		Long nextId = rsvdService.readNextRsvdId(todayRsvdMap);
 		
 		// 바로 다음 예약자를 가져온다.
-		ReservationVO nextRsvd = rsvdService.findRsvdByRsvdId(nextId, rsvdList);
+		RsvdVO nextRsvd = rsvdService.findRsvdByRsvdId(nextId, rsvdList);
 		
 		// 오늘 예약 합계를 가져온다.
 		int totalTodayRsvd = rsvdService.totalTodayRsvd(rsvdList);
@@ -161,6 +167,9 @@ public class BusinessController {
     	// 쿼리
 		List<UserWithRsvdDTO> todayRsvdUserList = rsvdService.userListTodayRsvd(storeId);
 		
+		// 현재 착성상태를 가져온다.
+		String curSeatStus = store.getBstore().getSeatStusCd();
+		
 		
 		
 		model.addAttribute("store", store);
@@ -172,6 +181,7 @@ public class BusinessController {
 		model.addAttribute("storeId",storeId);
 		model.addAttribute("nextWait",nextWait);
 		model.addAttribute("lastOrder",lastOrder);
+		model.addAttribute("curSeatStus",curSeatStus);
 		
 		//현황판
 		model.addAttribute("totalTodayRsvd",totalTodayRsvd);
@@ -181,5 +191,4 @@ public class BusinessController {
 		
 		return "/business/manage/manage";
 	}
-
 }

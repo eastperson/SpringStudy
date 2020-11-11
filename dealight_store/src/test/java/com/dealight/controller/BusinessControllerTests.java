@@ -84,7 +84,8 @@ public class BusinessControllerTests {
 	@Test
 	public void testGetDealHistory() throws Exception{
 		
-		log.info(mockMvc.perform(MockMvcRequestBuilders.post("/business/manage/dealhistory"))
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/business/manage/dealhistory")
+				.param("storeId", "13"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dealight.domain.ReservationVO;
+import com.dealight.domain.RsvdVO;
 import com.dealight.domain.UserVO;
-import com.dealight.mapper.ReservationMapper;
+import com.dealight.mapper.RsvdMapper;
 import com.dealight.mapper.UserMapper;
 import com.dealight.mapper.WaitingMapper;
 
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 	private WaitingMapper waitMapper;
 	
 	@Autowired
-	private ReservationMapper rsvdMapper;
+	private RsvdMapper rsvdMapper;
 
 	@Override
 	public UserVO read(String userId) {
@@ -45,14 +45,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<ReservationVO> getRsvdListThisUser(String userId) {
+	public List<RsvdVO> getRsvdListThisUser(String userId) {
 		
 		
 		return rsvdMapper.findByUserId(userId);
 	}
 
 	@Override
-	public List<ReservationVO> getRsvdListStoreUser(long storeId, String userId) {
+	public List<RsvdVO> getRsvdListStoreUser(long storeId, String userId) {
 		
 		
 		return rsvdMapper.findByStoreIdAndUserId(storeId, userId);

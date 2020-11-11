@@ -22,7 +22,9 @@ public class NStoreVO{
     @NonNull private long storeId;
 
     // 영업시간 
-    @NonNull private String breakEntm;
+    // 수정 biz tm
+    private String bizTm;
+    //@NonNull private String breakEntm;
 
     // 메뉴 
     private String menu;

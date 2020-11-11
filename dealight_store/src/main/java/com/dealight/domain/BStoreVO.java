@@ -1,6 +1,7 @@
 package com.dealight.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,12 @@ public class BStoreVO {
 
     // 사업자회원아이디 
     private String buserId;
+    
+    //추가 =================================
+    private String brch;
+    private String repMenu;
+    private String repImg;
+    //=================================
 
     // 착석상태코드 
     @Builder.Default
@@ -43,13 +50,13 @@ public class BStoreVO {
     private String lastOrdTm;
 
     // 1인테이블개수 
-    private int n1SeatNo;
+    private int n1SeatNo = -1;
 
     // 2인테이블개수 
-    private int n2SeatNo;
-
+    private int n2SeatNo = -1;
+    
     // 4인테이블개수 
-    private int n4SeatNo;
+    private int n4SeatNo = -1;
 
     // 매장소개 
     private String storeIntro;
@@ -61,7 +68,12 @@ public class BStoreVO {
     private String hldy;
 
     // 수용인원 
-    private int acmPnum;
+    private int acmPnum = -1;
+    
+    // 추가!!
+    private HtdlVO htdl; // 핫딜 VO명 변경
+    private StoreTagVO tag;
+    private List<MenuVO> menus;
 	
 	
 

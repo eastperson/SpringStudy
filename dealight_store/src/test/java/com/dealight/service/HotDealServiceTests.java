@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dealight.domain.HotDealDetailVO;
-import com.dealight.domain.HotDealResultVO;
-import com.dealight.domain.HotDealVO;
+import com.dealight.domain.HtdlDtlsVO;
+import com.dealight.domain.HtdlRsltVO;
+import com.dealight.domain.HtdlVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,7 +29,7 @@ public class HotDealServiceTests {
 	long storeId = 13;
 
 	@Autowired
-	private HotDealService hotDealService;
+	private HtdlService hotDealService;
 	
 	@Test
 	public void DITest() {
@@ -41,7 +41,7 @@ public class HotDealServiceTests {
 	@Test
 	public void readByHtdlTest() {
 		
-		HotDealVO htdl = hotDealService.read(htdlId);
+		HtdlVO htdl = hotDealService.read(htdlId);
 		
 		assertNotNull(htdl);
 		
@@ -50,7 +50,7 @@ public class HotDealServiceTests {
 	@Test
 	public void readDtlsByHtdlIdTest() {
 		
-		List<HotDealDetailVO> list = hotDealService.readDtls(htdlId);
+		List<HtdlDtlsVO> list = hotDealService.readDtls(htdlId);
 		
 		assertNotNull(list);
 		
@@ -66,7 +66,7 @@ public class HotDealServiceTests {
 		
 		htdlId = 4;
 		
-		HotDealResultVO htdlRslt = hotDealService.readRslt(htdlId);
+		HtdlRsltVO htdlRslt = hotDealService.readRslt(htdlId);
 		
 		assertNotNull(htdlRslt);
 		
@@ -75,7 +75,7 @@ public class HotDealServiceTests {
 	@Test
 	public void calHtdlEndTmTest1() {
 		
-		HotDealVO htdl = hotDealService.read(htdlId);
+		HtdlVO htdl = hotDealService.read(htdlId);
 		
 		int result = hotDealService.calHtdlEndTm(htdl);
 		
@@ -86,7 +86,7 @@ public class HotDealServiceTests {
 	@Test
 	public void readAllStoreHtdlListTest1() {
 		
-		List<HotDealVO> list = hotDealService.readAllStoreHtdlList(storeId);
+		List<HtdlVO> list = hotDealService.readAllStoreHtdlList(storeId);
 		
 		assertNotNull(list);
 		
@@ -100,7 +100,7 @@ public class HotDealServiceTests {
 	@Test
 	public void readActStoreHtdlListTest1() {
 		
-		List<HotDealVO> list = hotDealService.readActStoreHtdlList(storeId);
+		List<HtdlVO> list = hotDealService.readActStoreHtdlList(storeId);
 		
 		assertNotNull(list);
 		
