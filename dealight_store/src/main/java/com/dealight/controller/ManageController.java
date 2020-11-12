@@ -217,6 +217,8 @@ public class ManageController {
 		
 		log.info("business menu modify..");
 		
+		
+		
 		return "/business/manage/modify/menu";
 	}
 	
@@ -250,5 +252,13 @@ public class ManageController {
 		return "redirect:/business/manage?storeId="+storeId;
 	}
 
+	@GetMapping("/board")
+	public String getBoard(Model model, long storeId) {
+		
+		
+		model.addAttribute("storeId", storeId);
+		
+		return "/board";
+	}
 
 }
