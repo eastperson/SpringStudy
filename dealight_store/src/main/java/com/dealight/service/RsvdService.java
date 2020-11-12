@@ -104,7 +104,7 @@ public interface RsvdService {
 	int totalTodayRsvdPnum(List<RsvdVO> readTodayCurRsvdList);
 	
 	// 당일 선호 메뉴
-	List<HashMap<String,Integer>> todayFavMenu(long storeId);
+	HashMap<String,Integer> todayFavMenu(long storeId);
 	
 	// 당일 예약 고객 리스트
 	List<UserWithRsvdDTO> userListTodayRsvd(long storeId);

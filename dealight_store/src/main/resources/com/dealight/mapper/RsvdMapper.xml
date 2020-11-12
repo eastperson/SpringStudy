@@ -76,7 +76,6 @@
 </resultMap>
 
 
-
 	<select id="findAll"
 		resultType="com.dealight.domain.RsvdVO">
 		SELECT

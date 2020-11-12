@@ -38,7 +38,7 @@ public interface RsvdMapper {
 	public List<RsvdVO> findByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
 	
 	// read by store and date and menu count ORDER BY count
-	public List<HashMap<String, Integer>> findMenuCntByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
+	public List<HashMap<String, Object>> findMenuCntByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);
 	
 	// read by store and date and menu count ORDER BY count
 	public List<UserWithRsvdDTO> findUserByStoreIdAndDate(@Param("storeId") long storeId, @Param("date") String date);

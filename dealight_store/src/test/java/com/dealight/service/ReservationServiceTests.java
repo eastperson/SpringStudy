@@ -401,11 +401,9 @@ public class ReservationServiceTests {
 	@Test
 	public void todayFavMenuTest1(){
 		
-		List<HashMap<String,Integer>> list = reservationService.todayFavMenu(101);
+		HashMap<String,Integer> map = reservationService.todayFavMenu(101);
 		
-		list.stream().forEach(map -> {
-			log.info(map);
-		});
+		log.info(map);
 		
 	}
 	

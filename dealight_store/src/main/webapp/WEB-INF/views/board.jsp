@@ -14,7 +14,8 @@
 
 	storeId : ${storeId} </br>
 	
-	<button id="refresh">새로고침</button>
+	<button id="refresh">새로고침</button></br>
+	<button id="btn_rsvd_rslt">예약 결과판</button>
 
 	<h1>매장 정보</h1>
 	<ul class="store"></ul>
@@ -47,6 +48,9 @@
 	
 	<h1>시간대별 예약</h1>
 	<ul class="rsvdMap"></ul>
+	
+	<h1>당일 예약 결과</h1>
+	<ul class="rsvdRslt"></ul>
 	
 	<h1>테스트</h1>
 
@@ -141,6 +145,7 @@
 			</div>
 		</c:forEach>
 	</c:if>
+	<div id="myModal" ></div>
 <script>
 	$("body")
 
@@ -238,6 +243,24 @@
         }
     
         /*get 함수*/
+        
+        
+		function getRsvdRslt(param,callback,error) {
+            
+            let storeId = param.storeId;
+            
+            $.getJSON("/business/manage/board/reservation/rslt/"+storeId+".json",
+                function(data){
+                        if(callback){
+                            callback(data);
+                        }
+                    }).fail(function(xhr,status,err){
+                        if(error){
+                            error();
+                        }
+            });
+        }
+        
         function getRsvdList(param,callback,error) {
             
             let storeId = param.storeId;
@@ -364,7 +387,8 @@
             putChangeStatusCd : putChangeStatusCd,
             getNextWait : getNextWait,
             getNextRsvd : getNextRsvd,
-            getTodayRsvdMap : getTodayRsvdMap
+            getTodayRsvdMap : getTodayRsvdMap,
+            getRsvdRslt : getRsvdRslt
         };
     })();
     $(document).ready(() => {
@@ -378,10 +402,11 @@
         nextWaitUL = $(".nextWait"),
         nextRsvdUL = $(".nextRsvd"),
         rsvdMapUL = $(".rsvdMap"),
-        storeSeatUL = $(".storeSeatStus")
+        storeSeatUL = $(".storeSeatStus"),
+        rsvdRsltUL = $(".rsvdRslt")
         ;
             
-        showBoard(storeId);
+        showBoard(storeId); 
     
         function showBoard(storeId) {
             
@@ -520,17 +545,34 @@
                 
                 nextRsvdUL.html(strNextRsvd);
         	});
-            
-            
+  
             }
         
-        /* 착석 상태 전환 */
-        function showSeatStus(storeId) {
+        function showRsvdBoard(storeId) {
         	
+        	boardService.getRsvdRslt({storeId:storeId}, function(dto){
+        		let strRsvdRslt = "";
+        		if(!dto)
+        			return;
+        		
+        		strRsvdRslt += "<li>오늘 총 예약 수" + dto.totalTodayRsvd  +"</li>";
+        		strRsvdRslt += "<li>오늘 총 예약 인원" + dto.totalTodayRsvdPnum  +"</li>";
+        		strRsvdRslt += "<li>오늘의 인기 메뉴</li>";
+        		Object.entries(dto.todayFavMenuMap).forEach(([key,value]) => {
+	        		strRsvdRslt += "<li>" + key +' : '+ value  +"</li>";
+        		})
+        		
+        		rsvdRsltUL.html(strRsvdRslt);
+        		
+        	});
         }
-        
+      
         
         /* 이벤트 처리*/
+        $("#btn_rsvd_rslt").on("click", e => {
+        	showRsvdBoard(${storeId});
+        });
+        
         $("#refresh").on("click", e => {
         	window.location = location.href;
         });

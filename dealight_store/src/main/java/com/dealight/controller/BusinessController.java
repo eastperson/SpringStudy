@@ -155,7 +155,7 @@ public class BusinessController {
 		
 		// 오늘 선택된 메뉴의 map을 가져온다.
 		// 쿼리
-		List<HashMap<String,Integer>> todayFavMenuMap = rsvdService.todayFavMenu(storeId);
+		HashMap<String,Integer> todayFavMenuMap = rsvdService.todayFavMenu(storeId);
 		
 		String pattern = "yyyyMMdd";
     	

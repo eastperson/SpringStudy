@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dealight.domain.RsvdRsltDTO;
 import com.dealight.domain.RsvdVO;
 import com.dealight.domain.StoreVO;
 import com.dealight.domain.WaitingVO;
@@ -198,6 +199,31 @@ public class BoardController {
 				? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
+	}
+	
+	@GetMapping(value = "/board/reservation/rslt/{storeId}", 
+			produces = {
+					MediaType.APPLICATION_JSON_UTF8_VALUE,
+					MediaType.APPLICATION_XML_VALUE
+	})
+	public ResponseEntity<RsvdRsltDTO> getRsvdRslt(@PathVariable("storeId") long storeId) {
+		
+		List<RsvdVO> rsvdList = rsvdService.readTodayCurRsvdList(storeId);
+		
+		int totTodayRsvd = rsvdService.totalTodayRsvd(rsvdList);
+		int totTodayRsvdPnum = rsvdService.totalTodayRsvdPnum(rsvdList);
+		HashMap<String,Integer> todayFavMenuMap = rsvdService.todayFavMenu(storeId);
+				
+		RsvdRsltDTO dto = new RsvdRsltDTO().builder()
+				.totalTodayRsvd(totTodayRsvd)
+				.totalTodayRsvdPnum(totTodayRsvdPnum)
+				.todayFavMenuMap(todayFavMenuMap)
+				.build();
+		
+		log.info(dto);
+		
+				
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
 

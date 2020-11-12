@@ -288,7 +288,7 @@ public class RsvdServiceImpl implements RsvdService {
 	}
 
 	@Override
-	public List<HashMap<String,Integer>> todayFavMenu(long storeId) {
+	public HashMap<String,Integer> todayFavMenu(long storeId) {
 		
 		LocalDate currentDate = LocalDate.now();
     	
@@ -309,7 +309,18 @@ public class RsvdServiceImpl implements RsvdService {
     		}
     	});
 		*/
-		return rsvdMapper.findMenuCntByStoreIdAndDate(storeId, date);
+    	
+    	HashMap<String,Integer> hash = new HashMap<String, Integer>();
+    	
+
+    	
+    	rsvdMapper.findMenuCntByStoreIdAndDate(storeId, date).stream().forEach((m) -> {
+    		log.info("test............"+m.get("MENU_NM"));
+    		log.info("test............"+m.get("COUNT(*)"));
+    		hash.put((String) m.get("MENU_NM"), Integer.parseInt(m.get("COUNT(*)").toString()));
+    		
+    	});
+		return hash;
 	}
 
 

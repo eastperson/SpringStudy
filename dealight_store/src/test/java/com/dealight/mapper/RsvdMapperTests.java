@@ -245,10 +245,25 @@ public class RsvdMapperTests {
     @Test
     public void findMenuCntByStoreIdAndDateTest() {
     	
-    	List<HashMap<String,Integer>> map =  mapper.findMenuCntByStoreIdAndDate(101, "20201110");
+    	List<HashMap<String,Object>> map =  mapper.findMenuCntByStoreIdAndDate(101, "20201110");
     	
     	log.info(map);
     	
+    	HashMap<String,Integer> hash = new HashMap<String, Integer>();
+    	
+
+    	
+    	map.stream().forEach((m) -> {
+    		log.info("test............"+m.get("MENU_NM"));
+    		log.info("test............"+m.get("COUNT(*)"));
+    		hash.put((String) m.get("MENU_NM"), Integer.parseInt(m.get("COUNT(*)").toString()));
+    		
+    	});
+    	
+    	//hash.put((String) m.get("MENU_NM"),(Integer) m.get("COUNT(*)"));
+    	
+    	log.info(hash);
+    		
     }
     
     // read list
