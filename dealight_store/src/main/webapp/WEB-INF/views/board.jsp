@@ -12,10 +12,22 @@
 
 	<h1>Business Manage Main Page</h1>
 
-	storeId : ${storeId}
+	storeId : ${storeId} </br>
+	
+	<button id="refresh">새로고침</button>
 
 	<h1>매장 정보</h1>
 	<ul class="store"></ul>
+	
+	<h1>현재 착석 상태</h1>
+	<ul class="storeSeatStus"></ul>
+	   <form id="seatStusForm" action="/business/manage/board/seat" method="put">
+            <input name="seatStusColor" id="color_value" value="" hidden>
+            <input name="storeId" value="${storeId}" hidden>
+            <button class="btn_seat_stus">Green</button>
+            <button class="btn_seat_stus">Yellow</button>
+            <button class="btn_seat_stus">Red</button></br>
+        </form>
 
 	<h1>웨이팅 리스트</h1>
 	<ul class="waitList"></ul>
@@ -26,9 +38,15 @@
 	<h1>다음 웨이팅 정보</h1>
 	<ul class="nextWait"></ul>
 
+	<button class="btn_enter_wait">입장</button></br>
+	<button class="btn_noshow_wait">노쇼</button>
+
 	<h1>다음 예약자 정보</h1>
-	<div class="nextRsvd"></div>
+	<ul class="nextRsvd"></ul>
 	
+	
+	<h1>시간대별 예약</h1>
+	<ul class="rsvdMap"></ul>
 	
 	<h1>테스트</h1>
 
@@ -46,7 +64,7 @@
 		현재 시간 :
 		<fmt:formatDate pattern="HH:mm:ss" value="${today}" />
 	</p>
-        <form id="seatStusForm" action="/business/manage/" method="post">
+        <form id="seatStusForm" action="/business/manage/board/seat" method="post">
             <input name="seatStusColor" id="color_value" value="" hidden>
             <input name="storeId" value="${storeId}" hidden>
             <button class="btn_seat_stus">Green</button>
@@ -124,12 +142,40 @@
 		</c:forEach>
 	</c:if>
 <script>
+	$("body")
+
     console.log("board module........");
     
     let boardService = (() => {
-        
+      
+    	
         /*put 함수*/
-        function putNoshowWaiting(waitId) {
+        
+        function putChangeStatusCd(params,callback,error) {
+        	
+        	let storeId = params.storeId,
+        		seatStusCd = params.seatStusCd;
+        	
+            $.ajax({
+                type:'put',
+                url:'/business/manage/board/seat/'+storeId+'/'+seatStusCd,
+                data : {},
+                contentType : "application/json",
+                success : function(result, status, xhr) {
+                    if(callback) {
+                        callback(result);
+                    }
+                },
+                error : function(xhr, status, er) {
+                    if(error) {
+                        error(er);
+                    }               
+                }
+            });
+            
+            }
+        
+        function putNoshowWaiting(waitId,callback,error) {
             $.ajax({
                 type:'put',
                 url:'/business/manage/board/waiting/noshow/' + waitId,
@@ -149,7 +195,7 @@
             
             }
     
-        function putEnterWaiting(waitId) {
+        function putEnterWaiting(waitId,callback,error) {
     
             $.ajax({
                 type:'put',
@@ -170,7 +216,7 @@
             
             }
     
-        function putCancelWaiting(waitId) {
+        function putCancelWaiting(waitId,callback,error) {
     
             $.ajax({
                 type:'put',
@@ -255,9 +301,11 @@
                     .sort((w1,w2) => { return w1.id - w2.id})[0];
         };
         
-        function getTodayRsvdMap(rsvdList,callback,error){
+        function getTodayRsvdMap(param,callback,error){
+      
+        	let storeId = param.storeId;
         	
-        	let map = $.getJSON("/business/manage/board/reservation/map.json",rsvdList,
+        	$.getJSON("/business/manage/board/reservation/map/"+ storeId +".json",
                     function(data){
                         if(callback){
                             callback(data);
@@ -267,12 +315,22 @@
                             error();
                         }
             });
-            
-        	return map;
+
         };
         
-        function getNextRsvd(rsvdList){
-            
+        function getNextRsvd(param,callback,error){
+        	let storeId = param.storeId;
+        	
+        	$.getJSON("/business/manage/board/reservation/next/"+ storeId +".json",
+                    function(data){
+                        if(callback){
+                            callback(data);
+                        }
+                    }).fail(function(xhr,status,err){
+                        if(error){
+                            error();
+                        }
+            });
         };
     
         function regWait(wait, callback,error) {
@@ -303,6 +361,7 @@
             putCancelWaiting : putCancelWaiting,
             putNoshowWaiting : putNoshowWaiting,
             putEnterWaiting : putEnterWaiting,
+            putChangeStatusCd : putChangeStatusCd,
             getNextWait : getNextWait,
             getNextRsvd : getNextRsvd,
             getTodayRsvdMap : getTodayRsvdMap
@@ -316,7 +375,10 @@
         storeUL = $(".store"),
         rsvdListUL = $(".rsvdList"),
         waitListUL = $(".waitList"),
-        nextWaitUL = $(".nextWait")
+        nextWaitUL = $(".nextWait"),
+        nextRsvdUL = $(".nextRsvd"),
+        rsvdMapUL = $(".rsvdMap"),
+        storeSeatUL = $(".storeSeatStus")
         ;
             
         showBoard(storeId);
@@ -349,6 +411,9 @@
                 str += "<li>매장 소개 : " + store.bstore.storeIntro + "</li>";
                 
                 storeUL.html(str);
+                
+                /*착석 상태*/
+                storeSeatUL.html("<li>"+ store.bstore.seatStusCd +"</li>")
             });
     
             
@@ -421,14 +486,61 @@
               rsvdListUL.html(strRsvdList);
    
             }); 
+            
+            
+            strRsvdMap = "";
+            
+            boardService.getTodayRsvdMap({storeId:storeId}, function(map){
+            	let strRsvdMap = "";
+            	if(!map)
+            		return;
+            	Object.entries(map).forEach(([key,value]) => {
+            		strRsvdMap += "<li>"+key + " : " + value+"</li>";
+            	})
+            	
+            	rsvdMapUL.html(strRsvdMap);
+            	
+            });
+            
+            boardService.getNextRsvd({storeId:storeId},function(rsvd){
+        		let strNextRsvd = "";
+        		if(!rsvd)
+        			return;
+                strNextRsvd += "<li>예약 번호 : "+rsvd.id+"</li>"; 
+                strNextRsvd += "<li>매장번호 : "+ rsvd.storeId + "</li>";
+                strNextRsvd += "<li>회원 아이디 : "+ rsvd.userId + "</li>";
+                strNextRsvd += "<li>핫딜 번호 :"+ rsvd.htdlId + "</li>";
+                strNextRsvd += "<li>승인 번호 : "+ rsvd.aprvNo + "</li>";
+                strNextRsvd += "<li>예약 인원 : "+ rsvd.pnum + "</li>";
+                strNextRsvd += "<li>예약 시간 : "+ rsvd.time + "</li>";
+                strNextRsvd += "<li>예약 상태 : "+ rsvd.stusCd + "</li>";
+                strNextRsvd += "<li>예약 총 금액 : "+ rsvd.totAmt + "</li>";
+                strNextRsvd += "<li>예약 총 수량 : "+ rsvd.totQty + "</li>";
+                strNextRsvd += "<li>예약 등록 날짜"+ rsvd.inDate + "</li>";
+                
+                nextRsvdUL.html(strNextRsvd);
+        	});
+            
+            
             }
         
+        /* 착석 상태 전환 */
+        function showSeatStus(storeId) {
+        	
+        }
+        
+        
         /* 이벤트 처리*/
+        $("#refresh").on("click", e => {
+        	window.location = location.href;
+        });
         
         /* 매장 착석 상태 처리*/
         $(".btn_seat_stus").on("click", e => {
     
             e.preventDefault();
+            
+            let color = "";
     
             if(e.target.innerHTML === 'Red')
                 color = 'R';
@@ -437,16 +549,60 @@
             if(e.target.innerHTML === 'Green')
                 color = 'G';
             
-    
-            colorVal
-                .attr("value",color)
-            seatStusForm
-            .attr("method","post")
-            .attr("action","/business/manage/seat").submit();
+            console.log(color);
+            
+            let param = {};
+            param.storeId = ${storeId};
+            param.seatStusCd = color;
+            
+            console.log(param);
+            
+    		boardService.putChangeStatusCd(param);
+    		
+            showBoard(storeId);
+        });
+        
+        /*웨이팅 입장 처리*/
+        $(".btn_enter_wait").on("click", e => {
+        	
+        	/*dom 코드는 변경될 가능성 있음*/
+        	waitId = parseInt($(".nextWait li:eq(2)").text().split(":")[1]);
+
+        	boardService.putEnterWaiting(waitId);
+        	
+        	showBoard(storeId);
         })
         
+        /*웨이팅 노쇼 처리*/
+        $(".btn_noshow_wait").on("click", e => {
+        	
+        	/*dom 코드는 변경될 가능성 있음*/
+        	waitId = parseInt($(".nextWait li:eq(2)").text().split(":")[1]);
+
+        	boardService.putNoshowWaiting(waitId);
+        	
+        	showBoard(storeId);
+        })
+        
+        
+        
+
+        
+        });
     
-    })
+    /* 자동 새로고침 */
+    /*
+    function startRefresh() {
+        window.location = location.href;
+    }
+    
+    let minutes = 60;
+    
+    $(function() {
+        setTimeout(startRefresh,minutes*5);
+    });
+    */
+
     </script>
 	<!-- 
 <script>

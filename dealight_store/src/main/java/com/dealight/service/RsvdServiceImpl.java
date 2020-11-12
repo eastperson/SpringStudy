@@ -140,7 +140,7 @@ public class RsvdServiceImpl implements RsvdService {
 		listByDate.stream().forEach((rsvd) -> {
 			
 			// C여야 된다.
-			if(!rsvd.getStusCd().equalsIgnoreCase("P"))
+			if(!rsvd.getStusCd().equalsIgnoreCase("C"))
 				return;
 			
 			String time = getTime(rsvd.getInDate());
