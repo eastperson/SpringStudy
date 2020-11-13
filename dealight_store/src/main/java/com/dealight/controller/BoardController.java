@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -225,7 +226,34 @@ public class BoardController {
 				
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
-
+	
+	@GetMapping(value = "/board/reservation/dtls/{rsvdId}", 
+			produces = {
+					MediaType.APPLICATION_JSON_UTF8_VALUE,
+					MediaType.APPLICATION_XML_VALUE
+	})
+	public ResponseEntity<RsvdVO> getRsvdDtls(@PathVariable("rsvdId") long rsvdId) {
+		
+						
+		return new ResponseEntity<>(rsvdService.findRsvdByRsvdIdWithDtls(rsvdId), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/board/reservation/list/{storeId}/{userId}", 
+			produces = {
+					MediaType.APPLICATION_JSON_UTF8_VALUE,
+					MediaType.APPLICATION_XML_VALUE
+	})
+	public ResponseEntity<List<RsvdVO>> getRsvdList(@PathVariable("storeId") long storeId, @PathVariable("userId") String userId) {
+		
+		log.info("get user rsvd list....................");		
+		
+		List<RsvdVO> rsvdList = userService.getRsvdListStoreUser(storeId, userId);
+		
+		rsvdList = rsvdList.stream().sorted((r1,r2) -> (int) (r2.getInDate().getTime() - r1.getInDate().getTime())).collect(Collectors.toList());
+		
+		return new ResponseEntity<>(rsvdList, HttpStatus.OK);
+		//return new ResponseEntity<>(userService.getRsvdListStoreUser(storeId, userId), HttpStatus.OK);
+	}	
 
 
 	// 등록된 핫딜 정보를 가져온다.

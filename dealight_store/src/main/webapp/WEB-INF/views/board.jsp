@@ -5,6 +5,46 @@
 <head>
 <meta charset="UTF-8">
 <title>매장 관리</title>
+<style>
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+</style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -12,46 +52,57 @@
 
 	<h1>Business Manage Main Page</h1>
 
-	storeId : ${storeId} </br>
+	storeId : ${storeId}
+	</br>
+
+	<button id="refresh">새로고침</button>
+	</br>
 	
-	<button id="refresh">새로고침</button></br>
-	<button id="btn_rsvd_rslt">예약 결과판</button>
+	<h1>해당 유저 예약 상세</h1>
+	<ul class="rsvdDtls"></ul>
+	
+	<h1>해당 유저 예약 리스트</h1>
+	<ul class="userRsvdList"></ul>
 
 	<h1>매장 정보</h1>
 	<ul class="store"></ul>
-	
+
 	<h1>현재 착석 상태</h1>
 	<ul class="storeSeatStus"></ul>
-	   <form id="seatStusForm" action="/business/manage/board/seat" method="put">
-            <input name="seatStusColor" id="color_value" value="" hidden>
-            <input name="storeId" value="${storeId}" hidden>
-            <button class="btn_seat_stus">Green</button>
-            <button class="btn_seat_stus">Yellow</button>
-            <button class="btn_seat_stus">Red</button></br>
-        </form>
+	<form id="seatStusForm" action="/business/manage/board/seat"
+		method="put">
+		<input name="seatStusColor" id="color_value" value="" hidden>
+		<input name="storeId" value="${storeId}" hidden>
+		<button class="btn_seat_stus">Green</button>
+		<button class="btn_seat_stus">Yellow</button>
+		<button class="btn_seat_stus">Red</button>
+		</br>
+	</form>
 
 	<h1>웨이팅 리스트</h1>
 	<ul class="waitList"></ul>
 
 	<h1>예약 리스트</h1>
 	<ul class="rsvdList"></ul>
-	
+
 	<h1>다음 웨이팅 정보</h1>
 	<ul class="nextWait"></ul>
 
-	<button class="btn_enter_wait">입장</button></br>
+	<button class="btn_enter_wait">입장</button>
+	</br>
 	<button class="btn_noshow_wait">노쇼</button>
 
 	<h1>다음 예약자 정보</h1>
 	<ul class="nextRsvd"></ul>
-	
-	
+
+
 	<h1>시간대별 예약</h1>
 	<ul class="rsvdMap"></ul>
-	
+
 	<h1>당일 예약 결과</h1>
+	<button id="btn_rsvd_rslt">예약 결과판</button>
 	<ul class="rsvdRslt"></ul>
-	
+
 	<h1>테스트</h1>
 
 	<h1>
@@ -68,14 +119,16 @@
 		현재 시간 :
 		<fmt:formatDate pattern="HH:mm:ss" value="${today}" />
 	</p>
-        <form id="seatStusForm" action="/business/manage/board/seat" method="post">
-            <input name="seatStusColor" id="color_value" value="" hidden>
-            <input name="storeId" value="${storeId}" hidden>
-            <button class="btn_seat_stus">Green</button>
-            <button class="btn_seat_stus">Yellow</button>
-            <button class="btn_seat_stus">Red</button></br>
-        </form>
-		</br> ${curSeatStus}
+	<form id="seatStusForm" action="/business/manage/board/seat"
+		method="post">
+		<input name="seatStusColor" id="color_value" value="" hidden>
+		<input name="storeId" value="${storeId}" hidden>
+		<button class="btn_seat_stus">Green</button>
+		<button class="btn_seat_stus">Yellow</button>
+		<button class="btn_seat_stus">Red</button>
+		</br>
+	</form>
+	</br> ${curSeatStus}
 	<p>다음 예약 정보 : ${nextRsvd}</p>
 
 	<p>다음 웨이팅 정보 : ${nextWait}</p>
@@ -145,9 +198,58 @@
 			</div>
 		</c:forEach>
 	</c:if>
-	<div id="myModal" ></div>
+
+	<!-- Trigger/Open The Modal -->
+	<button id="myBtn">Open Modal</button>
+	
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<p>Some text in the Modal..</p>
+		</div>
+	</div>
 <script>
-	$("body")
+	console.log("modal module.............")
+	// Get the modal
+	const modal = $("#myModal"),
+		btn_modal = $("#myBtn"),
+		close = $(".close");
+
+// When the user clicks on the button, open the modal
+btn_modal.on("click",(e) => {
+	console.log("btn click........");
+
+	modal.css("display","block");
+	$(".rsvd").on("click", "li", function(e) {
+		rsvdService.get(rsvdId, function(rsvd){
+			modalRsvdSpan.val(rsvd.rsvdId);
+		})
+	})
+})
+
+close.on("click", (e) => {
+	console.log("close click........");
+	modal.css("display","none");
+})
+
+window.onclick = e => {
+	if(e.target == modal){
+		modal.css("display","block");
+	}
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>
+	<script>
 
     console.log("board module........");
     
@@ -243,6 +345,44 @@
         }
     
         /*get 함수*/
+        
+        function getRsvdDtls(param,callback,error) {
+        	
+        	let rsvdId = param.rsvdId;
+        	
+        	$.getJSON("/business/manage/board/reservation/dtls/" + rsvdId + ".json",
+        		function(data) {
+        			if(callback) {
+        				callback(data);
+        			}
+        	}).fail(function(xhr,status,err){
+        		if(error) {
+        			error();
+        		}
+        	});
+        	
+        }
+        
+		function getUserRsvdList(param,callback,error) {
+        	
+        	let storeId = param.storeId,
+        		userId = param.userId;
+        	
+        	console.log(storeId);
+        	console.log(userId);
+        	
+        	$.getJSON("/business/manage/board/reservation/list/" + storeId +"/" + userId + ".json",
+        		function(data) {
+        			if(callback) {
+        				callback(data);
+        			}
+        	}).fail(function(xhr,status,err){
+        		if(error) {
+        			error();
+        		}
+        	});
+        	
+        }
         
         
 		function getRsvdRslt(param,callback,error) {
@@ -388,14 +528,16 @@
             getNextWait : getNextWait,
             getNextRsvd : getNextRsvd,
             getTodayRsvdMap : getTodayRsvdMap,
-            getRsvdRslt : getRsvdRslt
+            getRsvdRslt : getRsvdRslt,
+            getUserRsvdList : getUserRsvdList,
+            getRsvdDtls : getRsvdDtls
         };
     })();
     $(document).ready(() => {
+        const storeId = ${storeId};
         
         let seatStusForm = $("#seatStusForm"),
         colorVal = $("#color_value"),
-        storeId = ${storeId},
         storeUL = $(".store"),
         rsvdListUL = $(".rsvdList"),
         waitListUL = $(".waitList"),
@@ -403,11 +545,14 @@
         nextRsvdUL = $(".nextRsvd"),
         rsvdMapUL = $(".rsvdMap"),
         storeSeatUL = $(".storeSeatStus"),
-        rsvdRsltUL = $(".rsvdRslt")
+        rsvdRsltUL = $(".rsvdRslt"),
+        userRsvdListUL = $(".userRsvdList"),
+        rsvdDtlsUL = $(".rsvdDtls")
         ;
             
         showBoard(storeId); 
-    
+        //showUserRsvdList(storeId,'kim'); test
+
         function showBoard(storeId) {
             
             boardService.getStore({storeId : storeId}, function (store) {
@@ -473,6 +618,8 @@
               
               let strNextWait = "";
               
+              if(nextWait){
+              
               strNextWait += "<li> 대기자 이름 : "+nextWait.custNm+"</li>";
               strNextWait += "<li> 대기자 연락처 : "+nextWait.custTelno+"</li>";
               strNextWait += "<li> 웨이팅 번호 :"+nextWait.id+"</li>";
@@ -482,7 +629,7 @@
               strNextWait += "<li> 웨이팅 인원 : "+nextWait.waitPnum+"</li>";
               strNextWait += "<li> 웨이팅 등록 시간 : "+nextWait.waitRegTm+"</li>";
               strNextWait += "<li> 웨이팅 상태 : "+nextWait.waitStusCd+"</li>";
-              
+              }
               nextWaitUL.html(strNextWait);
     
             }); 
@@ -494,7 +641,9 @@
                     return;
                 }
                 rsvdList.forEach(rsvd => {
-                    strRsvdList += "<ul>" + "<h3>예약 번호 : "+rsvd.id+"</h3>"; 
+                    strRsvdList += "<ul class='btnRsvd'>" + "<h3>예약 번호 : "+rsvd.id+"</h3>"; 
+                        strRsvdList += "<li hidden class='btnStoreId'>"+rsvd.storeId+"</li>";
+                        strRsvdList += "<li hidden class='btnUserId'>"+rsvd.userId+"</li>";
                         strRsvdList += "<li>매장번호 : "+ rsvd.storeId + "</li>";
                         strRsvdList += "<li>회원 아이디 : "+ rsvd.userId + "</li>";
                         strRsvdList += "<li>핫딜 번호 :"+ rsvd.htdlId + "</li>";
@@ -546,7 +695,7 @@
                 nextRsvdUL.html(strNextRsvd);
         	});
   
-            }
+        };
         
         function showRsvdBoard(storeId) {
         	
@@ -565,25 +714,109 @@
         		rsvdRsltUL.html(strRsvdRslt);
         		
         	});
-        }
-      
+        };
+        function showUserRsvdList(storeId,userId){
+        	
+        	boardService.getUserRsvdList({storeId:storeId,userId:userId}, function(userRsvdList){
+        		
+        		let strUserRsvdList = "";
+        		if(!userRsvdList)
+        			return;
+        		
+        		userRsvdList.forEach(rsvd => {
+        			strUserRsvdList += "========================================"
+        			strUserRsvdList += "<li>예약 번호 : "+rsvd.id+"</li>"; 
+                    strUserRsvdList += "<li>매장번호 : "+ rsvd.storeId + "</li>";
+                    strUserRsvdList += "<li>회원 아이디 : "+ rsvd.userId + "</li>";
+                    strUserRsvdList += "<li>핫딜 번호 :"+ rsvd.htdlId + "</li>";
+                    strUserRsvdList += "<li>승인 번호 : "+ rsvd.aprvNo + "</li>";
+                    strUserRsvdList += "<li>예약 인원 : "+ rsvd.pnum + "</li>";
+                    strUserRsvdList += "<li>예약 시간 : "+ rsvd.time + "</li>";
+                    strUserRsvdList += "<li>예약 상태 : "+ rsvd.stusCd + "</li>";
+                    strUserRsvdList += "<li>예약 총 금액 : "+ rsvd.totAmt + "</li>";
+                    strUserRsvdList += "<li>예약 총 수량 : "+ rsvd.totQty + "</li>";
+                    strUserRsvdList += "<li>예약 등록 날짜"+ rsvd.inDate + "</li>";
+        		});
+        		
+        		userRsvdListUL.html(strUserRsvdList);
+        		
+        		showRsvdDtls(userRsvdList[0].id);
+        		
+        	})
+        };
         
+        function showRsvdDtls(rsvdId){
+        	
+        	
+        	boardService.getRsvdDtls({rsvdId:rsvdId}, function(rsvd){
+				let strRsvdDtls = "";
+				if(!rsvd)
+					return;
+				
+        		strRsvdDtls += "<li>예약 번호 :" + rsvd.id +"</li>";
+        		strRsvdDtls += "<li>매장 번호 :" + rsvd.storeId +"</li>";
+        		strRsvdDtls += "<li>회원 아이디 : " + rsvd.userId +"</li>";
+        		strRsvdDtls += "<li>핫딜 번호 : " + rsvd.htdlId +"</li>";
+        		strRsvdDtls += "<li>승인 번호 : " + rsvd.aprvNo +"</li>";
+        		strRsvdDtls += "<li>예약 인원 : " + rsvd.pnum +"</li>";
+        		strRsvdDtls += "<li>예약 시간 : " + rsvd.time +"</li>";
+        		strRsvdDtls += "<li>예약 상태 : " + rsvd.stusCd +"</li>";
+        		strRsvdDtls += "<li>예약 총 가격 : " + rsvd.totAmt +"</li>";
+        		strRsvdDtls += "<li>예약 총 수량 : " + rsvd.totQty +"</li>";
+        		strRsvdDtls += "<li>예약 등록 날짜 : " + rsvd.inDate +"</li>";
+        		let cnt = 1;
+        		rsvd.rsvdDtlsList.forEach(dtls => {
+        			strRsvdDtls += "==============================";
+        			strRsvdDtls += "<li>상세 순서[" + cnt +"]</li>";
+        			strRsvdDtls += "<li>예약 상세 번호" + dtls.seq +"</li>";
+        			strRsvdDtls += "<li>예약 메뉴 이름" + dtls.menuNm +"</li>";
+        			strRsvdDtls += "<li>메뉴 가격" + dtls.menuPrc +"</li>";
+        			strRsvdDtls += "<li>메뉴 총 개수" + dtls.menuTotQty +"</li>";
+        			cnt += 1;
+        		})
+        		
+        		rsvdDtlsUL.html(strRsvdDtls);
+        		
+        	})
+        };
         /* 이벤트 처리*/
+        /**/
+
+        /*당일 예약 결과 가져오기*/
         $("#btn_rsvd_rslt").on("click", e => {
         	showRsvdBoard(${storeId});
         });
-        
+
+        /*새로고침*/
         $("#refresh").on("click", e => {
         	window.location = location.href;
         });
-        
+
+        	/*
+        	let storeId = $(this).children(".btnStoreId").textContent;
+        			userId = $(this).children(".btnUserId").textContent;
+        	showUserRsvdList(storeId, userId);
+        	*/
+
+        /*예약리스트에 있는 내용 중, 예약 상세 보여주기*/
+            	/**/
+        /*회원의 예약 리스트 보여주기*/
+        $(".rsvdList").on("click", e => {
+
+        	let storeId = $(e.target).parent().find(".btnStoreId").text(),
+        		userId = $(e.target).parent().find(".btnUserId").text();
+
+        	showUserRsvdList(storeId, userId);
+        	
+        });
+
         /* 매장 착석 상태 처리*/
         $(".btn_seat_stus").on("click", e => {
-    
+
             e.preventDefault();
             
             let color = "";
-    
+
             if(e.target.innerHTML === 'Red')
                 color = 'R';
             if(e.target.innerHTML === 'Yellow')
@@ -599,11 +832,11 @@
             
             console.log(param);
             
-    		boardService.putChangeStatusCd(param);
-    		
-            showBoard(storeId);
+        	boardService.putChangeStatusCd(param);
+        	
+            showBoard(param.storeId);
         });
-        
+
         /*웨이팅 입장 처리*/
         $(".btn_enter_wait").on("click", e => {
         	
@@ -614,7 +847,7 @@
         	
         	showBoard(storeId);
         })
-        
+
         /*웨이팅 노쇼 처리*/
         $(".btn_noshow_wait").on("click", e => {
         	
@@ -624,10 +857,15 @@
         	boardService.putNoshowWaiting(waitId);
         	
         	showBoard(storeId);
-        })
-        
-        
-        
+        });
+
+        /**/
+        /*회원의 예약 리스트 보여주기*/
+        $(".btnRsvd").on("click", e => {
+
+        	console.log("예약 리스트");
+        	
+        });
 
         
         });
