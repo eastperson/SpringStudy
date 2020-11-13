@@ -213,17 +213,19 @@ public class ReservationServiceTests {
 		
 		// 2020년 11월 7일 11시 47분 30초
 		// true가 나와야 함
-		Date date = new Date(120,10,7,11,47,30);
+		//Date date = new Date(120,10,7,11,47,30);
 		
 		// 2020년 11월 7일 12시 12분 30초
 		// false가 나와야 함
-		//Date date = new Date(120,10,7,12,12,30);
+		Date date = new Date(120,10,7,12,12,30);
 
 		int acm = 5;
 		
 		log.info(date);
 		
 		List<RsvdVO> list = reservationService.getListByDate(storeId, "20201107");
+		
+		
 		
 		log.info(list);
 		

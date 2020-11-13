@@ -57,12 +57,6 @@
 
 	<button id="refresh">새로고침</button>
 	</br>
-	
-	<h1>해당 유저 예약 상세</h1>
-	<ul class="rsvdDtls"></ul>
-	
-	<h1>해당 유저 예약 리스트</h1>
-	<ul class="userRsvdList"></ul>
 
 	<h1>매장 정보</h1>
 	<ul class="store"></ul>
@@ -207,6 +201,11 @@
 
 		<!-- Modal content -->
 		<div class="modal-content">
+			<h1>해당 유저 예약 상세</h1>
+			<ul class="rsvdDtls"></ul>
+	
+			<h1>해당 유저 예약 리스트</h1>
+			<ul class="userRsvdList"></ul>
 			<span class="close">&times;</span>
 			<p>Some text in the Modal..</p>
 		</div>
@@ -221,13 +220,6 @@
 // When the user clicks on the button, open the modal
 btn_modal.on("click",(e) => {
 	console.log("btn click........");
-
-	modal.css("display","block");
-	$(".rsvd").on("click", "li", function(e) {
-		rsvdService.get(rsvdId, function(rsvd){
-			modalRsvdSpan.val(rsvd.rsvdId);
-		})
-	})
 })
 
 close.on("click", (e) => {
@@ -533,6 +525,7 @@ window.onclick = function(event) {
             getRsvdDtls : getRsvdDtls
         };
     })();
+    
     $(document).ready(() => {
         const storeId = ${storeId};
         
@@ -805,6 +798,9 @@ window.onclick = function(event) {
 
         	let storeId = $(e.target).parent().find(".btnStoreId").text(),
         		userId = $(e.target).parent().find(".btnUserId").text();
+        	
+        	modal.css("display","block");
+        	
 
         	showUserRsvdList(storeId, userId);
         	
@@ -859,13 +855,6 @@ window.onclick = function(event) {
         	showBoard(storeId);
         });
 
-        /**/
-        /*회원의 예약 리스트 보여주기*/
-        $(".btnRsvd").on("click", e => {
-
-        	console.log("예약 리스트");
-        	
-        });
 
         
         });
