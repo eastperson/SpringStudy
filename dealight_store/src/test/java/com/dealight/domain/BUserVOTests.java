@@ -34,7 +34,7 @@ public class BUserVOTests {
 		
 	}
 	
-	// 2. 모든 입력값을 입력해서 유저 객체를 생선한다.
+	// 2. 모든 입력값을 입력해서 유저 객체를 생성한다.
 	// 필수값 : brSeq,userId,brno,brPhotoSrc,brJdgStusCd(deafult 값)
 	// 선택값 : storeId
 	@Test
