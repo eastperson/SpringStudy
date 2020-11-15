@@ -1,7 +1,5 @@
 package com.dealight.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,17 +7,18 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dealight.domain.RsvdRsltDTO;
 import com.dealight.domain.RsvdVO;
+import com.dealight.domain.StoreImgVO;
 import com.dealight.domain.StoreVO;
 import com.dealight.domain.WaitingVO;
 import com.dealight.service.HtdlService;
@@ -254,7 +253,6 @@ public class BoardController {
 		return new ResponseEntity<>(rsvdList, HttpStatus.OK);
 		//return new ResponseEntity<>(userService.getRsvdListStoreUser(storeId, userId), HttpStatus.OK);
 	}	
-
 
 	// 등록된 핫딜 정보를 가져온다.
 	//	@GetMapping(value = "/board/hotdeal/{storeId}", produces = {

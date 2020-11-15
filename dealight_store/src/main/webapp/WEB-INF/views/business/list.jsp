@@ -31,7 +31,7 @@
 ============================================</br>
 </c:forEach>
 
-
+<script src="/resources/js/get_upload.js"></script>
 </body>
 <script>
 

@@ -17,14 +17,12 @@ public class StoreImgVOTests {
 		StoreImgVO simg = new StoreImgVO.StoreImgVOBuilder()
 				.storeId(storeId)
 				.imgSeq(imgSeq)
-				.imgUrl(imgUrl)
 				.build();
 		
 		assertNotNull(simg);
 		
 		assertTrue(simg.getStoreId() == storeId);
 		assertTrue(simg.getImgSeq() == imgSeq);
-		assertTrue(simg.getImgUrl().equals(imgUrl));
 
 	}
 

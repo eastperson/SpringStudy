@@ -90,19 +90,18 @@ public class BusinessController {
 	}
 	
 	@PostMapping("/register")
-	public String waitingRegister(Model model,StoreVO store, BStoreVO bstore, RedirectAttributes rttr) {
+	public String waitingRegister(Model model,StoreVO store,BStoreVO bstore, RedirectAttributes rttr) {
 		
 		//log.info("business waiting register..");
 		
-		log.info("register bstore................... : " + bstore);
+		log.info("register bstore................... : "+bstore);
 		
 		store.setBstore(bstore);
 		
 		log.info("register store................... : "+store);
-		
+
 		storeService.registerStoreAndBStore(store);
 		
-		log.info("register store................... : "+store);
 		
 		return "redirect:/business/";
 	}

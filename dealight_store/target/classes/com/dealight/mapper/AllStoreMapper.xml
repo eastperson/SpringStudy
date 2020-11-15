@@ -143,9 +143,12 @@
 		<result column="reco_menu" property="recoMenu"/>
 	</collection>
 
- 	<collection property="imgList" column="store_id" ofType="com.dealight.domain.StoreImgVO">
+ 	<collection property="imgs" column="store_id" ofType="com.dealight.domain.StoreImgVO">
 		<result column="img_seq" property="imgSeq"/>
-		<result column="img_url" property="imgUrl"/>
+		<result column="uuid" property="uuid"/>
+		<result column="uploadpath" property="uploadPath"/>
+		<result column="image" property="image"/>
+		<result column="filename" property="fileName"/>
 	</collection>	
 	
 	<collection property="tagList" column="store_id" ofType="com.dealight.domain.StoreTagVO">
@@ -195,7 +198,7 @@
 <select id="findAllStoreByStoreId" resultMap="AllStoreVO">
 select s.store_id, s.store_nm, s.telno, s.cls_cd, m.menu_seq, m.price, m.img_url, m.name, m.reco_menu, b.buser_id, b.seat_stus_cd, b.open_tm, b.close_tm, b.break_sttm, b.break_entm, b.last_ord_tm, b.n1_seat_no
             , b.n2_seat_no, b.n4_seat_no, b.store_intro, b.avg_meal_tm, b.hldy, b.acm_pnum, l.addr, l.lo, l.lt, t.tag_nm
-            ,  o.nokids, o.park, o.pet, o.pg, o.smoke, o.wifi, i.img_seq, i.img_url,e.avg_rating, e.like_tot_num, e.revw_tot_num
+            ,  o.nokids, o.park, o.pet, o.pg, o.smoke, o.wifi, i.img_seq, i.uuid, i.uploadpath, i.image, i.filename,e.avg_rating, e.like_tot_num, e.revw_tot_num
 from tbl_store s, tbl_menu m, tbl_bstore b, tbl_store_loc l, tbl_option o, tbl_store_img i, tbl_store_eval e, tbl_store_tag t
 where 	s.store_id = m.store_id and s.store_id = b.store_id and s.store_id = l.store_id and s.store_id = o.store_id and
 		s.store_id = i.store_id and s.store_id = e.store_id and s.store_id = t.store_id

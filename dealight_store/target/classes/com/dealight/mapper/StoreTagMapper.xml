@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD  Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dealight.mapper.StoreTagMapper">
+<update id="update">
+UPDATE tbl_store_tag
+SET
+tag_nm = #{tagNm}
+WHERE store_id = #{storeId}
+</update>
+</mapper>

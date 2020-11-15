@@ -1,5 +1,8 @@
 package com.dealight.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -7,11 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dealight.domain.AllStoreVO;
@@ -53,6 +62,8 @@ public class ManageController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private UserService userService;
+	
+	final static private String ROOT_FOLDER = "C:\\Users\\kjuio\\Desktop\\ex05";
 	
 	// 쿼리문 1
 	@GetMapping("/dealhistory")
@@ -160,7 +171,7 @@ public class ManageController {
 		// 세션에 있는 userId를 불러온다.
 		String userId = (String) session.getAttribute("userId");
 		
-		log.info("business store modify get..");
+		log.info("business store modify get.." + storeId);
 		
 		if(storeId == null) {
 			storeId = (Long) request.getAttribute("storeId");
@@ -172,11 +183,11 @@ public class ManageController {
 		
 		if(store != null) {
 			List<MenuVO> menuList = store.getMenuList();
-			List<StoreImgVO> imgList = store.getImgList();
+			List<StoreImgVO> imgs = store.getImgs();
 			List<RevwVO> revwList = store.getRevwList();
 			List<StoreTagVO> tagList = store.getTagList();
 			model.addAttribute("menuList",menuList);
-			model.addAttribute("imgList",imgList);
+			model.addAttribute("imgs",imgs);
 			model.addAttribute("revwList",revwList);
 			model.addAttribute("tagList",tagList);
 			model.addAttribute("lti", store.getLt());
@@ -191,26 +202,63 @@ public class ManageController {
 	
 	// 쿼리문 2
 	@PostMapping("/modify")
-	public String storeModify(Model model,StoreVO store,BStoreVO bstore,RedirectAttributes rttr) {
+	public String storeModify(Model model,AllStoreVO store,RedirectAttributes rttr) {
 		
 		log.info("business store modify post..");
 		
 		rttr.addFlashAttribute("msg","수정 완료");
 		
-		//log.info("store................" + store);
+		log.info("store................" + store);
 		
-		//log.info("bstore................" + bstore);
-		
-		store.setBstore(bstore);
 		
 		if(!storeService.modifyStore(store)) {
 			rttr.addFlashAttribute("storeId",store.getStoreId());
 			rttr.addFlashAttribute("msg", "수정 오류");
 			return "redirect:/business/manage/modify?storeId="+store.getStoreId();
 		}
-
+		 
 		return "redirect:/business/manage/modify?storeId="+store.getStoreId();
 	}
+	
+	@GetMapping(value = "/getStoreImgs", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<StoreImgVO>> getStoreImage(long storeId) {
+		
+		log.info("getAttachList" + storeId);
+		
+		return new ResponseEntity<>(storeService.getStoreImageList(storeId), HttpStatus.OK);
+	}
+	
+	private void deleteFiles(List<StoreImgVO> imgs) {
+		if(imgs == null || imgs.size() == 0) {
+			return;
+		}
+		
+		log.info("delete imgs..................");
+		log.info(imgs);
+		
+		imgs.forEach(img -> {
+			
+			try {
+				Path file = Paths.get(img.getUploadPath() + "\\" + img.getUuid() + "_" + img.getFileName());
+				
+				Files.deleteIfExists(file);
+				
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get(img.getUploadPath() +"\\s_" + img.getUuid()
+								+ "_" + img.getFileName());
+					
+					Files.delete(thumbNail);
+							
+				}
+			} catch(Exception e) {
+				log.error("delete file error" + e.getMessage());
+			} // end catch
+		}); // end for each
+	}
+	
+
+	
 	
 	@GetMapping("/modify/menu")
 	public String menuModify(Model model) {

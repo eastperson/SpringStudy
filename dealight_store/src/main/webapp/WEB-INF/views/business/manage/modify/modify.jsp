@@ -15,7 +15,7 @@
 
 ${msg}
 
-<form action="/business/manage/modify" method="post">
+<form id="modifyForm" action="/business/manage/modify" method="post">
 
 	<input name="storeId" value="${store.storeId}" hidden>
 
@@ -64,7 +64,44 @@ ${msg}
 	<label id="acmPnum">매장수용인원</label>
 	<input name="acmPnum" value="${store.acmPnum}"></br>
 	
-	<button type="submit">제출하기</button>
+	<button id="btn_modifyForm" type="submit">제출하기</button>
+	
+	<input name="addr" value="${store.addr }" hidden>
+	<input name="lt" value="${lti}" hidden>
+	<input name="lo" value="${store.lo}" hidden>
+	<input name="avgRating" value="${store.avgRating }" hidden>
+	<input name="revwTotNum" value="${store.revwTotNum }" hidden>
+	<input name="likeTotNum" value="${store.likeTotNum }" hidden>
+	
+	<c:if test="${not empty menuList}">
+<c:forEach items="${menuList}" var="menu">
+<input name="menuSeq" value="${menu.menuSeq}" hidden>
+	<input name="price" value="${menu.price }" hidden>
+	<input name="imgUrl" value="${menu.imgUrl}" hidden>
+	<input name="name" value="${menu.name }" hidden>
+	<input name="recoMenu" value="${menu.recoMenu }" hidden>
+</c:forEach>
+</c:if>
+
+<c:if test="${not empty revwList}">
+<c:forEach items="${revwList}" var="revw">
+<input name="rsvdId" value="${revw.rsvdId }" hidden>
+<input name="waitSeq" value="${revw.waitSeq }" hidden>
+<input name="userId" value="${revw.userId }" hidden>
+<input name="cnts" value="${revw.cnts }" hidden>
+<input name="regDt" value="${revw.regDt }" hidden>
+<input name="rating" value="${revw.rating }" hidden>
+<input name="replyCnts" value="${revw.replyCnts }" hidden>
+<input name="replyRegDt" value="${revw.replyRegDt }" hidden>
+</c:forEach>
+</c:if>
+
+<c:if test="${not empty tagList}">
+<c:forEach items="${tagList}" var="tag">
+<input name="tagNm" value="tag.tagNm" hidden>
+</c:forEach>
+</c:if>
+
 </form>
 
 매장 주소 : ${store.addr } </br>
@@ -88,11 +125,14 @@ ${msg}
 </c:if>
 
 <h2>사진 리스트</h2>
-<c:if test="${not empty imgList}">
-<c:forEach items="${imgList}" var="img">
+<c:if test="${not empty imgs}">
+<c:forEach items="${imgs}" var="img">
 =====================================</br>
 사진 일련번호 : ${img.imgSeq }</br>
-매장 사진 주소 : ${img.imgUrl }</br>
+uuid : ${img.uuid }</br>
+매장 사진 주소 : ${img.uploadPath }</br>
+파일 이미지 여부 : ${img.image }</br>
+파일 이름 : ${img.fileName }</br>
 </c:forEach>
 </c:if>
 
@@ -118,8 +158,201 @@ ${msg}
 해시 태그 이름 : ${tag.tagNm }</br>
 </c:forEach>
 </c:if>
-
+<div class=""><h2>파일 첨부하기</h2></div>
+<div class="file_body">
+	<div class="form_img">
+		<input type="file" name='uploadFile' multiple>
+	</div> 
+	<div class='uploadResult'>
+		<ul>
+		</ul>
+	</div> <!-- uploadResult -->
+</div> 
+	<div class='bigPictureWrapper'>
+		<div class='bigPicture'>
+		</div>
+	</div>
+	
+	
 <h2><a href="/business/manage/menu?storeId=${store.storeId}" }>메뉴수정</a></h2>
+<script>
+$(document).ready(function(){
+    
+    let regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+    let maxSize = 5242880; // 5mb
+    
+function showUploadResult(uploadResultArr) {
+        
+        if(!uploadResultArr || uploadResultArr.length == 0){return; }
+        
+        let uploadUL = $(".uploadResult ul");
+        
+        let str = "";
+        
+        $(uploadResultArr).each(function(i,obj){
+            
+            if(obj.image) {
+                let fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+                str += "<li data-path='" + obj.uploadPath +"'";
+                str += "data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"'data-type='"+obj.image+"'";
+                str += "><div>";
+                str += "<span>" + obj.fileName +"</span>";
+                str += "<button type ='button' data-file=\'"+fileCallPath+"\'data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+                str += "<img src='/display?fileName=" + fileCallPath + "'>";
+                str += "</div>";
+                str += "</li>";
+                
+            } else {
+                let fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+                let fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 
+                str += "<li "
+                str += "data-path='" + obj.uploadPath + "'data-uuid='" + obj.uuid + "'data-filename='" + obj.fileName + "' data-type='" +obj.image+"'><div>";
+                str += "<span> " + obj.fileName + "</span>";
+                str += "<button type='button' data-file=\'"+fileCallPath+"\'data-type='file' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+                str += "<img src='/resources/img/attach.png'></a>";
+                str += "</div>";
+                str += "</li>";
+            }
+        });
+        uploadUL.append(str);
+    }
+    
+    function checkExtension(fileName, fileSize) {
+        if(fileSize >= maxSize){
+            alert("파일 사이즈 초과");
+            return false;
+        }
+        
+        if(regex.test(fileName)) {
+            alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+            return false;
+        }
+        return true;
+    }
+    
+    $("input[type='file']").change(function(e){
+        
+        let formData = new FormData();
+        
+        let inputFile = $("input[name='uploadFile']");
+        
+        let files = inputFile[0].files;
+        
+        for(let i = 0; i < files.length; i++){
+            
+            if(!checkExtension(files[i].name, files[i].size)) {
+                return false;
+            }
+            formData.append("uploadFile", files[i]);
+        }
+        
+        $.ajax({
+            url : '/uploadAjaxAction',
+            processData : false,
+            contentType : false, data:
+                formData, type: 'POST',
+                dataType : 'json',
+                success : function(result) {
+                console.log(result);
+                showUploadResult(result); // 업로드 결과 처리 함수
+                }
+            
+            
+        })
+        
+    });
+    
+    (function(){
+        
+        let storeId = ${store.storeId};
+        
+        $.getJSON("/business/manage/getStoreImgs", {storeId:storeId}, function(imgs){
+            
+            console.log("즉시 함수..");
+            
+            console.log(imgs);
+            
+            let str = "";
+            
+            $(imgs).each(function(i, img){
+                
+                // image type
+                if(img.image) {
+                    
+                    let fileCallPath = encodeURIComponent(img.uploadPath+"/s_" +img.uuid + "_" +img.fileName);
+                    
+                    str += "<li data-path='" + img.uploadPath + "'data-uuid='" + img.uuid + "'data-filename='"
+                        + img.fileName +"'data-type='" + img.image+"'><div>";
+                    str += "<span> " + img.fileName + "</span>";
+                    str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image'";
+                    str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+                    str += "<img src='/display?fileName=" + fileCallPath+"'>";
+                    str += "</div></li>";
+                    
+                } else {
+                    
+                    str += "<li data-path='" + img.uploadPath +"' data-uuid='" + img.uuid 
+                            +"' data-filename='" + img.fileName +"' data-type='" + img.image+"'><div>";
+                    str += "<span>" + img.fileName+"</span><br/>";
+                    str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file'";
+                    str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+                    str += "<img src='/resources/img/attach.png'>";
+                    str += "</div>";
+                    str += "</li>";
+                }
+            });
+            
+            $(".uploadResult ul").html(str);
+            
+        }); // end json
+        
+    })(); // end function
+    
+    
+    var formObj = $("#modifyForm");
+    
+    $('#btn_modifyForm').on("click",function(e){
+        
+        e.preventDefault();
+        
+            
+            console.log("submit clicked");
+            
+            let str ="";
+            
+            $(".uploadResult ul li").each(function(i, obj) {
+                
+                let jobj = $(obj);
+                
+                console.dir(jobj);
+                
+                str += "<input type='hidden' name='imgs["+i+"].fileName' value='" + jobj.data("filename")+"'>";
+                str += "<input type='hidden' name='imgs["+i+"].uuid' value='" + jobj.data("uuid")+"'>";
+                str += "<input type='hidden' name='imgs["+i+"].uploadPath' value='" + jobj.data("path")+"'>";
+                str += "<input type='hidden' name='imgs["+i+"].image' value='" + jobj.data("type")+"'>";
+            });
+            formObj.append(str).submit();
+        formObj.attr("method", "post");
+        formObj.submit();
+        
+    });
+    
+    $(".uploadResult").on("click", "button", function(e){
+    
+        console.log("delete file");
+        
+        if(confirm("Remove this file?")) {
+            
+            let targetLi = $(this).closest("li");
+            targetLi.remove();
+        }
+        
+    });
+    
+    
+});
+
+</script>
 </body>
 </html>

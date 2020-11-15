@@ -3,10 +3,9 @@ package com.dealight.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.dealight.domain.AllStoreVO;
 import com.dealight.domain.BStoreVO;
+import com.dealight.domain.StoreImgVO;
 import com.dealight.domain.StoreVO;
 
 public interface StoreService {
@@ -43,12 +42,16 @@ public interface StoreService {
 	// bstore 포함
 	boolean modifyStore(StoreVO store);
 	
+	boolean modifyStore(AllStoreVO store);
+	
 	// 매장 모든 정보 가져오기
 	AllStoreVO findAllStoreInfoByStoreId(long storeId);
 	
 
 	// ===============매장 수정 로직
 	
+	List<StoreImgVO> getStoreImageList(long storeId);
 	
+	void removeStoreImgAll(long storeId);
 
 }

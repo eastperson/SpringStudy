@@ -35,8 +35,8 @@ public class AllStoreVO {
     private String hldy; 
     private int acmPnum;
 	private String addr;
-	private int lt;
-	private int lo;
+	private double lt;
+	private double lo;
     private String park;
     private String nokids;
     private String pg;
@@ -69,7 +69,7 @@ public class AllStoreVO {
     //private StoreEvalVO eval;
     
     // composition
-    private List<StoreImgVO> imgList;
+    private List<StoreImgVO> imgs;
 
     // composition
     private List<StoreTagVO> tagList;

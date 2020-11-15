@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dealight.domain.AllStoreVO;
 import com.dealight.domain.BStoreVO;
+import com.dealight.domain.StoreImgVO;
 import com.dealight.domain.StoreVO;
 
 import lombok.extern.log4j.Log4j;
@@ -194,5 +195,30 @@ public class StoreServiceTests {
 		
 		log.info(allStore);
 		
+	}
+	
+	@Test
+	public void getStoreImageListTest1() {
+		
+		storeId = 101;
+		
+		List<StoreImgVO> list = storeService.getStoreImageList(storeId);
+		
+		assertNotNull(list);
+		
+		log.info(list);
+		
+	}
+	
+	@Transactional
+	@Test
+	public void deleteImgAll() {
+		
+		
+		log.info(storeService.getStoreImageList(storeId));
+		
+		storeService.removeStoreImgAll(storeId);
+		
+		assertTrue(0 ==storeService.getStoreImageList(storeId).size());
 	}
 }

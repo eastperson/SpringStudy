@@ -104,7 +104,6 @@ public class AllStoreVOTests {
 		StoreImgVO simg = new StoreImgVO.StoreImgVOBuilder()
 				.storeId(storeId)
 				.imgSeq(imgSeq)
-				.imgUrl(imgUrl)
 				.build();
 		StoreEvalVO seval = new StoreEvalVO.StoreEvalVOBuilder()
 				.storeId(storeId)
@@ -156,8 +155,8 @@ public class AllStoreVOTests {
 		List<StoreEvalVO> evalList = new ArrayList();
 		evalList.add(seval);
 	    
-	    List<StoreImgVO> imgList = new ArrayList();
-	    imgList.add(simg);
+	    List<StoreImgVO> imgs = new ArrayList();
+	    imgs.add(simg);
 		
 	    List<StoreTagVO> tagList = new ArrayList();
 	    tagList.add(stag);
@@ -166,7 +165,7 @@ public class AllStoreVOTests {
 	    revwList.add(review);
 	    
 	    AllStoreVO allStore = new AllStoreVO().builder()
-	    		.imgList(imgList)
+	    		.imgs(imgs)
 	    		.menuList(menuList)
 	    		.revwList(revwList)
 	    		.tagList(tagList)

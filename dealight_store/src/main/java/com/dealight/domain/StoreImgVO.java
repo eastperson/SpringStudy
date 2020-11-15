@@ -1,6 +1,7 @@
 package com.dealight.domain;
 
 import java.util.Date;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +20,10 @@ public class StoreImgVO {
 
     // 첨부사진일련번호 
     private long imgSeq;
-
-    // 매장사진주소 
-    private String imgUrl;
+    
+	private String fileName;
+	private String uploadPath;
+	private String uuid;
+	private boolean image;
 
 }

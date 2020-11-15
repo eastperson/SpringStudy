@@ -154,6 +154,12 @@
 		<!-- jackson : controller method의 return 타입을 VO, DTO 등의 객체로 할 수 있도록 해주는 
 			라이브러리 -->
 		<!-- 주로 JSON에 많이 사용 -->
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.5</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -165,6 +171,14 @@
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.9.6</version>
+		</dependency>
+		
+		<!-- Thumbnail 라이브러리 -->
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
 		</dependency>
 
 		<!-- gson -->
@@ -209,8 +223,7 @@
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 			<version>1.16</version>
 		</dependency>
-
-
+		
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

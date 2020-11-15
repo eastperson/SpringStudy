@@ -21,8 +21,8 @@ public class StoreLocVO {
     private String addr;
 
     // 위도 
-    private int lt;
+    private double lt;
 
     // 경도 
-    private int lo;
+    private double lo;
 }

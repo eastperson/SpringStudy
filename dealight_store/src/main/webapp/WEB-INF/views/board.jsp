@@ -57,6 +57,13 @@
 
 	<button id="refresh">새로고침</button>
 	</br>
+	
+	<div class="js-clock">
+		<h1>현재 날짜</h1>
+		<h2 class="date"></h1>
+		<h1>현재 시간</h1>
+		<h2 class="time">00:00</h2>
+	</div>
 
 	<h1>매장 정보</h1>
 	<ul class="store"></ul>
@@ -97,22 +104,7 @@
 	<button id="btn_rsvd_rslt">예약 결과판</button>
 	<ul class="rsvdRslt"></ul>
 
-	<h1>테스트</h1>
 
-	<h1>
-		<a href="/business/manage/dealhistory?storeId=${storeId}">Deal
-			History</a>
-	</h1>
-
-
-	<p>
-		현재 날짜 :
-		<fmt:formatDate pattern="yyyy-MM-dd" value="${today}" />
-	</p>
-	<p>
-		현재 시간 :
-		<fmt:formatDate pattern="HH:mm:ss" value="${today}" />
-	</p>
 	<h2>오늘 예약 회원</h2>
 	<c:if test="${not empty todayRsvdUserList}">
 		<c:forEach items="${todayRsvdUserList}" var="user">
@@ -145,6 +137,26 @@
 			<ul class="userRsvdList"></ul>
 			<span class="close">&times;</span>
 			<p>Some text in the Modal..</p>
+		</div>
+	</div>
+	
+	
+	<div class="row">
+	<div class="col-lg-12">
+	<div class="panel panel-default">
+	<h2>매장 사진</h2>
+	<!-- /.panel-heading -->
+	<div class="panel-body">
+	<div class='uploadResult'>
+		<ul>
+		</ul>
+	</div> <!-- uploadResult -->
+	</div> <!-- end panel-body  -->
+	</div> <!-- end pannel -->
+	</div> <!-- end col-lg-12  -->
+	</div> <!-- end row  -->
+	<div class='bigPictureWrapper'>
+		<div class='bigPicture'>
 		</div>
 	</div>
 <script>
@@ -481,6 +493,8 @@ window.onclick = function(event) {
         ;
             
         showBoard(storeId); 
+        getTime();
+        setInterval(getTime, 1000);
         //showUserRsvdList(storeId,'kim'); test
 
         function showBoard(storeId) {
@@ -795,7 +809,109 @@ window.onclick = function(event) {
 
         
         });
-    
+
+    $(document).ready(function() {
+    	
+
+        (function(){
+            
+        	let storeId = ${storeId};
+            
+            $.getJSON("/business/manage/getStoreImgs", {storeId:storeId}, function(imgs){
+                
+                console.log("즉시 함수..");
+                
+                console.log(imgs);
+                
+                let str = "";
+                
+                $(imgs).each(function(i, img){
+                	
+                	console.log(img);
+                    
+                    // image type
+                    if(img.image) {
+                        
+                        let fileCallPath = encodeURIComponent(img.uploadPath+"/s_" +img.uuid + "_" +img.fileName);
+                        
+                        str += "<li data-path='" + img.uploadPath + "'data-uuid='" + img.uuid + "'data-filename='"
+                            + img.fileName +"'data-type='" + img.image+"'><div>";
+                        str += "<img src='/display?fileName=" + fileCallPath+"'>";
+                        str += "</li>";
+                        
+                    } else {
+                        
+                        str += "<li data-path='" + img.uploadPath +"' data-uuid='" + img.uuid 
+                                +"' data-filename='" + img.fileName +"' data-type='" + img.image+"'><div>";
+                        str += "<span>" + img.fileName+"</span><br/>";
+                        str += "<img src='/resources/img/attach.png'>";
+                        str += "</div>";
+                        str += "</li>";
+                    }
+                });
+                
+                $(".uploadResult ul").html(str);
+                
+            }); // end getjson
+            
+        })(); // end function
+
+        
+        $(".uploadResult").on("click", "li", function(e){
+            
+            console.log("view image");
+            
+            let liObj = $(this);
+            
+            let path = encodeURIComponent(liObj.data("path")+ "/" + liObj.data("uuid") +"_" +liObj.data("filename"));
+            
+            if(liObj.data("type")){
+                
+                showImage(path.replace(new RegExp(/\\/g), "/"));
+            } else {
+                //download
+                self.location = "/download?fileName=" + path
+            }
+        });
+        
+        function showImage(fileCallPath) {
+            
+            alert(fileCallPath);
+            
+            $(".bigPictureWrapper").css("display", "flex").show();
+            
+            $(".bigPicture")
+            .html("<img src='/display?fileName=" + fileCallPath +"'>")
+            .animate({width:'100%',height:'100%'},1000);
+            
+        }
+        
+        $(".bigPictureWrapper").on("click",function(e){
+            $(".bigPicture").animate({width : '0%', height : '0%'}, 1000);
+            setTimeout(function(){
+                $('.bigPictureWrapper').hide();
+            },1000);
+        })
+
+
+        var operForm = $("#operForm");
+        
+        $("button[data-oper='modify']").on("click", function(e){
+            
+            operForm.attr("action", "/board/modify").submit();
+            
+        });
+        
+        $("button[data-oper='list']").on("click",function(e){
+            
+            operForm.find("#bno").remove();
+            operForm.attr("action","/board/list");
+            operForm.submit();
+            
+        });
+        
+    });
+
     /* 자동 새로고침 */
     /*
     function startRefresh() {
@@ -837,5 +953,6 @@ window.onclick = function(event) {
 
 </script>
  -->
+ <script src="/resources/js/clock.js"></script>
 </body>
 </html>
