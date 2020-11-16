@@ -176,11 +176,11 @@
 		select *
 		from tbl_rsvd
 		where store_id = #{storeId}
-		and stus_cd = 'C' OR stus_cd = 'L'
+		and (stus_cd = 'C' OR stus_cd = 'L')
 		and TO_CHAR(in_date,'YYYYMMDD') = #{date}
 		) r, tbl_user u
 		WHERE r.user_id = u.user_id
-		ORDER BY in_date asc
+		ORDER BY in_date desc
 	</select>
 	
 	<select id="findRsvdByRsvdIdWithDtls" resultMap="RsvdVO">

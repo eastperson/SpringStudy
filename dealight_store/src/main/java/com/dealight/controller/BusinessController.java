@@ -118,76 +118,83 @@ public class BusinessController {
 		String userId = (String) session.getAttribute("userId");
 		
 		// store 정보를 가져온다.(Bstore 조인)
-		StoreVO store = storeService.findByStoreIdWithBStore(storeId);
+		//StoreVO store = storeService.findByStoreIdWithBStore(storeId);
 		
 		// 라스트 오더 시간 정보를 가져온다.
-		String lastOrder = store.getBstore().getLastOrdTm();
+		//String lastOrder = store.getBstore().getLastOrdTm();
 		
 		// 현재 데이터 생성(시간포함)
-		Date today = new Date();
+		//Date today = new Date();
 		
 		// 매장에 오늘 기준으로 현재 예약상태인 예약 리스트를 가져온다. 
 		// 쿼리
-		List<RsvdVO> rsvdList = rsvdService.readTodayCurRsvdList(storeId);
+		//List<RsvdVO> rsvdList = rsvdService.readTodayCurRsvdList(storeId);
 
 		// 현재 웨이팅 상태인 웨이팅 리스트를 가져온다.
 		// 쿼리
-		List<WaitingVO> waitList = waitService.curStoreWaitList(storeId, "W");
+		//List<WaitingVO> waitList = waitService.curStoreWaitList(storeId, "W");
 		
 		// 바로 다음 웨이팅을 가져온다.
-		WaitingVO nextWait = waitService.readNextWait(waitList);
+		//WaitingVO nextWait = waitService.readNextWait(waitList);
 		
 		// 오늘 예약 대기자 명단을 가져온다.
-		HashMap<String,List<Long>> todayRsvdMap = rsvdService.getRsvdByTimeMap(rsvdList);
+		//HashMap<String,List<Long>> todayRsvdMap = rsvdService.getRsvdByTimeMap(rsvdList);
 		
 		// 다음 예약자 id를 가져온다.
-		Long nextId = rsvdService.readNextRsvdId(todayRsvdMap);
+		//Long nextId = rsvdService.readNextRsvdId(todayRsvdMap);
 		
 		// 바로 다음 예약자를 가져온다.
-		RsvdVO nextRsvd = rsvdService.findRsvdByRsvdId(nextId, rsvdList);
+		//RsvdVO nextRsvd = rsvdService.findRsvdByRsvdId(nextId, rsvdList);
 		
 		// 오늘 예약 합계를 가져온다.
-		int totalTodayRsvd = rsvdService.totalTodayRsvd(rsvdList);
+		//int totalTodayRsvd = rsvdService.totalTodayRsvd(rsvdList);
 		
 		// 오늘 예약 합계 인원을 가져온다.
-		int totalTodayRsvdPnum = rsvdService.totalTodayRsvdPnum(rsvdList);
+		//int totalTodayRsvdPnum = rsvdService.totalTodayRsvdPnum(rsvdList);
 		
 		// 오늘 선택된 메뉴의 map을 가져온다.
 		// 쿼리
-		HashMap<String,Integer> todayFavMenuMap = rsvdService.todayFavMenu(storeId);
+		//HashMap<String,Integer> todayFavMenuMap = rsvdService.todayFavMenu(storeId);
 		
-		String pattern = "yyyyMMdd";
+		//String pattern = "yyyyMMdd";
     	
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		//SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     	
-    	String date = simpleDateFormat.format(today);
+    	//String date = simpleDateFormat.format(today);
 		
 		// 오늘 예약한 고객 리스트를 가져온다.
     	// 쿼리
 		List<UserWithRsvdDTO> todayRsvdUserList = rsvdService.userListTodayRsvd(storeId);
 		
 		// 현재 착성상태를 가져온다.
-		String curSeatStus = store.getBstore().getSeatStusCd();
+		//String curSeatStus = store.getBstore().getSeatStusCd();
 		
 		
-		
-		model.addAttribute("store", store);
-		model.addAttribute("today", today);
-		model.addAttribute("todayRsvdMap",todayRsvdMap);
-		model.addAttribute("nextRsvd",nextRsvd);
-		model.addAttribute("rsvdList", rsvdList);
-		model.addAttribute("waitList", waitList);
-		model.addAttribute("storeId",storeId);
-		model.addAttribute("nextWait",nextWait);
-		model.addAttribute("lastOrder",lastOrder);
-		model.addAttribute("curSeatStus",curSeatStus);
+		model.addAttribute("storeId", storeId);
+		//model.addAttribute("store", store);
+		//model.addAttribute("today", today);
+		//model.addAttribute("todayRsvdMap",todayRsvdMap);
+		//model.addAttribute("nextRsvd",nextRsvd);
+		//model.addAttribute("rsvdList", rsvdList);
+		//model.addAttribute("waitList", waitList);
+		//model.addAttribute("storeId",storeId);
+		//model.addAttribute("nextWait",nextWait);
+		//model.addAttribute("lastOrder",lastOrder);
+		//model.addAttribute("curSeatStus",curSeatStus);
 		
 		//현황판
-		model.addAttribute("totalTodayRsvd",totalTodayRsvd);
-		model.addAttribute("totalTodayRsvdPnum",totalTodayRsvdPnum);
-		model.addAttribute("todayFavMenuMap", todayFavMenuMap);
+		//model.addAttribute("totalTodayRsvd",totalTodayRsvd);
+		//model.addAttribute("totalTodayRsvdPnum",totalTodayRsvdPnum);
+		//model.addAttribute("todayFavMenuMap", todayFavMenuMap);
 		model.addAttribute("todayRsvdUserList", todayRsvdUserList);
 		
 		return "/business/manage/manage";
+	}
+	
+	@GetMapping("/text")
+	public void text() {
+		
+		log.info("text..........");
+		
 	}
 }

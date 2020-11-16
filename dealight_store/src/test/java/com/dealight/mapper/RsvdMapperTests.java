@@ -271,7 +271,9 @@ public class RsvdMapperTests {
     @Test
     public void findUserByStoreIdAndDateAndStusTest1() {
     	
-    	List<UserWithRsvdDTO> map =  mapper.findUserByStoreIdAndDate(storeId, "20201107");
+    	storeId = 101;
+    	
+    	List<UserWithRsvdDTO> map =  mapper.findUserByStoreIdAndDate(storeId, "20201115");
     	
     	log.info(map);
     	

@@ -83,6 +83,8 @@
 	<h1>웨이팅 리스트</h1>
 	<ul class="waitList"></ul>
 
+	<button class="btn_wait_register">웨이팅 등록</button>
+
 	<h1>예약 리스트</h1>
 	<ul class="rsvdList"></ul>
 
@@ -122,21 +124,18 @@
 		</c:forEach>
 	</c:if>
 
-	<!-- Trigger/Open The Modal -->
-	<button id="myBtn">Open Modal</button>
-	
 	<!-- The Modal -->
 	<div id="myModal" class="modal">
 
 		<!-- Modal content -->
 		<div class="modal-content">
-			<h1>해당 유저 예약 상세</h1>
 			<ul class="rsvdDtls"></ul>
 	
-			<h1>예약 히스토리</h1>
 			<ul class="userRsvdList"></ul>
+			
+			<ul class="waiting_registerForm"></ul>
+			
 			<span class="close">&times;</span>
-			<p>Some text in the Modal..</p>
 		</div>
 	</div>
 	
@@ -174,6 +173,7 @@ btn_modal.on("click",(e) => {
 close.on("click", (e) => {
 	console.log("close click........");
 	modal.css("display","none");
+	modal.find("ul").html("");
 })
 
 window.onclick = e => {
@@ -194,6 +194,11 @@ window.onclick = function(event) {
 
     console.log("board module........");
     
+    
+    /*
+    REST 방식으로 서버와 통신
+    
+    */
     let boardService = (() => {
       
     	
@@ -475,6 +480,10 @@ window.onclick = function(event) {
         };
     })();
     
+    
+    /*
+    	서버가 시작 되면 동작하는 코드
+    */
     $(document).ready(() => {
         const storeId = ${storeId};
         
@@ -489,7 +498,8 @@ window.onclick = function(event) {
         storeSeatUL = $(".storeSeatStus"),
         rsvdRsltUL = $(".rsvdRslt"),
         userRsvdListUL = $(".userRsvdList"),
-        rsvdDtlsUL = $(".rsvdDtls")
+        rsvdDtlsUL = $(".rsvdDtls"),
+        waitRegFormUL = $(".waiting_registerForm")
         ;
             
         showBoard(storeId); 
@@ -497,6 +507,10 @@ window.onclick = function(event) {
         setInterval(getTime, 1000);
         //showUserRsvdList(storeId,'kim'); test
 
+        /*
+        	board를 보여준다.
+        	
+        */
         function showBoard(storeId) {
             
             boardService.getStore({storeId : storeId}, function (store) {
@@ -659,6 +673,11 @@ window.onclick = function(event) {
         		
         	});
         };
+        
+        /*
+        	유저의 예약 히스토리를 보여준다.
+        
+        */
         function showUserRsvdList(storeId,userId){
         	
         	boardService.getUserRsvdList({storeId:storeId,userId:userId}, function(userRsvdList){
@@ -667,8 +686,9 @@ window.onclick = function(event) {
         		if(!userRsvdList)
         			return;
         		
+        		strUserRsvdList += "<h1>예약 히스토리</h1>";
         		userRsvdList.forEach(rsvd => {
-        			strUserRsvdList += "========================================"
+        			strUserRsvdList += "========================================";
         			strUserRsvdList += "<li>예약 번호 : "+rsvd.id+"</li>"; 
                     strUserRsvdList += "<li>매장번호 : "+ rsvd.storeId + "</li>";
                     strUserRsvdList += "<li>회원 아이디 : "+ rsvd.userId + "</li>";
@@ -689,6 +709,10 @@ window.onclick = function(event) {
         	})
         };
         
+        /*
+        	예약 상세를 보여준다.
+        
+        */
         function showRsvdDtls(rsvdId){
         	
         	
@@ -696,7 +720,7 @@ window.onclick = function(event) {
 				let strRsvdDtls = "";
 				if(!rsvd)
 					return;
-				
+				strRsvdDtls += "<h1>해당 유저 예약 상세</h1>"
         		strRsvdDtls += "<li>예약 번호 :" + rsvd.id +"</li>";
         		strRsvdDtls += "<li>매장 번호 :" + rsvd.storeId +"</li>";
         		strRsvdDtls += "<li>회원 아이디 : " + rsvd.userId +"</li>";
@@ -723,6 +747,28 @@ window.onclick = function(event) {
         		
         	})
         };
+        
+        function showWaitRegisterForm(storeId){
+        	
+        	let today = new Date();
+        	strWaitRegForm = "";
+        	strWaitRegForm += "<h1>오프라인 웨이팅 등록</h1>";
+        	strWaitRegForm += "<form id='waitRegForm' action='/business/manage/waiting/register' method='post'>";
+        	strWaitRegForm += "고객 이름<input name='custNm'></br>";
+        	strWaitRegForm += "고객 전화번호<input name='custTelno'></br>";
+        	strWaitRegForm += "웨이팅 인원<input name='waitPnum'></br>";
+        	strWaitRegForm += "<input name='curTime' value='"+today+"' hidden>";
+        	strWaitRegForm += "<input name='storeId' value='"+storeId+"' hidden>";
+        	strWaitRegForm += "<button id='submit_waitRegForm' type='submit'>제출하기</button>";
+        	strWaitRegForm += "</form>";
+        	strWaitRegForm += "<h2>현재 시간</h2>";
+        	strWaitRegForm += "<h2>"+today+"</h2>";
+        	
+        	waitRegFormUL.html(strWaitRegForm);
+        	
+        }
+        
+        
         /* 이벤트 처리*/
         /**/
 
@@ -743,7 +789,6 @@ window.onclick = function(event) {
         	*/
 
         /*예약리스트에 있는 내용 중, 예약 상세 보여주기*/
-            	/**/
         /*회원의 예약 리스트 보여주기*/
         $(".rsvdList").on("click", e => {
 
@@ -751,9 +796,48 @@ window.onclick = function(event) {
         		userId = $(e.target).parent().find(".btnUserId").text();
         	
         	modal.css("display","block");
-        	
 
         	showUserRsvdList(storeId, userId);
+        	
+        });
+        	
+        /* 웨이팅 등록 */
+        $(".btn_wait_register").on("click", e => {
+        	
+        	modal.css("display","block");
+        	showWaitRegisterForm(${storeId});
+        	
+			let modalInputCustNm = modal.find("input[name='custNm']"),
+				modalInputCutsTelNo = modal.find("input[name='custTelno']"),
+				modalInputCurTime = modal.find("input[name='curTime']"),
+				modalInputStoreId = modal.find("input[name='storeId']");
+        	
+        	$("#submit_waitRegForm").on("click", e => {
+        		
+        		e.preventDefault();
+        		
+        		let wait = {
+        				custNm : modalInputCustNm.val(),
+        				custTelno : modalInputCutsTelNo.val(),
+        				curTime : modalInputCurTime.val(),
+        				storeId : modalInputStoreId.val()
+        		};
+
+        		boardService.regWait(wait, result => {
+        			
+        			alert(result);
+        			modal.find("input").val("");
+        			modal.css("display","none");
+        			
+        			
+        		});
+        		
+        		console.log("결과.........."+modalInputStoreId.val());
+                showBoard(modalInputStoreId.val());
+        		//$("#waitRegForm").submit();        		
+        		
+        	});
+        	
         	
         });
 

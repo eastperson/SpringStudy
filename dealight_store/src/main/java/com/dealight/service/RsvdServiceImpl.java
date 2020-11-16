@@ -327,11 +327,14 @@ public class RsvdServiceImpl implements RsvdService {
 
 	@Override
 	public List<UserWithRsvdDTO> userListTodayRsvd(long storeId) {
+		
 		LocalDate currentDate = LocalDate.now();
     	
     	DateTimeFormatter dateTimeForMatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     	
     	String date = currentDate.format(dateTimeForMatter);
+    	
+    	log.info("today..................." + date);
 		
 
 		return rsvdMapper.findUserByStoreIdAndDate(storeId, date);

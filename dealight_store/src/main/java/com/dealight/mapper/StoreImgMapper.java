@@ -16,5 +16,7 @@ public interface StoreImgMapper {
 	
 	public List<StoreImgVO> findByStoreId(long storeId);
 	
+	public List<StoreImgVO> getOldFiles();
+	
 
 }

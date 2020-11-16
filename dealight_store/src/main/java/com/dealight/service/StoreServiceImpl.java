@@ -148,8 +148,16 @@ public class StoreServiceImpl implements StoreService {
 		imgs.stream().forEach(img -> {
 			img.setStoreId(store.getStoreId());
 		});
+		StoreLocVO loc = new StoreLocVO();
+		StoreEvalVO eval = new StoreEvalVO();
+		StoreOptionVO opt = new StoreOptionVO();
+		
+		
 		storeImgMapper.deleteAll(store.getStoreId());
 		storeImgMapper.insertAll(imgs);
+		
+		
+		
 
 		return result == 1 && result2 == 1;
 	}
@@ -185,6 +193,7 @@ public class StoreServiceImpl implements StoreService {
 		StoreVO store1 = new StoreVO.Builder(store.getStoreId(), store.getStoreNm(), store.getTelno()
 				).build();
 		BStoreVO bstore = BStoreVO.builder()
+				.buserId(store.getBuserId())
 				.storeId(store.getStoreId())
 				.openTm(store.getOpenTm())
 				.closeTm(store.getCloseTm())
@@ -224,9 +233,9 @@ public class StoreServiceImpl implements StoreService {
 		List<MenuVO> menuList = store.getMenuList();
 		List<StoreImgVO> imgs = store.getImgs();
 
-		storeMapper.update(store1);
-		bStoreMapper.update(bstore);
-		locMapper.update(loc);
+		int rslt1 = storeMapper.update(store1);
+		int rslt2 = bStoreMapper.update(bstore);
+		int rslt3 = locMapper.update(loc);
 		
 		if(revwList != null) {
 		
@@ -246,6 +255,6 @@ public class StoreServiceImpl implements StoreService {
 		}
 		
 		
-		return false;
+		return rslt1 == 1 && rslt2 == 1 && rslt3 == 1;
 	}
 }

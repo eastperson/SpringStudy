@@ -53,4 +53,10 @@ where store_id = #{storeId}
 		SELECT * FROM dual
 </insert>
 
+	 <select id="getOldFiles" resultType="com.dealight.domain.StoreImgVO">
+	 SELECT *
+	 FROM tbl_store_img
+	 WHERE uploadpath = to_char(sysdate -1, 'yyyy\mm\dd')
+	 </select>
+
 </mapper>

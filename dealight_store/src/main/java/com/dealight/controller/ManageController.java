@@ -3,8 +3,10 @@ package com.dealight.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -69,11 +71,17 @@ public class ManageController {
 	@GetMapping("/dealhistory")
 	public String dealHistory(Model model,long storeId,HttpServletRequest request) {
 		
-		log.info("business manage..");
+		log.info("business manage dealhistory..");
 		
 		List<HtdlVO> htdlList = htdlService.readAllStoreHtdlList(storeId);
 		
 		model.addAttribute("htdlList",htdlList);
+		
+		List<HtdlVO> curList = htdlList.stream().filter(htdl -> 
+			htdl.getStusCd().equals("A")
+		).collect(Collectors.toList());
+		
+		model.addAttribute("curList", curList);
 		
 		return "/business/manage/dealhistory";
 	}
@@ -156,10 +164,10 @@ public class ManageController {
 		
 		waitService.registerOffWaiting(wait);
 		
-		
 		long id = wait.getId();
 		
 		return "redirect:/business/manage/?storeId="+storeId;
+		//return "redirect:/business/manage/board/?storeId="+storeId;
 	}
 	
 	// Äõ¸®¹® 1
