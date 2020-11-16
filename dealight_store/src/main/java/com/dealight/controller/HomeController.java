@@ -40,4 +40,13 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/socket", method = RequestMethod.GET)
+	public String socket(Locale locale, Model model) {
+
+		
+		
+		
+		return "socket";
+	}
+	
 }

@@ -409,4 +409,15 @@ public class ReservationServiceTests {
 		
 	}
 	
+	@Test
+	public void lastWeekRsvdTest1() {
+		
+		storeId= 101;
+		
+		List<RsvdVO> list = reservationService.findLastWeekRsvd(storeId);
+		
+		log.info(list);
+		
+	}
+	
 }

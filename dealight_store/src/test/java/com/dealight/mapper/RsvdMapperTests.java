@@ -337,6 +337,19 @@ public class RsvdMapperTests {
     	
     }
     
+    @Test
+    public void findLastWeekRsvdListByStoreIdTest1() {
+    	
+    	
+    	long storeId = 101;
+    	
+    	List<RsvdVO> list = mapper.findLastWeekRsvdListByStoreId(storeId);
+    	
+    	assertNotNull(list);
+    	
+    	log.info(list);
+    	
+    }
 
 
 }

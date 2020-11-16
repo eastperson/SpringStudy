@@ -163,6 +163,8 @@ input:checked + .slider:before {
 <div id="rsvd_rslt_baord" style="display : none">
 <h1>당일 예약 결과💵</h1>
 <ul class="rsvdRslt"></ul>
+<h1>최근 7일 예약 현황</h1>
+<ul class="last_week_rsvd"></ul>
 </div>
 </br>
 
@@ -570,6 +572,25 @@ window.onclick = function(event) {
                 }
             })
         }
+        
+        function getLastWeekRsvd(param, callback,error) {
+        	
+			let storeId = param.storeId;
+        	
+        	$.getJSON("/business/manage/board/reservation/rslt/"+ storeId +"/list.json",
+                    function(data){
+        					console.log(data);
+                        if(callback){
+                            callback(data);
+                        }
+                    }).fail(function(xhr,status,err){
+                        if(error){
+                            error();
+                        }
+            });
+        	
+        	
+        }
     
         return {
             regWait:regWait,
@@ -585,7 +606,8 @@ window.onclick = function(event) {
             getTodayRsvdMap : getTodayRsvdMap,
             getRsvdRslt : getRsvdRslt,
             getUserRsvdList : getUserRsvdList,
-            getRsvdDtls : getRsvdDtls
+            getRsvdDtls : getRsvdDtls,
+            getLastWeekRsvd : getLastWeekRsvd
         };
     })();
     
@@ -608,7 +630,8 @@ window.onclick = function(event) {
         rsvdRsltUL = $(".rsvdRslt"),
         userRsvdListUL = $(".userRsvdList"),
         rsvdDtlsUL = $(".rsvdDtls"),
-        waitRegFormUL = $(".waiting_registerForm")
+        waitRegFormUL = $(".waiting_registerForm"),
+        lastWeekRsvdUL = $(".last_week_rsvd")
         ;
             
         showBoard(storeId); 
@@ -781,6 +804,32 @@ window.onclick = function(event) {
         		rsvdRsltUL.html(strRsvdRslt);
         		
         	});
+        	
+        	boardService.getLastWeekRsvd({storeId:storeId}, function(list){
+        		
+        		let strLastWeekRsvd = "";
+        		if(!list)
+        			return;
+        		
+        		list.forEach(rsvd => {
+        			strLastWeekRsvd += "<li hidden class='btnStoreId'>"+rsvd.storeId+"</li>";
+        			strLastWeekRsvd += "<li hidden class='btnUserId'>"+rsvd.userId+"</li>";
+        			strLastWeekRsvd += "<li>매장번호 : "+ rsvd.storeId + "</li>";
+        			strLastWeekRsvd += "<li>회원 아이디 : "+ rsvd.userId + "</li>";
+        			strLastWeekRsvd += "<li>핫딜 번호 :"+ rsvd.htdlId + "</li>";
+        			strLastWeekRsvd += "<li>승인 번호 : "+ rsvd.aprvNo + "</li>";
+        			strLastWeekRsvd += "<li>예약 인원 : "+ rsvd.pnum + "</li>";
+        			strLastWeekRsvd += "<li>예약 시간 : "+ rsvd.time + "</li>";
+        			strLastWeekRsvd += "<li>예약 상태 : "+ rsvd.stusCd + "</li>";
+        			strLastWeekRsvd += "<li>예약 총 금액 : "+ rsvd.totAmt + "</li>";
+        			strLastWeekRsvd += "<li>예약 총 수량 : "+ rsvd.totQty + "</li>";
+        			strLastWeekRsvd += "<li>예약 등록 날짜"+ rsvd.inDate + "</li>";
+        			strLastWeekRsvd += "===========================================";
+        		});
+	        	lastWeekRsvdUL.html(strLastWeekRsvd);
+        	});
+        	
+        	
         };
         
         /*

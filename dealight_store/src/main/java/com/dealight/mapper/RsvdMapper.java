@@ -56,4 +56,6 @@ public interface RsvdMapper {
 	// delete
 	public int delete(long id);
 	
+	public List<RsvdVO> findLastWeekRsvdListByStoreId(long storeId);
+	
 }

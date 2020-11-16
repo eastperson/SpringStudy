@@ -226,6 +226,20 @@ public class BoardController {
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
+	@GetMapping(value="board/reservation/rslt/{storeId}/list", produces = {
+					MediaType.APPLICATION_JSON_UTF8_VALUE,
+					MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<List<RsvdVO>> getLastWeekRsvd(@PathVariable("storeId") long storeId){
+		
+		List<RsvdVO> rsvdList = rsvdService.findLastWeekRsvd(storeId);
+		
+		log.info("rsvd list............" + rsvdList);
+		
+		
+		return new ResponseEntity<>(rsvdList,HttpStatus.OK);
+		
+	}
+	
 	@GetMapping(value = "/board/reservation/dtls/{rsvdId}", 
 			produces = {
 					MediaType.APPLICATION_JSON_UTF8_VALUE,

@@ -33,6 +33,13 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 
 		<!-- AspectJ -->
 		<dependency>
@@ -154,7 +161,7 @@
 		<!-- jackson : controller method의 return 타입을 VO, DTO 등의 객체로 할 수 있도록 해주는 
 			라이브러리 -->
 		<!-- 주로 JSON에 많이 사용 -->
-		
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -172,7 +179,7 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.9.6</version>
 		</dependency>
-		
+
 		<!-- Thumbnail 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
 		<dependency>
@@ -223,8 +230,8 @@
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 			<version>1.16</version>
 		</dependency>
-		
-				<!-- Quartz 라이브러리 설정 -->
+
+		<!-- Quartz 라이브러리 설정 -->
 		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
@@ -238,7 +245,7 @@
 			<artifactId>quartz-jobs</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-		
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>

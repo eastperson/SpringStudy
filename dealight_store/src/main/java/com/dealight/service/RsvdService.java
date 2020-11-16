@@ -116,4 +116,6 @@ public interface RsvdService {
 	//일단 제외
 	
 	
+	List<RsvdVO> findLastWeekRsvd(long storeId);
+	
 }

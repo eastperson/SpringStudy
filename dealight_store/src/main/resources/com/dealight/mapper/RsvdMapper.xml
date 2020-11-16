@@ -189,6 +189,14 @@
 		FROM tbl_rsvd r, tbl_rsvd_dtls d
 		WHERE r.id = d.rsvd_id and r.id = #{rsvdId}
 	</select>
+	
+	<select id="findLastWeekRsvdListByStoreId" resultMap="RsvdVO">
+		select *
+		from tbl_rsvd
+		where store_id = #{storeId}
+			and TO_CHAR(in_date,'YYYYMMDD') BETWEEN TO_CHAR(sysdate - 7,'YYYYMMDD')
+			AND TO_CHAR(sysdate,'YYYYMMDD')
+	</select>
 
 	<insert id="insert">
 		INSERT

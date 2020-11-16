@@ -362,4 +362,11 @@ public class RsvdServiceImpl implements RsvdService {
 				
 		return rsvdMapper.findRsvdByRsvdIdWithDtls(rsvdId);
 	}
+
+	@Override
+	public List<RsvdVO> findLastWeekRsvd(long storeId) {
+		
+		
+		return rsvdMapper.findLastWeekRsvdListByStoreId(storeId);
+	}
 }

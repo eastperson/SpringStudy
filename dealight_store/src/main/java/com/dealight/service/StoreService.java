@@ -54,4 +54,5 @@ public interface StoreService {
 	
 	void removeStoreImgAll(long storeId);
 
+
 }
