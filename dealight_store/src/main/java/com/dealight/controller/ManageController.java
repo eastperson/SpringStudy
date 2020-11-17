@@ -103,34 +103,6 @@ public class ManageController {
 		return "/business/manage/reservation";
 	}
 	
-	// 웨이팅 상세
-	// 쿼리문 1
-	@GetMapping("/waiting")
-	public String waiting(Model model, long waitId) {
-		
-		log.info("business waiting detail..");
-		
-		WaitingVO wait = waitService.read(waitId);
-		
-		log.info(wait);
-		
-		// 해당 매장에 현재 상태가 W인 리스트를 가져온다.
-		List<WaitingVO> curStoreWaitiList = waitService.curStoreWaitList(wait.getStoreId(), "W");
-		
-		// 해당 웨이팅 번호의 현재 대기 순서를 보여준다.
-		int order = waitService.calWatingOrder(curStoreWaitiList, wait.getId());
-		
-		// 해당 웨이팅 번호의 현대 예상 대기 시간을 보여준다.
-		// 대기시간은 일단 임의로 15로 지정했다.
-		int waitTime = waitService.calWaitingTime(curStoreWaitiList, wait.getId(), 15);
-		
-		model.addAttribute("wait",wait);
-		model.addAttribute("order",order);
-		model.addAttribute("waitTime", waitTime);
-		
-		return "/business/manage/waiting/waiting";
-	}
-	
 	// 쿼리문 0
 	@GetMapping("/waiting/register")
 	public String waitingRegister(Model model, long storeId) {
@@ -266,7 +238,7 @@ public class ManageController {
 	}
 	
 
-	
+
 	
 	@GetMapping("/menu")
 	public String menuModify(Model model, long storeId) {

@@ -62,6 +62,6 @@
 		</div>
 	</c:forEach>
 </c:if>
-<script src="/resources/js/reg_upload_menu.js"></script>
+<script src="/resources/js/reg_upload_menu.js?ver=1"></script>
 </body>
 </html>

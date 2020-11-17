@@ -49,5 +49,7 @@ public class RsvdVO {
     private int totQty;
     
     private Date inDate;
+    
+    private String strInDate;
 
 }

@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>매장 관리</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/resources/js/Chart.js"></script>
 <link rel="stylesheet" href="/resources/css/manage.css?ver=1" type ="text/css" />
 </head>
 <body>
@@ -51,7 +52,9 @@
          <div id="rsvd_rslt_baord" style="display : none">
             <h1>당일 예약 결과💵</h1>
             <ul class="rsvdRslt"></ul>
-            <h1>최근 7일 예약 현황</h1>
+            <h1>최근 7일 Trend📈</h1>
+            <canvas id="rsvd_chart"></canvas>
+            <h1>최근 7일 예약 현황</h1>            
             <ul class="last_week_rsvd"></ul>
         </div>
 
@@ -614,7 +617,7 @@ window.onclick = function(event) {
                 
                 waitList.forEach(wait => {
                 	strWaitList += "<div class='wait'>";
-                    strWaitList += "<ul>" + "<h3>웨이팅 번호 : "+wait.id+"</h3>";
+                    strWaitList += "<ul>" + "<a href='/business/waiting/"+wait.id+"'><h3>웨이팅 번호 : "+wait.id+"</h3></a>";
                         strWaitList += "<li>웨이팅 회원 아이디 : "+ wait.userId + "</li>";
                         strWaitList += "<li>웨이팅 매장 번호"+ wait.storeId + "</li>";
                         strWaitList += "<li>웨이팅 인원"+ wait.waitPnum + "</li>";
@@ -736,13 +739,29 @@ window.onclick = function(event) {
         		
         	});
         	
+        	let dateArr = new Array();
+    		let pnumArr = [0,0,0,0,0,0,0];
+    		let amountArr = [0,0,0,0,0,0,0];
+        	
         	boardService.getLastWeekRsvd({storeId:storeId}, function(list){
         		
         		let strLastWeekRsvd = "";
         		if(!list)
         			return;
         		
+        		
+        		
         		list.forEach(rsvd => {
+        			
+        			if(dateArr.indexOf(rsvd.strInDate) === -1){
+        				dateArr.push(rsvd.strInDate);
+        			}
+        			
+        			pnumArr[dateArr.indexOf(rsvd.strInDate)] += rsvd.pnum;
+        			amountArr[dateArr.indexOf(rsvd.strInDate)] += rsvd.totAmt;
+        			
+        			//pnumArr[dateArr.indexOf(rsvd.strInDate)].push(rsvd)
+        			
         			strLastWeekRsvd += "<li hidden class='btnStoreId'>"+rsvd.storeId+"</li>";
         			strLastWeekRsvd += "<li hidden class='btnUserId'>"+rsvd.userId+"</li>";
         			strLastWeekRsvd += "<li>매장번호 : "+ rsvd.storeId + "</li>";
@@ -754,11 +773,34 @@ window.onclick = function(event) {
         			strLastWeekRsvd += "<li>예약 상태 : "+ rsvd.stusCd + "</li>";
         			strLastWeekRsvd += "<li>예약 총 금액 : "+ rsvd.totAmt + "</li>";
         			strLastWeekRsvd += "<li>예약 총 수량 : "+ rsvd.totQty + "</li>";
-        			strLastWeekRsvd += "<li>예약 등록 날짜"+ rsvd.inDate + "</li>";
+        			strLastWeekRsvd += "<li>예약 등록 날짜"+ rsvd.strInDate + "</li>";
         			strLastWeekRsvd += "===========================================";
         		});
+        		console.log(dateArr);
+        		console.log(pnumArr);
+        		console.log(amountArr);
 	        	lastWeekRsvdUL.html(strLastWeekRsvd);
+	        	let chart = document.getElementById('rsvd_chart');
+	        	let context = chart.getContext('2d'),
+	           	rsvdChart = new Chart(context, {
+	           		type : 'line',
+	           		data : {
+	           			labels : [dateArr[0], dateArr[1], dateArr[2], dateArr[3], dateArr[4], dateArr[5], dateArr[6]],
+	           			datasets : [{
+	           				label : '예약 인원',
+	           				lineTension : 0,
+	           				data : [pnumArr[0], pnumArr[1], pnumArr[2], pnumArr[3], pnumArr[4], pnumArr[5], pnumArr[6]],
+	           				backgroundColor : "rgba(153,255,51,0.4)"
+	           			}/*, {
+	           				label : "예약 금액",
+	           				data : [amountArr[0],amountArr[1],amountArr[2],amountArr[3],amountArr[4],amountArr[5],amountArr[6]],
+	           				backgroundColor: "rgba(255,153,0,0.4)"
+	           			}*/]
+	           		}
+	           	});
         	});
+        	
+         
         	
         	
         };
@@ -953,6 +995,7 @@ window.onclick = function(event) {
         			alert(result);
 	        		console.log("결과.........."+modalInputStoreId.val());
 	        		showBoard(${storeId});
+	        		modal.find("ul").html("");
         			modal.find("input").val("");
         			modal.css("display","none");
         			
@@ -988,7 +1031,9 @@ window.onclick = function(event) {
             
             console.log(param);
             
-        	boardService.putChangeStatusCd(param);
+        	boardService.putChangeStatusCd(param, function(result){
+        		alert(result);
+        	});
         	
             showBoard(param.storeId);
         });
@@ -999,7 +1044,9 @@ window.onclick = function(event) {
         	/*dom 코드는 변경될 가능성 있음*/
         	waitId = parseInt($(".nextWait li:eq(2)").text().split(":")[1]);
 
-        	boardService.putEnterWaiting(waitId);
+        	boardService.putEnterWaiting(waitId, function(result){
+        		alert(result);
+        	});
         	
         	showBoard(storeId);
         })
@@ -1010,14 +1057,15 @@ window.onclick = function(event) {
         	/*dom 코드는 변경될 가능성 있음*/
         	waitId = parseInt($(".nextWait li:eq(2)").text().split(":")[1]);
 
-        	boardService.putNoshowWaiting(waitId);
+        	boardService.putNoshowWaiting(waitId, function(result){
+        		alert(result);
+        	});
         	
         	showBoard(storeId);
         });
-
-
+        	
         
-        });
+   });
 
     $(document).ready(function() {
     	

@@ -1,5 +1,6 @@
 package com.dealight.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -232,6 +233,14 @@ public class BoardController {
 	public ResponseEntity<List<RsvdVO>> getLastWeekRsvd(@PathVariable("storeId") long storeId){
 		
 		List<RsvdVO> rsvdList = rsvdService.findLastWeekRsvd(storeId);
+		
+		String pattern = "yyyy/MM/dd";
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		
+		rsvdList.stream().forEach((rsvd) -> {
+			rsvd.setStrInDate(simpleDateFormat.format(rsvd.getInDate()));
+		});
 		
 		log.info("rsvd list............" + rsvdList);
 		

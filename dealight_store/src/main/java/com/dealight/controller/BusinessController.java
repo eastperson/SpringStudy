@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -192,10 +193,31 @@ public class BusinessController {
 		return "/business/manage/manage";
 	}
 	
-	@GetMapping("/text")
-	public void text() {
-		
-		log.info("text..........");
-		
-	}
+	// 웨이팅 상세
+		// 쿼리문 1
+		@GetMapping("/waiting/{waitId}")
+		public String waiting(Model model, @PathVariable("waitId") long waitId) {
+			
+			log.info("business waiting detail..");
+			
+			WaitingVO wait = waitService.read(waitId);
+			
+			log.info(wait);
+			
+			// 해당 매장에 현재 상태가 W인 리스트를 가져온다.
+			List<WaitingVO> curStoreWaitiList = waitService.curStoreWaitList(wait.getStoreId(), "W");
+			
+			// 해당 웨이팅 번호의 현재 대기 순서를 보여준다.
+			int order = waitService.calWatingOrder(curStoreWaitiList, wait.getId());
+			
+			// 해당 웨이팅 번호의 현대 예상 대기 시간을 보여준다.
+			// 대기시간은 일단 임의로 15로 지정했다.
+			int waitTime = waitService.calWaitingTime(curStoreWaitiList, wait.getId(), 15);
+			
+			model.addAttribute("wait",wait);
+			model.addAttribute("order",order);
+			model.addAttribute("waitTime", waitTime);
+			
+			return "/business/manage/waiting/waiting";
+		}
 }

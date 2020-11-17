@@ -350,7 +350,7 @@
         #map_wrapper{
         	position: absolute;
         	display : inline;
-        	width:300px;
+        	width: 400px;
         	border: solid 1px black;
         	height : 80px;
         	overflow:scroll;
@@ -358,6 +358,6 @@
         }
         .rsvdMap {
         	display:inline;
-        	width:300px;
+        	width:400px;
         
         }
