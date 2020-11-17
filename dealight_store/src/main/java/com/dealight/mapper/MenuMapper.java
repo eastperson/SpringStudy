@@ -19,6 +19,8 @@ public interface MenuMapper {
 	// read list
 	public List<MenuVO> findAll();
 	
+	public List<MenuVO> findByStoreId(long storeId);
+	
 	// update
 	public int update(MenuVO menu);
 	

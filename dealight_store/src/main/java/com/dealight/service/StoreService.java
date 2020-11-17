@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dealight.domain.AllStoreVO;
 import com.dealight.domain.BStoreVO;
+import com.dealight.domain.MenuVO;
 import com.dealight.domain.StoreImgVO;
 import com.dealight.domain.StoreVO;
 
@@ -32,6 +33,10 @@ public interface StoreService {
 	// read
 	// by user id
 	List<StoreVO> findByUserId(String userId);
+	
+	List<MenuVO> findMenuByStoreId(long storeId);
+	
+	void registerMenu(MenuVO menu);
 	
 	
 	// 매장 등록하기

@@ -38,6 +38,7 @@ public interface StoreMapper {
 	
 	public List<StoreVO> findAll();
 	
+	
 	//Update
 	public int update(StoreVO store);
 	

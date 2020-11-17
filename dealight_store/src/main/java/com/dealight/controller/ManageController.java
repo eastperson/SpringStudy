@@ -268,14 +268,34 @@ public class ManageController {
 
 	
 	
-	@GetMapping("/modify/menu")
-	public String menuModify(Model model) {
+	@GetMapping("/menu")
+	public String menuModify(Model model, long storeId) {
 		
 		log.info("business menu modify..");
 		
+		List<MenuVO> menus = storeService.findMenuByStoreId(storeId);
 		
+		model.addAttribute("menus",menus);
+		model.addAttribute("storeId",storeId);
 		
 		return "/business/manage/modify/menu";
+	}
+	
+	@PostMapping("/menu/register")
+	public String menuModify(Model model, MenuVO menu) {
+		
+		log.info("business menu register..");
+		
+		log.info("menu......" + menu);
+		
+		if(menu.getRecoMenu().equalsIgnoreCase("on"))
+			menu.setRecoMenu("Y");
+		else
+			menu.setRecoMenu("N");
+		
+		storeService.registerMenu(menu);
+		
+		return "redirect:/business/manage/menu?storeId="+menu.getStoreId();
 	}
 	
 	// Äõ¸®¹® 1

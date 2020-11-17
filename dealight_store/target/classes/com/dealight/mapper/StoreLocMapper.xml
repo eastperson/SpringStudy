@@ -13,4 +13,18 @@ lt = #{lt},
 lo = #{lo}
 WHERE store_id = #{storeId}
 </update>
+
+<select id="findByStoreId" resultType="com.dealight.domain.StoreLocVO">
+SELECT *
+FROM tbl_store_loc
+WHERE store_id = #{storeId}
+</select>
+
+<insert id="insert">
+INSERT INTO
+tbl_store_loc(store_id,addr,lt,lo)
+VALUES(#{storeId},#{addr},#{lt},#{lo})
+
+</insert>
+
 </mapper>

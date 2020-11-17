@@ -10,6 +10,8 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.dealight.domain.UserVO;
+
 import lombok.extern.log4j.Log4j;
 
 
@@ -33,6 +35,14 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
 		
 	}
 	
+	private UserVO getUser(WebSocketSession session) { 
+		
+		return (UserVO) session.getAttributes().get("HTTP.SESSION.ID"); 
+	
+	}
+	
+
+	
     @Override
     public void afterConnectionEstablished(WebSocketSession session)
 
@@ -40,11 +50,11 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
 
           super.afterConnectionEstablished(session);
 
-
-
           sessionSet.add(session);
+          
+          UserVO user = getUser(session);
 
-          log.info("add session!");
+          log.info("add session!................." + user.getUserId());
 
     }
     
@@ -54,8 +64,6 @@ public class SocketHandler extends TextWebSocketHandler implements InitializingB
                  WebSocketMessage<?> message) throws Exception {
 
           super.handleMessage(session, message);
-
-         
 
           log.info("receive message:"+message.toString());
 

@@ -1,5 +1,6 @@
 package com.dealight.mapper;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -39,6 +40,39 @@ public class StoreLocTests2 {
 		int result = mapper.update(loc);
 		
 		assertTrue(result == 1);
+	}
+	
+	@Test
+	public void findByStoreIdTests1() {
+		
+		StoreLocVO loc = mapper.findByStoreId(storeId);
+		
+		assertNotNull(loc);
+		
+		log.info(loc);
+	}
+	
+	@Test
+	public void insertTests() {
+		
+		storeId = 86;
+		
+		StoreLocVO loc = new StoreLocVO().builder()
+				.storeId(storeId)
+				.addr(addr)
+				.lt(lt)
+				.lo(lo)
+				.build();
+		
+		mapper.insert(loc);
+		
+		loc = mapper.findByStoreId(storeId);
+		
+		assertNotNull(loc);
+		
+		log.info(loc);
+		
+		
 	}
 
 }

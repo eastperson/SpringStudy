@@ -20,6 +20,14 @@
 		where
 		menu_seq = #{menuSeq}
 	</select>
+	
+	<select id="findByStoreId" resultType="com.dealight.domain.MenuVO">
+		SELECT
+		*
+		FROM tbl_menu
+		WHERE
+		store_id = #{storeId}
+	</select>
 
 	<insert id="insert">
 		INSERT

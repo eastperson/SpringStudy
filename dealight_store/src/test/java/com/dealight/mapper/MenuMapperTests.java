@@ -150,5 +150,16 @@ public class MenuMapperTests {
     	assertTrue(mapper.findAll().size() == bf - 1);
     	
     }
+    
+    @Test
+    public void findByStoreIdTests() {
+    	
+    	List<MenuVO> list = mapper.findByStoreId(storeId);
+    	
+    	assertNotNull(list);
+    	
+    	log.info(list);
+    	
+    }
 
 }

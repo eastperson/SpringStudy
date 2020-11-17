@@ -8,149 +8,217 @@
 <meta charset="UTF-8">
 <title>매장 관리</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="/resources/css/manage.css?ver=1" type ="text/css" />
+<style>
+/* hover */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+
+/* toggle css */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* end toggle */
+
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+</style>
 </head>
 <body>
-    <div class="main_box"><!-- main box -->
-        <h2>Business Manage Main Page</h2>
-        <div class="board"> <!-- board -->
-            <div class="board_top_box"> <!-- top box -->
 
-                <div class="cur_time"> <!-- cur time -->
-                
-                <div class="js-clock clock">
-                        <h6>현재 날짜🗓</h6>
-                        <h3 class="date"></h3>
-                        <h6>현재 시간⏰</h6>
-                        <h3 class="time" style="color : blue">00:00</h3>
-                </div>
+<h1>Business Manage Main Page</h1>
 
-                </div> <!-- end time -->
-                <div class="light"> <!-- light -->
-                    <h4>현재 착석 상태💺</h4>
-                    <ul class="storeSeatStus"></ul>
-                    <form id="seatStusForm" action="/business/manage/board/seat"
-                            method="put">
-                            <input name="seatStusColor" id="color_value" value="" hidden>
-                            <input name="storeId" value="${storeId}" hidden>
-                            <button class="btn_seat_stus">Green</button>
-                            <button class="btn_seat_stus">Yellow</button>
-                            <button class="btn_seat_stus">Red</button>
-                            </br>
-                    </form>
-                </div> <!-- end light -->
-                <div class="top_box_blank"></div>
-                <div class="toggle"> <!-- toggle -->
-                    <label class="switch">
-                        <button>Toggle Button</button>
-                      </label>
-                </div> <!-- end toggle -->
+<div class="js-clock">
+		<h1>현재 날짜🗓</h1>
+		<h3 class="date"></h3>
+		<h1>현재 시간⏰</h1>
+		<h3 class="time" style="color : blue">00:00</h3>
+</div>
+<p><a href="/business/manage/dealhistory?storeId=${storeId}">핫딜 히스토리</a></p>
+<p><a href="/business/manage/modify?storeId=${storeId}">매장 정보 수정</a></p>
 
-         </div> <!-- end top box -->
+<label class="switch">
+  <button>Toggle Button</button>
+</label>
 
-         <div id="rsvd_rslt_baord" style="display : none">
-            <h1>당일 예약 결과💵</h1>
-            <ul class="rsvdRslt"></ul>
-            <h1>최근 7일 예약 현황</h1>
-            <ul class="last_week_rsvd"></ul>
-        </div>
+<div id="rsvd_rslt_baord" style="display : none">
+<h1>당일 예약 결과💵</h1>
+<ul class="rsvdRslt"></ul>
+<h1>최근 7일 예약 현황</h1>
+<ul class="last_week_rsvd"></ul>
+</div>
+</br>
 
-        <div id="board">
-        <!--  
-            <h1>매장 정보🏪</h1>
-            <ul class="store"></ul>
+<div id="board">
 
-            <h2>매장 사진</h2>
-            <div class='uploadResult'>
-                <ul>
-                </ul>
-            </div>  --><!-- uploadResult --><!--
-            
-            <div class='bigPictureWrapper'>
-                <div class='bigPicture'>
-                </div>
-            </div>
- 		-->
-            <div class="next_wait"> <!-- next wait -->
-                <h4>다음 웨이팅 정보👉</h4>
-	            <ul class="nextWait"></ul>
-                <div class="btn_wait_wrapper">
-                    <button class="btn_wait_stus btn_enter_wait">입장</button>
-                    <button class="btn_wait_stus btn_noshow_wait">노쇼</button>
-                </div>
-            </div> <!-- end next wait -->
-            <div class="next_rsvd"> <!-- next rsvd -->
-                <h4>다음 예약자 정보👉</h4>
-                <ul class="nextRsvd"></ul>
-            </div> <!-- end next rsvd -->
-            <div class="wait_board"> <!-- wait board -->
-            <div class="rsvd_wrapper">
-                    <div class="rsvd"> <!-- wait  -->
-                        <h1>예약 리스트🗒</h1>
-                        <ul class="rsvdList"></ul>
-                    </div> <!-- end wait -->
-            </div>
-            <div class="wait_wrapper">
-                <h1>웨이팅 리스트🗒</h1>
-	            <ul class="waitList">
-	            
-	            </ul>
-            </div>
-                <di class="wait_register_wrapper">
-                    <button class="btn_wait_register">오프라인 웨이팅 등록</button>
-                </div><!-- end wait board -->
-                <p id="dealhistory"><a href="/business/manage/dealhistory?storeId=${storeId}">핫딜 히스토리</a></p>
-                <p id="modify"><a href="/business/manage/modify?storeId=${storeId}">매장 정보 수정</a></p>
-                <div id="map_wrapper">
-                	<h4>시간대별 예약</h4>
-	            	<ul class="rsvdMap"></ul>
-	            </div>
-            </div> <!-- end board -->
-        </div>
-            <div class="rsvd_time_bar"> <!-- rsvd time bar -->
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-                <div class="rsvd_time"></div>
-            </div> <!-- end rsvd time bar -->
-        </div> <!-- end main box -->
-        <div class="info_box"> <!--  info box -->
-        
-                    <h1>매장 정보🏪</h1>
-            <ul class="store"></ul>
+<h1>매장 정보🏪</h1>
+<ul class="store"></ul>
 
-            <h2>매장 사진</h2>
-            <div class='uploadResult'>
-                <ul>
-                </ul>
-            </div> <!-- uploadResult -->
-            
-            <div class='bigPictureWrapper'>
-                <div class='bigPicture'>
-                </div>
-            </div>
-            
-            <h2>오늘 예약 회원</h2>
+<h2>매장 사진</h2>
+<div class='uploadResult'>
+	<ul>
+	</ul>
+</div> <!-- uploadResult -->
+
+<div class='bigPictureWrapper'>
+	<div class='bigPicture'>
+	</div>
+</div>
+
+<h1>현재 착석 상태💺</h1>
+<ul class="storeSeatStus"></ul>
+<form id="seatStusForm" action="/business/manage/board/seat"
+		method="put">
+		<input name="seatStusColor" id="color_value" value="" hidden>
+		<input name="storeId" value="${storeId}" hidden>
+		<button class="btn_seat_stus">Green</button>
+		<button class="btn_seat_stus">Yellow</button>
+		<button class="btn_seat_stus">Red</button>
+		</br>
+</form>
+
+	<h1>다음 웨이팅 정보👉</h1>
+	<ul class="nextWait"></ul>
+
+	<button class="btn_enter_wait">입장</button>
+	</br>
+	<button class="btn_noshow_wait">노쇼</button>
+
+	<h1>다음 예약자 정보👉</h1>
+	<ul class="nextRsvd"></ul>
+
+
+	<h1>웨이팅 리스트🗒</h1>
+	<ul class="waitList"></ul>
+
+	<button class="btn_wait_register">웨이팅 등록</button>
+
+	<h1>예약 리스트🗒</h1>
+	<ul class="rsvdList"></ul>
+
+	<h1>시간대별 예약</h1>
+	<ul class="rsvdMap"></ul>
+	
+	<h2>오늘 예약 회원</h2>
 	<c:if test="${empty todayRsvdUserList}">
 		<h2>오늘 예약하신 손님이 없습니다.🤣</h2>
 	</c:if>
@@ -181,18 +249,24 @@
 			</div>
 		</c:forEach>
 	</c:if>
-        </div> <!-- end info box -->
-        	<!-- The Modal -->
+	
+</div>
+	
+	<!-- The Modal -->
 	<div id="myModal" class="modal">
+
 		<!-- Modal content -->
 		<div class="modal-content">
 			<ul class="rsvdDtls"></ul>
+	
 			<ul class="userRsvdList"></ul>
+			
 			<ul class="waiting_registerForm"></ul>
+			
 			<span class="close">&times;</span>
 		</div>
 	</div>
-    
+	
 <script>
 	console.log("modal module.............")
 	// Get the modal
@@ -613,7 +687,6 @@ window.onclick = function(event) {
                 console.log(waitList);
                 
                 waitList.forEach(wait => {
-                	strWaitList += "<div class='wait'>";
                     strWaitList += "<ul>" + "<h3>웨이팅 번호 : "+wait.id+"</h3>";
                         strWaitList += "<li>웨이팅 회원 아이디 : "+ wait.userId + "</li>";
                         strWaitList += "<li>웨이팅 매장 번호"+ wait.storeId + "</li>";
@@ -623,9 +696,7 @@ window.onclick = function(event) {
                         strWaitList += "<li>웨이팅 등록 시간 : "+ wait.inDate + "</li>";
                         strWaitList += "<li>웨이팅 회원 이름 : "+ wait.custNm + "</li>";
                         strWaitList += "<li>웨이팅 회원 번호 : "+ wait.custTelno + "</li>";
-                    strWaitList += "</ul>"
-                    strWaitList += "<button class='btn_wait_call'>호출</button>";
-                    strWaitList += "</div>";
+                    strWaitList += "</ul>"  
                 });
     
               waitListUL.html(strWaitList);   
@@ -660,7 +731,6 @@ window.onclick = function(event) {
                     return;
                 }
                 rsvdList.forEach(rsvd => {
-                	strRsvdList += "<div class='rsvd'>" ;
                     strRsvdList += "<ul class='btnRsvd'>" + "<h3>예약 번호 : "+rsvd.id+"</h3>"; 
                         strRsvdList += "<li hidden class='btnStoreId'>"+rsvd.storeId+"</li>";
                         strRsvdList += "<li hidden class='btnUserId'>"+rsvd.userId+"</li>";
@@ -674,8 +744,7 @@ window.onclick = function(event) {
                         strRsvdList += "<li>예약 총 금액 : "+ rsvd.totAmt + "</li>";
                         strRsvdList += "<li>예약 총 수량 : "+ rsvd.totQty + "</li>";
                         strRsvdList += "<li>예약 등록 날짜"+ rsvd.inDate + "</li>";
-                    strRsvdList += "</ul>" 
-                    strRsvdList += "</div>" ;
+                    strRsvdList += "</ul>"  
                 });
     
               rsvdListUL.html(strRsvdList);

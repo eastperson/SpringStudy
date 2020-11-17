@@ -8,12 +8,25 @@
 <update id="update">
 UPDATE tbl_option
 SET
-park = #{avgRating},
-nokids = #{revwTotNum},
-pg = #{likeTotNum},
+park = #{park},
+nokids = #{nokids},
+pg = #{pg},
 wifi = #{wifi},
 pet = #{pet},
 smoke = #{smoke}
 WHERE store_id = #{storeId}
 </update>
+
+<select id="findByStoreId" resultType="com.dealight.domain.StoreOptionVO">
+select *
+from tbl_option
+where store_id = 101
+</select>
+
+<insert id="insert">
+INSERT INTO
+tbl_option(store_id,park,nokids,pg,wifi,pet,smoke)
+values(#{storeId},#{park},#{nokids},#{pg},#{wifi},#{pet},#{smoke})
+</insert>
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.dealight.mapper;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -40,5 +41,33 @@ public class StoreEvalTests {
 		
 		assertTrue(result == 1);
 	}
+	
+	@Test
+	public void insertTest1() {
+		
+		storeId = 23;
+		
+		StoreEvalVO eval = new StoreEvalVO().builder()
+				.storeId(storeId)
+				.avgRating(avgRating)
+				.revwTotNum(revwTotNum)
+				.likeTotNum(likeTotNum)
+				.build();
+		
+		mapper.insert(eval);
+		
+		assertNotNull(mapper.findByStoreID(storeId));
+		
+	}
+	
+	@Test
+	public void findByIdTests1() {
+		
+		
+		assertNotNull(mapper.findByStoreID(storeId));
+	}
+	
+	
+	
 
 }

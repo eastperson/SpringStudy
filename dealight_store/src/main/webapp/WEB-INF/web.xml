@@ -2,6 +2,7 @@
 <web-app id="WebApp_Id" version="3.1"
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:websocket ="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_3_1.xsd">
 
 	<!-- The definition of the Root Spring Container shared by all Servlets 
@@ -25,6 +26,7 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 
 		<multipart-config>
 			<location>C:\\upload\\temp</location>

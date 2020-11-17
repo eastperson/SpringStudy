@@ -6,12 +6,16 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import lombok.AllArgsConstructor;
+import com.dealight.domain.UserVO;
+import com.dealight.service.UserService;
 
 /**
  * Handles requests for the application home page.
@@ -20,6 +24,9 @@ import lombok.AllArgsConstructor;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -41,12 +48,20 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/socket", method = RequestMethod.GET)
-	public String socket(Locale locale, Model model) {
-
+	public ModelAndView socket(Locale locale, ModelAndView mv) {
 		
+		// view 화면의 이름을 구성한다.
+		mv.setViewName("test");
 		
+		// 사용자 정보 출력(세션)
+		UserVO user = userService.read("kjuioq");
+		//UserVO user = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println("user name : " + user.getName());
+		System.out.println("normal chat page");
 		
-		return "socket";
+		mv.addObject("userId", user.getName());
+		
+		return mv;
 	}
 	
 }

@@ -20,9 +20,12 @@ import com.dealight.mapper.BStoreMapper;
 import com.dealight.mapper.MenuMapper;
 import com.dealight.mapper.NStoreMapper;
 import com.dealight.mapper.RevwMapper;
+import com.dealight.mapper.StoreEvalMapper;
 import com.dealight.mapper.StoreImgMapper;
 import com.dealight.mapper.StoreLocMapper;
 import com.dealight.mapper.StoreMapper;
+import com.dealight.mapper.StoreOptionMapper;
+import com.dealight.mapper.StoreTagMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -49,6 +52,12 @@ public class StoreServiceImpl implements StoreService {
 	private MenuMapper menuMapper;
 	
 	private StoreLocMapper locMapper;
+	
+	private StoreEvalMapper evalMapper;
+	
+	private StoreOptionMapper optMapper;
+	
+	private StoreTagMapper tagMapper;
 	
 	@Override
 	public boolean changeSeatStus(long storeId,String seatStusCd) {
@@ -124,12 +133,49 @@ public class StoreServiceImpl implements StoreService {
 		
 		List<StoreImgVO> imgs = store.getImgs();
 		
-		imgs.stream().forEach(img -> {
-			img.setStoreId(store.getStoreId());
-		});
+		log.info(imgs);
+		if(imgs != null) {
+			
+			imgs.stream().forEach(img -> {
+				img.setStoreId(store.getStoreId());
+			});
+			storeImgMapper.insertAll(imgs);
+		}
 		
-		storeImgMapper.insertAll(imgs);
 		
+		StoreEvalVO eval = new StoreEvalVO();
+		eval.setStoreId(store.getStoreId());
+		
+		log.info(eval);
+		
+		evalMapper.insert(eval);
+		
+		StoreLocVO loc = store.getLoc();
+		if(loc == null) {
+			loc = new StoreLocVO();
+			loc.setStoreId(store.getStoreId());
+			
+		}
+		if(loc.getAddr() == null || loc.getAddr().equals("NULL")) {
+			loc.setAddr("default");
+		}
+		
+		log.info(loc);
+		
+		locMapper.insert(loc);
+
+		
+		StoreOptionVO opt = new StoreOptionVO().builder()
+				.storeId(store.getStoreId())
+				.park("N")
+				.nokids("N")
+				.pet("N")
+				.pg("N")
+				.smoke("N")
+				.wifi("N")
+				.build();
+		
+		optMapper.insert(opt);
 		
 	}
 
@@ -256,5 +302,15 @@ public class StoreServiceImpl implements StoreService {
 		
 		
 		return rslt1 == 1 && rslt2 == 1 && rslt3 == 1;
+	}
+
+	@Override
+	public List<MenuVO> findMenuByStoreId(long storeId) {
+		return menuMapper.findByStoreId(storeId);
+	}
+
+	@Override
+	public void registerMenu(MenuVO menu) {
+		menuMapper.insert(menu);
 	}
 }

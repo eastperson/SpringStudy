@@ -32,14 +32,24 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">	
 	</beans:bean>
 
-	<context:component-scan base-package="com.dealgiht.websocket" />
+	<!-- <context:component-scan base-package="com.dealgiht.websocket" /> -->
+	
+	<!-- 
+	<websocket:handlers> 
+		<websocket:mapping handler="myHandler" path="/socket" /> 
+		<websocket:handshake-interceptors> 
+			<bean class="com.dealight.websocket.HandshakeInterceptor" /> 
+		</websocket:handshake-interceptors> 
+		<websocket:sockjs /> 
+	</websocket:handlers>
+ 	-->
 	
 	<websocket:handlers>
-        <websocket:mapping path="/websocket/echo.do" handler="myHandler"/>
-    </websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<websocket:sockjs/>
+	</websocket:handlers>
 
-
-    <beans:bean id="myHandler" class="com.dealight.websocket.SocketHandler"/>
+    <beans:bean id="echoHandler" class="com.dealight.websocket.EchoHandler"/>
     
 
 	

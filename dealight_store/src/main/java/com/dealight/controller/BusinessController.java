@@ -52,6 +52,7 @@ public class BusinessController {
 		
 		log.info("business store list..");
 		
+		
 		HttpSession session = request.getSession();
 		
 		// 로그인 세션 됐다고 가정

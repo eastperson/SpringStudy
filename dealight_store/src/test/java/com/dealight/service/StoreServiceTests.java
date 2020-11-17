@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dealight.domain.AllStoreVO;
 import com.dealight.domain.BStoreVO;
+import com.dealight.domain.MenuVO;
 import com.dealight.domain.StoreImgVO;
 import com.dealight.domain.StoreVO;
 
@@ -220,5 +221,41 @@ public class StoreServiceTests {
 		storeService.removeStoreImgAll(storeId);
 		
 		assertTrue(0 ==storeService.getStoreImageList(storeId).size());
+	}
+	
+	@Test
+	public void findMenuByStoreIdTest1() {
+		
+		List<MenuVO> list = storeService.findMenuByStoreId(storeId);
+		
+		assertNotNull(list);
+		
+		log.info(list);
+		
+	}
+	
+	@Transactional
+	@Test
+	public void registerMenuTest1() {
+		
+		long storeId = 13;
+		String recoMenu = "N";
+		int price = 5000;
+		String name = "Ä¡Áîµ·±î½º";
+		String imgUrl = "/a.jpg";
+		
+		MenuVO menu = new MenuVO().builder()
+				.storeId(storeId)
+				.recoMenu(recoMenu)
+				.price(price)
+				.name(name)
+				.imgUrl(imgUrl)
+				
+				.build();
+		
+		storeService.registerMenu(menu);
+		
+		log.info(storeService.findMenuByStoreId(storeId));
+		
 	}
 }
