@@ -15,18 +15,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dealight.domain.UserVO;
+import com.dealight.service.CallService;
 import com.dealight.service.UserService;
+
+import lombok.extern.log4j.Log4j;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@Log4j
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CallService callService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -62,6 +69,21 @@ public class HomeController {
 		mv.addObject("userId", user.getName());
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="/test", method = RequestMethod.GET)
+	public String test(Model model) {
+		
+		log.info("rest template test..........................");
+		
+		String result = callService.getProfile();
+		
+		log.info(result);
+		
+		model.addAttribute("result", result);
+
+		
+		return "test";
 	}
 	
 }

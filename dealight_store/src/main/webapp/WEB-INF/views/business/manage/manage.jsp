@@ -791,11 +791,11 @@ window.onclick = function(event) {
 	           				lineTension : 0,
 	           				data : [pnumArr[0], pnumArr[1], pnumArr[2], pnumArr[3], pnumArr[4], pnumArr[5], pnumArr[6]],
 	           				backgroundColor : "rgba(153,255,51,0.4)"
-	           			}/*, {
+	           			}, {
 	           				label : "예약 금액",
 	           				data : [amountArr[0],amountArr[1],amountArr[2],amountArr[3],amountArr[4],amountArr[5],amountArr[6]],
 	           				backgroundColor: "rgba(255,153,0,0.4)"
-	           			}*/]
+	           			}]
 	           		}
 	           	});
         	});
