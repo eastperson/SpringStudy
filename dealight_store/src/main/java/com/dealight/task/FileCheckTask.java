@@ -58,7 +58,8 @@ public class FileCheckTask {
 		
 	}
 	
-	//@Scheduled(cron="0 * * * * *")
+	//예약 자동 생성기
+	@Scheduled(cron="0 0 * * * *")
 	public void registerRsvd() throws Exception{
 		log.warn("Auto Rsvd Register Task run .....................");
 		
@@ -75,9 +76,17 @@ public class FileCheckTask {
     	
     	List<String> menuList = new ArrayList<>();
     	
-    	int idx = (int) (Math.random() * userIdList.size());
+    	int userIdx = (int) (Math.random() * userIdList.size());
     	
+    	List<Long> storeList = new ArrayList<>();
     	
+    	storeList.add(101L);
+    	storeList.add(187L);
+    	storeList.add(188L);
+    	storeList.add(189L);
+    	storeList.add(201L);
+    	
+    	int storeIdx = (int) (Math.random() * storeList.size());
     	
     	
         long id = 6;
@@ -99,7 +108,8 @@ public class FileCheckTask {
         long htdlId = 121;
         
         
-        userId = userIdList.get(idx);
+        userId = userIdList.get(userIdx);
+        storeId = storeList.get(storeIdx);
         
     	RsvdVO rsvd = new RsvdVO().builder()
     			.id(id)
@@ -156,7 +166,7 @@ public class FileCheckTask {
 		log.warn("=========================================rsvd 완료");
 	}
 
-	//@Scheduled(cron="0 10 * * * *")
+	@Scheduled(cron="0 10 * * * *")
 	public void checkFiles() throws Exception{
 		
 		log.warn("Image File Check Task run .....................");

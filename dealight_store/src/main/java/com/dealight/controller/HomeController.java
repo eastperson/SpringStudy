@@ -70,13 +70,44 @@ public class HomeController {
 		
 		return mv;
 	}
+
 	
-	@RequestMapping(value="/test", method = RequestMethod.GET)
-	public String test(Model model) {
+	@RequestMapping(value="/oauth", method = RequestMethod.GET)
+	public String getOauth(Model model) {
+		
+		log.info("rest template get oauth..........................");
+		
+		String restKey = "dba6ebc24e85989c7afde75bd48c5746";
+		String redirectURI = "https://localhost:8080";
+		
+		model.addAttribute("restKey",restKey);
+		model.addAttribute("redirectURI",redirectURI);
+		
+		return "oauth";
+	}
+	
+	@RequestMapping(value="/token", method = RequestMethod.GET)
+	public String getToken(Model model, String code) {
+		
+		log.info("rest template get token..........................");
+		
+		log.info(code);
+		
+		String result = callService.getToken(code);
+		
+		log.info(result);
+
+		model.addAttribute("result", result);
+
+		return "token";
+	}
+	
+	@RequestMapping(value="/message", method = RequestMethod.GET)
+	public String test(Model model, String access_token) {
 		
 		log.info("rest template test..........................");
 		
-		String result = callService.getProfile();
+		String result = callService.sendMessage(access_token);
 		
 		log.info(result);
 		
@@ -85,5 +116,4 @@ public class HomeController {
 		
 		return "test";
 	}
-	
 }

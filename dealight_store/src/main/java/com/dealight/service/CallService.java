@@ -14,5 +14,11 @@ public interface CallService {
 	int callAllList(List<WaitingVO> curStoreWaitList);
 	
 	String getProfile();
+	
+	String getAuth();
+	
+	String getToken(String code);
+	
+	String sendMessage(String access_token);
 
 }

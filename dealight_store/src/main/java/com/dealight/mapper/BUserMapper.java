@@ -10,7 +10,6 @@ public interface BUserMapper {
 	// create
 	public void insert(BUserVO buser);
 
-	
 	public void insertSelectKey(BUserVO buser);
 	
 	// read

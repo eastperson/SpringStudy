@@ -740,6 +740,19 @@ window.onclick = function(event) {
         	});
         	
         	let dateArr = new Array();
+        	
+        	let today = new Date();
+        	let year, month, date;
+        	
+        	for(let i = 0; i < 7; i++) {
+        		year =  today.getFullYear();
+        		month = (today.getMonth() + 1);
+        		date = today.getDate();
+        		dateArr[i] =    year + '/' + month + '/' + date;
+        		today.setDate(today.getDate() - 1);
+        	}
+        	
+        	
     		let pnumArr = [0,0,0,0,0,0,0];
     		let amountArr = [0,0,0,0,0,0,0];
         	
@@ -748,14 +761,9 @@ window.onclick = function(event) {
         		let strLastWeekRsvd = "";
         		if(!list)
         			return;
-        		
-        		
+
         		
         		list.forEach(rsvd => {
-        			
-        			if(dateArr.indexOf(rsvd.strInDate) === -1){
-        				dateArr.push(rsvd.strInDate);
-        			}
         			
         			pnumArr[dateArr.indexOf(rsvd.strInDate)] += rsvd.pnum;
         			amountArr[dateArr.indexOf(rsvd.strInDate)] += rsvd.totAmt;
@@ -776,24 +784,29 @@ window.onclick = function(event) {
         			strLastWeekRsvd += "<li>예약 등록 날짜"+ rsvd.strInDate + "</li>";
         			strLastWeekRsvd += "===========================================";
         		});
+        		
+
+        		
+        		
         		console.log(dateArr);
         		console.log(pnumArr);
         		console.log(amountArr);
+        		
 	        	lastWeekRsvdUL.html(strLastWeekRsvd);
 	        	let chart = document.getElementById('rsvd_chart');
 	        	let context = chart.getContext('2d'),
 	           	rsvdChart = new Chart(context, {
 	           		type : 'line',
 	           		data : {
-	           			labels : [dateArr[0], dateArr[1], dateArr[2], dateArr[3], dateArr[4], dateArr[5], dateArr[6]],
+	           			labels : [dateArr[6], dateArr[5], dateArr[4], dateArr[3], dateArr[2], dateArr[1], dateArr[0]],
 	           			datasets : [{
 	           				label : '예약 인원',
 	           				lineTension : 0,
-	           				data : [pnumArr[0], pnumArr[1], pnumArr[2], pnumArr[3], pnumArr[4], pnumArr[5], pnumArr[6]],
+	           				data : [pnumArr[6], pnumArr[5], pnumArr[4], pnumArr[3], pnumArr[2], pnumArr[1], pnumArr[0]],
 	           				backgroundColor : "rgba(153,255,51,0.4)"
 	           			}, {
 	           				label : "예약 금액",
-	           				data : [amountArr[0],amountArr[1],amountArr[2],amountArr[3],amountArr[4],amountArr[5],amountArr[6]],
+	           				data : [amountArr[6],amountArr[5],amountArr[4],amountArr[3],amountArr[2],amountArr[1],amountArr[0]],
 	           				backgroundColor: "rgba(255,153,0,0.4)"
 	           			}]
 	           		}
