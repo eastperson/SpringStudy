@@ -15,6 +15,8 @@ import lombok.NonNull;
 @Builder
 public class AllStoreVO {
 	
+	// 커밋 수정사항 test1
+	// 커밋 수정사항 test2
 	
     private long storeId;
     private String storeNm;
