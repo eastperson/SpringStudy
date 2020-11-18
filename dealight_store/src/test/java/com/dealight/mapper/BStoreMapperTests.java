@@ -22,13 +22,13 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class BStoreMapperTests {
 	
-	// ÇÊ¼ö ÀÔ·Â
+	// ï¿½Ê¼ï¿½ ï¿½Ô·ï¿½
     private long storeId = 13;
     private String seatStusCd;
     private String openTm = "09:30";
     private String closeTm = "21:30";
     
-    // ¼±ÅÃ ÀÔ·Â
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
     private String buserId = "kjuioq";
     private String breakSttm = "15:00";
     private String breakEntm = "16:00";
@@ -36,9 +36,9 @@ public class BStoreMapperTests {
     private int n1SeatNo = 8;
     private int n2SeatNo = 10;
     private int n4SeatNo = 5;
-    private String storeIntro = "¾È³ç?";
+    private String storeIntro = "ï¿½È³ï¿½?";
     private int avgMealTm = 30;
-    private String hldy = "ÀÏ¿äÀÏ"; 
+    private String hldy = "ï¿½Ï¿ï¿½ï¿½ï¿½"; 
     private int acmPnum = 40;
     
     @Autowired
@@ -82,6 +82,7 @@ public class BStoreMapperTests {
 				.avgMealTm(avgMealTm)
 				.hldy(hldy)
 				.acmPnum(acmPnum)
+				.seatStusCd("B")
 				.build();
     	
     	log.info(bstore);
@@ -103,7 +104,7 @@ public class BStoreMapperTests {
     	
     	String b = bstore.getHldy();
     	
-    	bstore.setHldy("¼öÁ¤");
+    	bstore.setHldy("ï¿½ï¿½ï¿½ï¿½");
     	
     	int result = mapper.update(bstore);
     	
@@ -124,7 +125,7 @@ public class BStoreMapperTests {
     @Test
     public void deleteTest1() {
     	BStoreVO bstore = new BStoreVO().builder()
-				.storeId(12)
+				.storeId(12L)
 				.openTm(openTm)
 				.closeTm(closeTm)
 				.breakSttm(breakSttm)
@@ -137,6 +138,7 @@ public class BStoreMapperTests {
 				.avgMealTm(avgMealTm)
 				.hldy(hldy)
 				.acmPnum(acmPnum)
+				.seatStusCd("B")
 				.build();
     	
     	log.info(bstore);

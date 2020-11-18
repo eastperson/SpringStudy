@@ -21,20 +21,20 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class NStoreMapperTests {
 	
-	// nstore °´Ã¼
+	// nstore ï¿½ï¿½Ã¼
 	private long storeId = 1;
 	private String breakEntm = "21:00";
-	private String menu = "µ·±î½º";
+	private String menu = "ï¿½ï¿½ï¿½î½º";
 	
-	// store °´Ã¼
-    private String storeNm = "¿µµ¿Á·¹ß";
+	// store ï¿½ï¿½Ã¼
+    private String storeNm = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     private String telno = "010-2737-5157";
     private String clsCd = "I";
     
     @Autowired
     private NStoreMapper mapper;
     
-	// mapper Àß ÁÖÀÔµÇ¾ú´ÂÁö DI Å×½ºÆ®
+	// mapper ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ï¿½ï¿½ï¿½ï¿½ DI ï¿½×½ï¿½Æ®
 	@Test
 	public void mapperDItest() {
 		log.info("mapper DI test : " + mapper);
@@ -115,7 +115,7 @@ public class NStoreMapperTests {
     public void deleteNStoreTest1() {
     	
 		NStoreVO nstore = new NStoreVO().builder()
-				.storeId(14)
+				.storeId(14L)
 				.bizTm("14:00")
 				.menu(menu)
 				.build();

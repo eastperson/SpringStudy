@@ -12,7 +12,7 @@ public class HtdlRsltVOTests {
     private long storeId = 1;
     private int lastPnum = 30;
     private int htdlLmtPnum = 50;
-    private double rsvdRate = 0.5;
+    private Double rsvdRate = 0.5;
     private String elapTm = "30:00";
 
 	@Test

@@ -1,75 +1,74 @@
 package com.dealight.service;
 
-import java.util.HashMap;
 import java.util.List;
 
-import com.dealight.domain.WaitingVO;
+import com.dealight.domain.WaitVO;
 
 public interface WaitingService {
 	
-	// ¿þÀÌÆÃ »ó¼¼ º¸±â
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	// wait dtls mapper - select
 	// read
-	WaitingVO read(long waitingId);
+	WaitVO read(long waitingId);
 	
-	// ¿Â¶óÀÎ ¿þÀÌÆÃ µî·Ï
+	// ï¿½Â¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	// wait mapper - inserSelectKey
 	// insert
-	long registerOnWaiting(WaitingVO waiting);
+	long registerOnWaiting(WaitVO waiting);
 	
-	// ¿þÀÌÆÃ °¡´É ¿©ºÎ
-	// Áßº¹ ¿þÀÌÆÃ, ÆÐ³ÎÆ¼ °í°´ ÇÕÄ£°Í
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Ð³ï¿½Æ¼ ï¿½ï¿½ ï¿½ï¿½Ä£ï¿½ï¿½
 	boolean isPossibleWaitingUser(String userId);
 	
-	// Áßº¹ ¿þÀÌÆÃ ¹æÁö
+	// ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	boolean isCurWaitingUser(String userId);
 	
-	// ÆÐ³ÎÆ¼ °í°´ ¹æÁö
+	// ï¿½Ð³ï¿½Æ¼ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	boolean isCurPanaltyUser(String userId);
 	
-	// ¿ÀÇÁ¶óÀÎ ¿þÀÌÆÃ µî·Ï
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	// wait mapper - inserSelectKey
 	// insert
-	long registerOffWaiting(WaitingVO waiting);
+	long registerOffWaiting(WaitVO waiting);
 	
-	// ¿þÀÌÆÃ Ãë¼Ò
-	// ¿þÀÌÆÃ clsCd waitStusCd = "C" 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ clsCd waitStusCd = "C" 
 	// wait mapper - update
 	boolean cancelWaiting(long waitingId);
 	
-	// ¿þÀÌÆÃ ÀÔÀå
-	// ¿þÀÌÆÃ clsCd waitStusCd = "E" 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ clsCd waitStusCd = "E" 
 	// wait mapper - update
 	boolean enterWaiting(long waitingId);
 	
-	// ¿þÀÌÆÃ ³ë¼î
-	// ¿þÀÌÆÃ clsCd waitStusCd = "P" 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ clsCd waitStusCd = "P" 
 	// wait mapper - update
 	boolean panaltyWaiting(long waitingId);
 	
-	// mapper method ÇÊ¿ä
-	// ÀÌ ¸ÅÀåÀÇ ÀüÃ¼ ¿þÀÌÆÃ ¸®½ºÆ®(°ú°ÅÆ÷ÇÔ)
+	// mapper method ï¿½Ê¿ï¿½
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	// wait mapper - select list
-	List<WaitingVO> allStoreWaitList(long storeId);
+	List<WaitVO> allStoreWaitList(long storeId);
 	
-	// mapper method ÇÊ¿ä
-	// ÇöÀç ÀÌ ¸ÅÀå¿¡¼­ ´ë±âÁßÀÎ ¿þÀÌÆÃ ¸®½ºÆ®
+	// mapper method ï¿½Ê¿ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 	// wait mapper - select list
 	// -storeid
 	// -clsCd waitStusCd = "C" 
-	List<WaitingVO> curStoreWaitList(long storeId, String waitStusCd);
+	List<WaitVO> curStoreWaitList(long storeId, String waitStusCd);
 	
-	// ¿þÀÌÆÃ ¼ø¼­ °è»ê
-	// ÇöÀç 'ÀÌ ¸ÅÀå'¿¡¼­ »óÅÂ°¡ '´ë±âÁß'ÀÎ '¿þÀÌÆÃ ¸®½ºÆ®' Áß ÇØ´ç ¿þÀÌÆÃÀÇ ´ë±â¼ø¼­
-	int calWatingOrder(List<WaitingVO> curStoreWaitiList, long waitingId);
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ 'ï¿½ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½ 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®' ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	int calWatingOrder(List<WaitVO> curStoreWaitiList, long waitingId);
 	
-	// ¿¹»ó ¼Ò¿ä ½Ã°£
-	// ÇöÀç 'ÀÌ ¿þÀÌÆÃ'ÀÌ ½Ä»ç±îÁö ¾ó¸¸Å­ÀÇ ½Ã°£ÀÌ ¼Ò¿äµÇ´ÂÁö
-	// ¹ÝÈ¯ÀÇ ´ÜÀ§´Â 'ÃÊ'
-	int calWaitingTime(List<WaitingVO> curStoreWaitiList, long waitingId, int avgTime);
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¿ï¿½ ï¿½Ã°ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½ ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å­ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ò¿ï¿½Ç´ï¿½ï¿½ï¿½
+	// ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 'ï¿½ï¿½'
+	int calWaitingTime(List<WaitVO> curStoreWaitiList, long waitingId, int avgTime);
 	
-	// ¹Ù·Î ´ÙÀ½ ¿þÀÌÆÃ °´Ã¼ °¡Á®¿À±â
-	WaitingVO readNextWait(List<WaitingVO> curStoreWaitiList);
+	// ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	WaitVO readNextWait(List<WaitVO> curStoreWaitiList);
 	
 
 

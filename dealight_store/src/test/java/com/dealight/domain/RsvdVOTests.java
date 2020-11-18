@@ -7,7 +7,7 @@ import org.junit.Test;
 public class RsvdVOTests {
 	
 
-	// ÇÊ¼öÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ï¿½Ô·Â°ï¿½
     private long id = 1;
     private long storeId = 1;
     private String userId = "kjuioq";
@@ -17,25 +17,27 @@ public class RsvdVOTests {
     private int totAmt = 30;
     private int totQty = 30;
     
-    // ¼±ÅÃÀÔ·Â°ª
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ô·Â°ï¿½
     private long htdlId = 2;
-    private int aprvNo = 1111;
+    private Long aprvNo = 1111L; // ***************ë³€ê²½
 
-	// 1. ÇÊ¼ö ÀÔ·Â°ª¸¸ ÀÔ·ÂÇÏ°í ¸ÅÀå°´Ã¼°¡ »ý¼ºµÉ ¼ö ÀÖ´ÂÁö.
+	// 1. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½å°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½.
 	@Test
 	public void reservationGenerateTest1() {
 		
 		RsvdVO rsvd = new RsvdVO.RsvdVOBuilder()
-				.id(id)
+				.rsvdId(id)
 				.storeId(storeId)
 				.userId(userId)
 				.pnum(pnum)
 				.time(time)
 				.totAmt(totAmt)
 				.totQty(totQty)
+				.stusCd(stusCd)
+				.stusCd("P")
 				.build();
 		
-		assertTrue(rsvd.getId() == id);
+		assertTrue(rsvd.getRsvdId() == id);
 		assertTrue(rsvd.getStoreId() == storeId);
 		assertTrue(rsvd.getUserId().equals(userId));
 		assertTrue(rsvd.getPnum() == pnum);
@@ -44,17 +46,15 @@ public class RsvdVOTests {
 		assertTrue(rsvd.getTotQty() == totQty);
 		assertTrue(rsvd.getStusCd().equals("P"));
 		
-		assertTrue(rsvd.getHtdlId() == 0);
-		assertTrue(rsvd.getAprvNo() == 0);
 		
 	}
 	
-	// 2. ¸ðµçÀÔ·Â°ª
+	// 2. ï¿½ï¿½ï¿½ï¿½Ô·Â°ï¿½
 	@Test
 	public void reservationGenerateTest2() {
 		
 		RsvdVO rsvd = new RsvdVO.RsvdVOBuilder()
-				.id(id)
+				.rsvdId(id)
 				.storeId(storeId)
 				.userId(userId)
 				.pnum(pnum)
@@ -63,9 +63,10 @@ public class RsvdVOTests {
 				.totQty(totQty)
 				.htdlId(htdlId)
 				.aprvNo(aprvNo)
+				.stusCd("P")
 				.build();
 		
-		assertTrue(rsvd.getId() == id);
+		assertTrue(rsvd.getRsvdId() == id);
 		assertTrue(rsvd.getStoreId() == storeId);
 		assertTrue(rsvd.getUserId().equals(userId));
 		assertTrue(rsvd.getPnum() == pnum);
@@ -74,8 +75,6 @@ public class RsvdVOTests {
 		assertTrue(rsvd.getTotQty() == totQty);
 		assertTrue(rsvd.getStusCd().equals("P"));
 		
-		assertTrue(rsvd.getHtdlId() == htdlId);
-		assertTrue(rsvd.getAprvNo() == aprvNo);
 		
 	}
 

@@ -1,13 +1,9 @@
 package com.dealight.domain;
 
-import java.util.Date;
-import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
@@ -15,15 +11,17 @@ import lombok.NonNull;
 @Builder
 public class StoreImgVO {
 	
-	 // ¸ÅÀå¹øÈ£ 
-    private long storeId;
+    private Long storeId;
 
-    // Ã·ºÎ»çÁøÀÏ·Ã¹øÈ£ 
-    private long imgSeq;
+    private Long imgSeq;
     
+    
+    // ******************file upload 
 	private String fileName;
 	private String uploadPath;
 	private String uuid;
 	private boolean image;
 
+    // ë§¤ìž¥ì‚¬ì§„ì£¼ì†Œ 
+    private String imgUrl;
 }

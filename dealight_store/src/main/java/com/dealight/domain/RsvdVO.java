@@ -3,11 +3,16 @@ package com.dealight.domain;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
@@ -17,39 +22,65 @@ public class RsvdVO {
 	
 	// composition
 	private List<RsvdDtlsVO> rsvdDtlsList;
-	
-    // ¿¹¾à¹øÈ£ 
-    private long id;
 
-    // ¸ÅÀå¹øÈ£
-    private long storeId;
+	// **************ë³€ê²½ id -> rsvdId 
+	// ì˜ˆì•½ë²ˆí˜¸ 
+	@NotNull(message = "ì˜ˆì•½ë²ˆí˜¸ëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.")
+    private Long rsvdId;
 
-    // È¸¿ø¾ÆÀÌµğ
+    // ë§¤ì¥ë²ˆí˜¸
+	@NotNull(message = "ë§¤ì¥ë²ˆí˜¸ëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.")
+    private Long storeId;
+
+    // íšŒì›ì•„ì´ë””
+	@NotBlank
+	@Length(min = 1, max = 20)
     private String userId;
 
-    // ÇÖµô¹øÈ£ 
-    private long htdlId;
+    // í•«ë”œë²ˆí˜¸
+	@Nullable
+    private Long htdlId;
 
-    // °áÁ¦½ÂÀÎ¹øÈ£ 
-    private int aprvNo;
+    // ê²°ì œìŠ¹ì¸ë²ˆí˜¸
+    @Nullable
+    private Long aprvNo;
 
-    // ¿¹¾àÀÎ¿ø
+    // ì˜ˆì•½ì¸ì›
+    @NotNull
     private int pnum;
 
-    // ¿¹¾à½Ã°£
+    // ì˜ˆì•½ì‹œê°„
+    @NotBlank
+    @Length(min = 1, max = 20)
     private String time;
 
-    // ¿¹¾à»óÅÂÄÚµå
-    private String stusCd = "P";
+    // ì˜ˆì•½ìƒíƒœì½”ë“œ
+    @NotBlank
+    private String stusCd;
 
-    // ¿¹¾àÃÑ¾×
+    // ì˜ˆì•½ì´ì•¡
+    @NotNull
     private int totAmt;
 
-    // ÃÑ¸Ş´º¼ö·®
+    // ì´ë©”ë‰´ìˆ˜ëŸ‰
+    @NotNull
     private int totQty;
     
-    private Date inDate;
+    @NotNull
+    private Date regDate;
     
-    private String strInDate;
-
+    @NotNull
+    private Date updateDate;
+    
+    @NotNull
+    private int revwStus;
+    
+    //@Nullable
+    //private List<RsvdDtlsVO> dtlsList;
+    //==================================================
+    //ì´ê±°ì—ëŒ€í•œ ì„¤ëª…í•„ìš”í•´ìš” ìˆ˜ë¹ˆì”¨
+//    // ë¦¬ë·° ìƒì„¸
+//    private RsvdDtlsVO dtls;
+//    // ë§¤ì¥
+//    private StoreVO store;
 }

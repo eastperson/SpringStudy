@@ -139,17 +139,17 @@ public class RsvdServiceImpl implements RsvdService {
 		
 		listByDate.stream().forEach((rsvd) -> {
 			
-			// C¿©¾ß µÈ´Ù.
+			// Cï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
 			if(!rsvd.getStusCd().equalsIgnoreCase("C"))
 				return;
 			
-			String time = getTime(rsvd.getInDate());
+			String time = getTime(rsvd.getRegDate());
 			String fomatedTime = toRsvdByTimeFormat(time);
 			
 			if(map.get(fomatedTime) == null)
 				map.put(fomatedTime, new ArrayList<Long>());
 				
-			map.get(fomatedTime).add(rsvd.getId());
+			map.get(fomatedTime).add(rsvd.getRsvdId());
 			
 		});
 		
@@ -233,7 +233,7 @@ public class RsvdServiceImpl implements RsvdService {
 		
 		//log.info("test................keys it next : "+getTodayRsvdByTimeMap.get(first));
 		
-		// ¿À´Ã ¿¹¾à ¸í´ÜÀÌ ¾øÀ¸¸é -1¸®ÅÏ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -1ï¿½ï¿½ï¿½ï¿½
 		if(first.equals(""))
 			return -1;
 		if(getTodayRsvdByTimeMap == null)
@@ -259,7 +259,7 @@ public class RsvdServiceImpl implements RsvdService {
 		
 		readTodayCurRsvdList.stream().forEach((rsvd)->{
 			
-			// C È¤Àº L¿©¾ß ÇÑ´Ù.
+			// C È¤ï¿½ï¿½ Lï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 			if(rsvd.getStusCd().equalsIgnoreCase("C") || rsvd.getStusCd().equalsIgnoreCase("L"))
 				cnt.incrementAndGet();
 				
@@ -275,7 +275,7 @@ public class RsvdServiceImpl implements RsvdService {
 		
 		readTodayCurRsvdList.stream().forEach((rsvd)->{
 			
-			// C È¤Àº LÀÌ¾î¾ß ÇÑ´Ù.
+			// C È¤ï¿½ï¿½ Lï¿½Ì¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
 			if(rsvd.getStusCd().equalsIgnoreCase("C") || rsvd.getStusCd().equalsIgnoreCase("L")) {
 				
 				cnt.addAndGet(rsvd.getPnum());
@@ -350,7 +350,7 @@ public class RsvdServiceImpl implements RsvdService {
 	public RsvdVO findRsvdByRsvdId(long rsvdId,List<RsvdVO> readTodayCurRsvdList) {
 		
 		for(RsvdVO rsvd : readTodayCurRsvdList) {
-			if(rsvd.getId() == rsvdId)
+			if(rsvd.getRsvdId() == rsvdId)
 				return rsvd;
 		}
 		

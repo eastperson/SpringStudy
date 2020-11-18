@@ -1,163 +1,60 @@
 package com.dealight.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserVO {
 	
-	// composition
-	private BUserVO buser;
+    // íšŒì›ì•„ì´ë”” 
+    private String userId;
 
-	// È¸¿ø¾ÆÀÌµğ 
-	private String userId;
+    // íšŒì›ì´ë¦„ dd
+    private String name;
 
-	// È¸¿øÀÌ¸§ 
-	private String name;
+    // íšŒì›ë¹„ë°€ë²ˆí˜¸ 
+    private String pwd;
 
-	// È¸¿øºñ¹Ğ¹øÈ£ 
-	private String pwd;
+    // íšŒì›ì´ë©”ì¼ 
+    private String email;
 
-	// È¸¿øÀÌ¸ŞÀÏ 
-	private String email;
+    // íšŒì›ì „í™”ë²ˆí˜¸ 
+    private String telno;
 
-	// È¸¿øÀüÈ­¹øÈ£ 
-	private String telno;
+    // ìƒë…„ì›”ì¼ 
+    private String brdt;
 
-	// »ı³â¿ùÀÏ 
-	private String brdt;
+    // ì„±ë³„ 
+    private String sex;
 
-	// ¼ºº° 
-	private String sex;
+    // íšŒì›í”„ë¡œí•„ì‚¬ì§„ 
+    private String photoSrc;
 
-	// È¸¿øÇÁ·ÎÇÊ»çÁø 
-	private String photoSrc;
+    // ì†Œì…œë¡œê·¸ì¸ì—¬ë¶€ 
+    private String snsLginYn;
 
-	// ¼Ò¼È·Î±×ÀÎ¿©ºÎ 
-	private String snsLginYn = "N";
+    // íšŒì›êµ¬ë¶„ì½”ë“œ 
+    private String clsCd;
 
-	// È¸¿ø±¸ºĞÄÚµå 
-	private String clsCd = "C";
+    // íŒ¨ë„í‹°íšŒì›ì—¬ë¶€ 
+    private String pmStus;
 
-	// ÆĞ³ÎÆ¼È¸¿ø¿©ºÎ 
-	private String pmStus = "N";
+    // íŒ¨ë„í‹°íšŸìˆ˜ 
+    private int pmCnt;
 
-	// ÆĞ³ÎÆ¼È½¼ö 
-	private int pmCnt = 0;
-
-	// ÆĞ³ÎÆ¼¸¸·áÀÏÀÚ 
-	private Date pmExpi;
-
-
-
-
-
-
-
-	public static class Builder{
-
-		private String userId;
-		private String name;
-		private String pwd;
-		private String email;
-		private String telno;
-		private String brdt;
-		private String sex;
-		private String photoSrc; 
-		private String snsLginYn = "N"; 
-		private String clsCd = "C";
-		private String pmStus = "N";
-		private int pmCnt = 0;
-		private Date pmExpi;
-
-		// ÇÊ¼ö ÀÔ·Â°ª
-		public Builder(String userId, String name,String pwd, String email, String telno, String sex){
-			
-			// id´Â 20ÀÚ ÀÌ³»¿©¾ß ÇÑ´Ù.
-			if(userId.length() > 20)
-				throw new IllegalArgumentException("idÀÇ ±ÛÀÚ¼ö°¡ 20ÀÚ¸¦ ÃÊ°úÇß½À´Ï´Ù.");
-			
-			if(name.length() > 5)
-				throw new IllegalArgumentException("ÀÌ¸§ÀÇ ±ÛÀÚ¼ö°¡ 5ÀÚ¸¦ ÃÊ°úÇß½À´Ï´Ù.");
-			
-			if(pwd.length() > 20)
-				throw new IllegalArgumentException("ºñ¹Ğ¹øÈ£ÀÇ ±ÛÀÚ¼ö°¡ 20ÀÚ¸¦ ÃÊ°úÇß½À´Ï´Ù.");
-			
-			if(email.length() > 30)
-				throw new IllegalArgumentException("emailÀÇ ±ÛÀÚ¼ö°¡ 30ÀÚ¸¦ ÃÊ°úÇß½À´Ï´Ù.");
-			
-			if(telno.length() > 13)
-				throw new IllegalArgumentException("ÀüÈ­¹øÈ£ÀÇ ±ÛÀÚ¼ö°¡ 13ÀÚ¸¦ ÃÊ°úÇß½À´Ï´Ù.");
-			
-			if(!sex.equalsIgnoreCase("M") && !sex.equalsIgnoreCase("F"))
-				throw new IllegalArgumentException("¼ºº° ÀÔ·ÂÄÚµå°¡ Àß¸øµÇ¾ú½À´Ï´Ù.");
-			
-			this.userId = userId;
-			this.name = name;
-			this.pwd = pwd;
-			this.email = email;
-			this.telno = telno;
-			this.sex = sex;
-			this.snsLginYn = "N";
-			this.clsCd = "C";
-			this.pmStus = "N";
-			this.pmCnt = 0;
-		}
-
-		public Builder setBrbt(String brbt){
-
-			this.brdt = brbt;
-
-			return this;
-		}
-
-		public Builder setPhotoSrc(String photoSrc){
-
-			this.photoSrc = photoSrc;
-
-			return this;
-
-		}
-		
-		public Builder setPmExpi(Date pmExpi){
-
-			this.pmExpi = pmExpi;
-
-			return this;
-
-		}
-
-		public UserVO build(){
-
-			UserVO user = new UserVO();
-
-			user.userId = userId;
-			user.name = name;
-			user.pwd = pwd;
-			user.email = email;
-			user.telno = telno;
-			user.brdt = brdt;
-			user.sex = sex;
-			user.photoSrc = photoSrc;
-			user.snsLginYn = snsLginYn;
-			user.clsCd = clsCd;
-			user.pmStus = pmStus;
-			user.pmCnt = pmCnt;
-			user.pmExpi = pmExpi;
-			
-			return user;
-
-		}
-	}
+    // íŒ¨ë„í‹°ë§Œë£Œì¼ì 
+    private Date pmExpi;
+    
+    // ***************ì¶”ê°€ ë™ì¸
+    // Buserì™€ ì¡°ì¸ì„ í•˜ë ¤ê³  ì¼ë‹¨ ë„£ì–´ë†¨ëŠ”ë° í•„ìš”ì—†ìœ¼ë©´ ì‚­ì œ
+    private BUserVO buser;
+	 
 }

@@ -23,9 +23,9 @@ public class StoreLocTests2 {
 	private StoreLocMapper mapper;
 	
 	private long storeId = 102;
-	private String addr = "¼öÁ¤ÁÖ¼Ò";
-	private double lt = 90;
-	private double lo = 40;
+	private String addr = "ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½";
+	private double lat = 90;
+	private double lng = 40;
 	
 	@Test
 	public void updateTest1() {
@@ -33,8 +33,8 @@ public class StoreLocTests2 {
 		StoreLocVO loc = new StoreLocVO().builder()
 				.storeId(storeId)
 				.addr(addr)
-				.lt(lt)
-				.lo(lo)
+				.lat(lat)
+				.lng(lng)
 				.build();
 		
 		int result = mapper.update(loc);
@@ -60,8 +60,8 @@ public class StoreLocTests2 {
 		StoreLocVO loc = new StoreLocVO().builder()
 				.storeId(storeId)
 				.addr(addr)
-				.lt(lt)
-				.lo(lo)
+				.lat(lat)
+				.lng(lng)
 				.build();
 		
 		mapper.insert(loc);

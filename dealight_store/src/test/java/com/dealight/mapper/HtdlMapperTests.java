@@ -24,9 +24,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class HtdlMapperTests {
 	
-	// ÇÊ¼öÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ï¿½Ô·Â°ï¿½
     private long hotdealId = 1;
-    private String name = "µ·±î½º¼¼Æ®";
+    private String name = "ï¿½ï¿½ï¿½î½ºï¿½ï¿½Æ®";
     private long storeId = 13;
     private double dcRate = 0.5;
     private String startTm = "13:00";
@@ -36,11 +36,11 @@ public class HtdlMapperTests {
     private int ddct = 7500;
     private int curPnum = 25;
     
-    // ±âº»°ª
-    private String stusCd;
+    // ï¿½âº»ï¿½ï¿½
+    private String stusCd = "A";
     
-    //¼±ÅÃ ÀÔ·Â°ª
-    private String intro = "ÇÖµô °í°í";
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
+    private String intro = "ï¿½Öµï¿½ ï¿½ï¿½ï¿½";
     
     @Autowired
     private HtdlMapper mapper;
@@ -61,6 +61,7 @@ public class HtdlMapperTests {
 				.befPrice(befPrice)
 				.ddct(ddct)
 				.curPnum(curPnum)
+				.stusCd(stusCd)
 				.build();
     	
     	List<HtdlVO> list = mapper.findAll();
@@ -82,7 +83,7 @@ public class HtdlMapperTests {
     @Rollback(false)
     public void insertSelectKeyTest1() {
     	HtdlVO htdl = new HtdlVO().builder()
-				.name("»©»©·Î ¼¼Æ®")
+				.name("ëˆê¹ŒìŠ¤")
 				.storeId(storeId)
 				.dcRate(dcRate)
 				.startTm(startTm)
@@ -91,6 +92,7 @@ public class HtdlMapperTests {
 				.befPrice(befPrice)
 				.ddct(ddct)
 				.curPnum(curPnum)
+				.stusCd(stusCd)
 				.build();
     	
     	List<HtdlVO> list = mapper.findAll();
@@ -106,7 +108,7 @@ public class HtdlMapperTests {
     	
     	assertTrue(list.get(list.size()-1).getHtdlId() == htdl.getHtdlId());
     	
-    	log.info("ÇÖµô........................."+htdl);
+    	log.info("ï¿½Öµï¿½........................."+htdl);
     	log.info("bf................................"+bf);
     	
     
@@ -167,8 +169,8 @@ public class HtdlMapperTests {
     @Test
     public void updateTest1() {
     	HtdlVO htdl = new HtdlVO().builder()
-				.htdlId(2)
-				.name("¼öÁ¤")
+				.htdlId(2L)
+				.name("ï¿½ï¿½ï¿½ï¿½")
 				.storeId(storeId)
 				.dcRate(dcRate)
 				.startTm(startTm)
@@ -177,6 +179,7 @@ public class HtdlMapperTests {
 				.befPrice(befPrice)
 				.ddct(ddct)
 				.curPnum(curPnum)
+				.stusCd(stusCd)
 				.build();
     	
     	String bf = mapper.findById(2).getName();

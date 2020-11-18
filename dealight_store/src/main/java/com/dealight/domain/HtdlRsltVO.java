@@ -10,6 +10,14 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -17,28 +25,36 @@ import lombok.ToString;
 @Builder
 public class HtdlRsltVO {
 	
-    // ÇÖµô¹øÈ£ 
-	@NonNull
-    private long htdlId;
 
-    // ¸ÅÀå¹øÈ£ 
-	@NonNull
-    private long storeId;
+	// í•«ë”œë²ˆí˜¸
+	@NotNull(message = "í•«ë”œë²ˆí˜¸ëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.")
+    private Long htdlId;
 
-    // ÃÖÁ¾¿¹¾àÀÎ¿ø
-	@NonNull
+    // ë§¤ì¥ë²ˆí˜¸
+	@NotNull(message = "ë§¤ì¥ë²ˆí˜¸ëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.")
+    private Long storeId;
+
+    // ìµœì¢…ì˜ˆì•½ì¸ì›
+	@NotNull
     private int lastPnum;
 
-    // ÇÖµô¸¶°¨ÀÎ¿ø
-	@NonNull
+    // í•«ë”œë§ˆê°ì¸ì›
+	@NotNull
     private int htdlLmtPnum;
 
-    // ¿¹¾à·ü 
-	@NonNull
-    private double rsvdRate;
+    // ì˜ˆì•½ë¥ 
+	// doubleë¡œ ìˆ˜ì •í•´ì•¼ í•¨
+    @NotNull
+    private Double rsvdRate;
 
-    // °æ°ú½Ã°£
-	@NonNull
+    // ê²½ê³¼ì‹œê°„
+    @NotBlank
     private String elapTm;
-
+    
+    @NotNull
+    private Date regDate;
+    
+    @NotNull
+    private Date updateDate;
 }
+

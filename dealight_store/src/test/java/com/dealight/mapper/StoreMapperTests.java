@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 public class StoreMapperTests {
 
 	private long storeId = 13;
-	private String storeNm = "¿µµ¿Á·¹ß";
+	private String storeNm = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 	private String telno = "010-2737-5157";
 	private String clsCd = "I";
 	private String userId = "kjuioq";
@@ -30,7 +30,7 @@ public class StoreMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private StoreMapper mapper;
 
-	// mapper Àß ÁÖÀÔµÇ¾ú´ÂÁö DI Å×½ºÆ®
+	// mapper ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ï¿½ï¿½ï¿½ï¿½ DI ï¿½×½ï¿½Æ®
 	@Test
 	public void mapperDItest() {
 		log.info("mapper DI test : " + mapper);
@@ -58,8 +58,11 @@ public class StoreMapperTests {
 	@Test
 	public void storeMapperInsertTests1() {
 		
-		StoreVO store = new StoreVO.Builder(storeId, storeNm, telno)
-				.setClsCd(clsCd)
+		StoreVO store = new StoreVO().builder()
+				.storeId(storeId)
+				.storeNm(storeNm)
+				.telno(telno)
+				.clsCd(clsCd)
 				.build();
 		
 		mapper.insert(store);
@@ -75,8 +78,11 @@ public class StoreMapperTests {
 	@Test
 	public void storeMapperInsertSelectKeyTests1() {
 		
-		StoreVO store = new StoreVO.Builder(storeId, storeNm, telno)
-				.setClsCd(clsCd)
+		StoreVO store = new StoreVO().builder()
+				.storeId(storeId)
+				.storeNm(storeNm)
+				.telno(telno)
+				.clsCd(clsCd)
 				.build();
 		
 		List<StoreVO> list = mapper.findAll();
@@ -113,7 +119,7 @@ public class StoreMapperTests {
 		
 		log.info(store);
 		
-		assertNotNull(store.getNstore());
+		assertNotNull(store.getBstore());
 	}
 	
 	@Test

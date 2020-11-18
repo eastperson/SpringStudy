@@ -83,7 +83,7 @@ public class StoreServiceImpl implements StoreService {
 		StoreVO store = storeMapper.findById(storeId);
 
 		if(!store.getClsCd().equals("B"))
-			return "»ç¾÷ÀÚ·Î µî·ÏµÈ ¸ÅÀåÀÌ ¾Æ´Õ´Ï´Ù.";
+			return "ï¿½ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Õ´Ï´ï¿½.";
 		
 		BStoreVO bstore = bStoreMapper.findByStoreId(store.getStoreId());
 		
@@ -114,7 +114,7 @@ public class StoreServiceImpl implements StoreService {
 		return storeMapper.findByIdJoinBStore(storeId);
 	}
 
-	// mapper 2¹ø
+	// mapper 2ï¿½ï¿½
 	@Transactional
 	@Override
 	public void registerStoreAndBStore(StoreVO store) {
@@ -180,9 +180,9 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	
-	// store update¸¦ ÇÒ ¶§´Â 
-	// Æ÷ÇÔ°ü°èÀÎ nstore, bstore¸¦ ¸ðµÎ ¾÷µ¥ÀÌÆ® ÇØÁà¾ß ÇÑ´Ù.
-	// mapper 2¹ø
+	// store updateï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+	// ï¿½ï¿½ï¿½Ô°ï¿½ï¿½ï¿½ï¿½ï¿½ nstore, bstoreï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+	// mapper 2ï¿½ï¿½
 	@Override
 	public boolean modifyStore(StoreVO store) {
 		
@@ -236,8 +236,15 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public boolean modifyStore(AllStoreVO store) {
 
-		StoreVO store1 = new StoreVO.Builder(store.getStoreId(), store.getStoreNm(), store.getTelno()
-				).build();
+		Long storeId = 101L;
+		String storeNm = "ë§¤ìž¥";
+		String telno = "000";
+		
+		StoreVO store1 = new StoreVO().builder()
+				.storeId(storeId)
+				.storeNm(storeNm)
+				.telno(telno)
+				.build();
 		BStoreVO bstore = BStoreVO.builder()
 				.buserId(store.getBuserId())
 				.storeId(store.getStoreId())
@@ -257,8 +264,8 @@ public class StoreServiceImpl implements StoreService {
 		StoreLocVO loc = StoreLocVO.builder()
 				.storeId(store.getStoreId())
 				.addr(store.getAddr())
-				.lt(store.getLt())
-				.lo(store.getLo())
+				.lat(store.getLat())
+				.lng(store.getLng())
 				.build();
 		StoreOptionVO opt = StoreOptionVO.builder()
 				.storeId(store.getStoreId())

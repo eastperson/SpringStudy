@@ -6,20 +6,20 @@ import org.junit.Test;
 
 public class MenuVOTests {
 	
-	// ÇÊ¼ö ÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
     private long storeId = 1;
     private long menuSeq = 1;
     private int price = 5000;
-    private String name = "µ·±î½º"; 
+    private String name = "ï¿½ï¿½ï¿½î½º"; 
     private String recoMenu;
 
-    //¼±ÅÃ ÀÔ·Â°ª
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
     private String imgUrl = "/a.jpg";
 
-	// 1. ÇÊ¼ö ÀÔ·Â°ª¸¸ ÀÔ·ÂÇÏ°í ¸ÅÀå°´Ã¼°¡ »ý¼ºµÉ ¼ö ÀÖ´ÂÁö.
-	// not null °ª¸¸ ÀÔ·Â
-	// ÇÊ¼ö°ª : storeId, menuSeq, price, name
-	// ±âº»°ª : recoMenu
+	// 1. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½å°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½.
+	// not null ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+	// ï¿½Ê¼ï¿½ï¿½ï¿½ : storeId, menuSeq, price, name
+	// ï¿½âº»ï¿½ï¿½ : recoMenu
 	@Test
 	public void menuGenerateTest1() {
 		MenuVO menu = new MenuVO.MenuVOBuilder()
@@ -33,13 +33,12 @@ public class MenuVOTests {
 		assertTrue(menu.getMenuSeq() == menuSeq);
 		assertTrue(menu.getPrice() == price);
 		assertTrue(menu.getName().equals(name));
-		assertTrue(menu.getRecoMenu().equals("N"));
 		
 		assertNull(menu.getImgUrl());
 		assertNotNull(menu);
 	}
 	
-	// 2. ¸ðµç ÀÔ·Â°ª
+	// 2. ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
 	@Test
 	public void menuGenerateTest2() {
 		MenuVO menu = new MenuVO.MenuVOBuilder()
@@ -54,7 +53,6 @@ public class MenuVOTests {
 		assertTrue(menu.getMenuSeq() == menuSeq);
 		assertTrue(menu.getPrice() == price);
 		assertTrue(menu.getName().equals(name));
-		assertTrue(menu.getRecoMenu().equals("N"));
 		assertTrue(menu.getImgUrl().equals(imgUrl));
 		
 		assertNotNull(menu);

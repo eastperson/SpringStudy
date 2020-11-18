@@ -1,68 +1,72 @@
 package com.dealight.domain;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Data
 public class HtdlVO {
-	
-	// composition
+	@NotNull(message = "í•«ë”œë²ˆí˜¸ëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.")
+	private Long htdlId;
+	// í•«ë”œì´ë¦„
+	@NotBlank
+	@Length(min = 1, max = 25, message = "ê¸¸ì´ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.")
+	private String name;
+	// ë§¤ì¥ë²ˆí˜¸
+	@NotNull(message = "ë§¤ì¥ë²ˆí˜¸ëŠ” nullì¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.")
+	private Long storeId;
+	// í• ì¸ìœ¨
+	@NotNull
+	private double dcRate;
+	// í•«ë”œì‹œì‘ì‹œê°„
+	@NotEmpty
+	@Length(min = 1, max = 20)
+	private String startTm;
+	// í•«ë”œë§ˆê°ì‹œê°„
+	@NotEmpty
+	@Length(min = 1, max = 20)
+	private String endTm;
+	// í•«ë”œë§ˆê°ì¸ì›
+	@NotNull
+	private int lmtPnum;
+	// í•«ë”œì†Œê°œ
+	@Nullable
+	@Length(min = 1, max = 75)
+	private String intro;
+	// í•«ë”œì ìš©ì „ê°€ê²©
+	@NotNull
+	private int befPrice;
+	// í• ì¸ì°¨ê°ê¸ˆì•¡
+	@NotNull
+	private int ddct;
+	// í•«ë”œí˜„ì¬ì˜ˆì•½ì¸ì›
+	@NotNull
+	private int curPnum;
+	// í•«ë”œìƒíƒœì½”ë“œ
+	@NotBlank
+	private String stusCd;
+	// ë“±ë¡ë‚ ì§œ
+	@NotNull
+	private Date regDate;
+	// ìˆ˜ì •ë‚ ì§œ
+	@NotNull
+	private Date updateDate;
+	// í•«ë”œ ìƒì„¸
 	private List<HtdlDtlsVO> htdlDtls;
-	
-	// ÇÖµô¹øÈ£ 
-	@NonNull
-    private long htdlId;
-
-    // ÇÖµôÀÌ¸§
-	@NonNull
-    private String name;
-
-    // ¸ÅÀå¹øÈ£
-	@NonNull
-    private long storeId;
-
-    // ÇÒÀÎÀ² 
-	@NonNull
-    private double dcRate;
-
-    // ÇÖµô½ÃÀÛ½Ã°£
-	@NonNull
-    private String startTm;
-
-    // ÇÖµô¸¶°¨½Ã°£
-	@NonNull
-    private String endTm;
-
-    // ÇÖµô¸¶°¨ÀÎ¿ø
-	@NonNull
-    private int lmtPnum;
-
-    // ÇÖµô¼Ò°³ 
-    private String intro;
-
-    // ÇÖµôÀû¿ëÀü°¡°İ
-    @NonNull
-    private int befPrice;
-
-    // ÇÒÀÎÂ÷°¨±İ¾×
-    @NonNull
-    private int ddct;
-
-    // ÇÖµôÇöÀç¿¹¾àÀÎ¿ø
-    @NonNull
-    private int curPnum;
-
-    // ÇÖµô»óÅÂÄÚµå
-    @NonNull
-    @Builder.Default
-    private String stusCd = "A";
-
+	// ë§¤ì¥ í‰ê°€
+	private StoreEvalVO storeEval;
 }

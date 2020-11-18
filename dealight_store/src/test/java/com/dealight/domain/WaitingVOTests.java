@@ -9,35 +9,36 @@ import org.junit.Test;
 
 public class WaitingVOTests {
 	
-	//ÇÊ¼ö ÀÔ·Â°ª
+	//ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
     private long id = 1;
     private long storeId = 1;
     private Date waitRegTm = new Date();
     private int waitPnum = 30;
     private String custTelno = "010-0000-0000";
-    private String custNm = "±èµ¿ÀÎ"; 
-    private String waitStusCd;
+    private String custNm = "ï¿½èµ¿ï¿½ï¿½"; 
+    private String waitStusCd = "W";
     
-    // ¼±ÅÃÀÔ·Â°ª
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ô·Â°ï¿½
     private String userId = "kjuioq";
 
 
-	// 1. ÇÊ¼ö ÀÔ·Â°ª¸¸ ÀÔ·ÂÇÏ°í ¸ÅÀå°´Ã¼°¡ »ý¼ºµÉ ¼ö ÀÖ´ÂÁö.
-	// not null °ª¸¸ ÀÔ·Â
-	// ÇÊ¼ö°ª : id, storeId, waitRegTm, waitPnum,custTelno,custNm,waitStusCd
-	// ¼±ÅÃ°ª : userId
+	// 1. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½å°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½.
+	// not null ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+	// ï¿½Ê¼ï¿½ï¿½ï¿½ : id, storeId, waitRegTm, waitPnum,custTelno,custNm,waitStusCd
+	// ï¿½ï¿½ï¿½Ã°ï¿½ : userId
 	@Test
 	public void waitingGenerateTest1() {
-		WaitingVO waiting = new WaitingVO.WaitingVOBuilder()
-				.id(id)
+		WaitVO waiting = new WaitVO().builder()
+				.waitId(id)
 				.storeId(storeId)
 				.waitRegTm(waitRegTm)
 				.waitPnum(waitPnum)
 				.custTelno(custTelno)
 				.custNm(custNm)
+				.waitStusCd(waitStusCd)
 				.build();
 		
-		assertTrue(waiting.getId() == id);
+		assertTrue(waiting.getWaitId() == id);
 		assertTrue(waiting.getStoreId() == storeId);
 		assertTrue(waiting.getWaitRegTm().equals(waitRegTm));
 		assertTrue(waiting.getWaitPnum() == waitPnum);
@@ -49,20 +50,21 @@ public class WaitingVOTests {
 		
 	}
 	
-	// 2. ¸ðµç ÀÔ·Â°ª
+	// 2. ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
 	@Test
 	public void waitingGenerateTest2() {
-		WaitingVO waiting = new WaitingVO.WaitingVOBuilder()
-				.id(id)
+		WaitVO waiting = new WaitVO().builder()
+				.waitId(id)
+				.userId(userId)
 				.storeId(storeId)
 				.waitRegTm(waitRegTm)
 				.waitPnum(waitPnum)
 				.custTelno(custTelno)
 				.custNm(custNm)
-				.userId(userId)
+				.waitStusCd(waitStusCd)
 				.build();
 		
-		assertTrue(waiting.getId() == id);
+		assertTrue(waiting.getWaitId() == id);
 		assertTrue(waiting.getStoreId() == storeId);
 		assertTrue(waiting.getWaitRegTm().equals(waitRegTm));
 		assertTrue(waiting.getWaitPnum() == waitPnum);

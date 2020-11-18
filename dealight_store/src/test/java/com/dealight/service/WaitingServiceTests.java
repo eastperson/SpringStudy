@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dealight.domain.WaitingVO;
-import com.dealight.mapper.WaitingMapper;
+import com.dealight.mapper.WaitMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,7 +26,7 @@ public class WaitingServiceTests {
 	private WaitingService waitingService;
 	
 	@Autowired
-	private WaitingMapper waitMapper;
+	private WaitMapper waitMapper;
 	
 	
 	@Test 
@@ -57,7 +57,7 @@ public class WaitingServiceTests {
 				.waitPnum(3)
 				.waitRegTm(new Date())
 				.custTelno("010-2737-3333")
-				.custNm("µ¿ÀÎ")
+				.custNm("ï¿½ï¿½ï¿½ï¿½")
 				.waitStusCd("W")
 				.build();
 		
@@ -100,7 +100,7 @@ public class WaitingServiceTests {
 				.waitPnum(3)
 				.waitRegTm(new Date())
 				.custTelno("010-2737-3333")
-				.custNm("ÇöÀå¼Õ´Ô")
+				.custNm("ï¿½ï¿½ï¿½ï¿½Õ´ï¿½")
 				.waitStusCd("W")
 				.build();
 		

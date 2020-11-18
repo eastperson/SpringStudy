@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public class HtdlVOTests {
 	
-	// ÇÊ¼öÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ï¿½Ô·Â°ï¿½
     private long hotdealId = 1;
-    private String name = "µ·±î½º¼¼Æ®";
+    private String name = "ï¿½ï¿½ï¿½î½ºï¿½ï¿½Æ®";
     private long storeId = 1;
     private double dcRate = 0.5;
     private String startTm = "13:00";
@@ -18,13 +18,13 @@ public class HtdlVOTests {
     private int ddct = 7500;
     private int curPnum = 25;
     
-    // ±âº»°ª
+    // ï¿½âº»ï¿½ï¿½
     private String stusCd;
     
-    //¼±ÅÃ ÀÔ·Â°ª
-    private String intro = "ÇÖµô °í°í";
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
+    private String intro = "ï¿½Öµï¿½ ï¿½ï¿½ï¿½";
 
-    // 1. ÇÊ¼öÀÔ·Â°ª
+    // 1. ï¿½Ê¼ï¿½ï¿½Ô·Â°ï¿½
 	@Test
 	public void hotDealGenerateTest1() {
 		
@@ -39,6 +39,7 @@ public class HtdlVOTests {
 				.befPrice(befPrice)
 				.ddct(ddct)
 				.curPnum(curPnum)
+				.stusCd("A")
 				.build();
 		
 		assertTrue(htdl.getHtdlId() == hotdealId);
@@ -56,7 +57,7 @@ public class HtdlVOTests {
 		
 	}
 	
-	 // 1. ¸ðµçÀÔ·Â°ª
+	 // 1. ï¿½ï¿½ï¿½ï¿½Ô·Â°ï¿½
 		@Test
 		public void hotDealGenerateTest2() {
 			
@@ -72,6 +73,7 @@ public class HtdlVOTests {
 					.ddct(ddct)
 					.curPnum(curPnum)
 					.intro(intro)
+					.stusCd("A")
 					.build();
 			
 			assertTrue(htdl.getHtdlId() == hotdealId);

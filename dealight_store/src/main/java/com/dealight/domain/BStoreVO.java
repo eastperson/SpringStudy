@@ -6,11 +6,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -18,63 +15,115 @@ import lombok.ToString;
 @Builder
 public class BStoreVO {
 	
-    // ¸ÅÀå¹øÈ£ 
-    @NonNull private long storeId;
+	    private Long storeId;
+	    // ì‚¬ì—…ìíšŒì›ì•„ì´ë”” 
+	    private String buserId;
+//	    =======================
+	    private String brch;
+	    private String repMenu;
+	    private String repImg;
+//	    =======================
+	    // ì°©ì„ìƒíƒœì½”ë“œ 
+	    private String seatStusCd = "B";
+	    // ì˜ì—…ì‹œì‘ì‹œê°„ 
+	    private String openTm;
+	    // ì˜ì—…ì¢…ë£Œì‹œê°„ 
+	    private String closeTm;
+	    // ë¸Œë ˆì´í¬íƒ€ì…ì‹œì‘ì‹œê°„ 
+	    private String breakSttm;
+	    // ë¸Œë ˆì´í¬íƒ€ì„ì¢…ë£Œì‹œê°„ 
+	    private String breakEntm;
+	    // ë¼ìŠ¤íŠ¸ì˜¤ë”ì‹œê°„ 
+	    private String lastOrdTm;
+	    // 1ì¸í…Œì´ë¸”ê°œìˆ˜ 
+	    private int n1SeatNo = -1;
+	    // 2ì¸í…Œì´ë¸”ê°œìˆ˜ 
+	    private int n2SeatNo = -1;
+	    // 4ì¸í…Œì´ë¸”ê°œìˆ˜ 
+	    private int n4SeatNo = -1;
+	    // ë§¤ì¥ì†Œê°œ 
+	    private String storeIntro;
+	    // ë§¤ì¥í‰ê· ì‹ì‚¬ì‹œê°„ 
+	    private int avgMealTm = -1;
+	    // ë§¤ì¥íœ´ë¬´ì¼ 
+	    private String hldy;
+	    // ìˆ˜ìš©ì¸ì› 
+	    private int acmPnum = -1;
+	    
+	    private HtdlVO htdl;
+	    private List<StoreTagVO> tag;
+	    private List<MenuVO> menus;
+	    //ì¶”ê°€ WaitVO ì¶”ê°€ë¨
+	    private List<WaitVO> waits;
+	    
+	    public static class Builder{
+	    	private final Long storeId;
+	    	private final String buserId;
+	    	private final String brch;
+	 	    private final String repMenu;
+	 	    private final String repImg;
+	    	private final String openTm;
+	    	private final String closeTm;
+	    	
+	    	private String seatStusCd;
+	    	private String breakSttm;
+	    	private String breakEntm;
+	    	private int n1SeatNo;
+	 	    private int n2SeatNo;
+	 	    private int n4SeatNo;
+	 	    private String storeIntro;
+		    private int avgMealTm;
+		    private String hldy;
+		    private int acmPnum;
+		    
+		    
+		    
+			public Builder(Long storeId, String buserId,
+							String brch, String repMenu, String repImg,
+							String openTm, String closeTm) {
+				super();
+				this.storeId = storeId;
+				this.buserId = buserId;
+				this.brch = brch;
+				this.repImg = repImg;
+				this.repMenu = repMenu;
+				this.openTm = openTm;
+				this.closeTm = closeTm;
+			}
 
-    // »ç¾÷ÀÚÈ¸¿ø¾ÆÀÌµğ 
-    private String buserId;
-    
-    //Ãß°¡ =================================
-    private String brch;
-    private String repMenu;
-    private String repImg;
-    //=================================
-
-    // Âø¼®»óÅÂÄÚµå 
-    @Builder.Default
-    @NonNull private String seatStusCd = "B";
-
-    // ¿µ¾÷½ÃÀÛ½Ã°£ 
-    @NonNull private String openTm;
-
-    // ¿µ¾÷Á¾·á½Ã°£ 
-    @NonNull private String closeTm;
-
-    // ºê·¹ÀÌÅ©Å¸ÀÔ½ÃÀÛ½Ã°£ 
-    private String breakSttm;
-
-    // ºê·¹ÀÌÅ©Å¸ÀÓÁ¾·á½Ã°£ 
-    private String breakEntm;
-
-    // ¶ó½ºÆ®¿À´õ½Ã°£ 
-    private String lastOrdTm;
-
-    // 1ÀÎÅ×ÀÌºí°³¼ö 
-    private int n1SeatNo = -1;
-
-    // 2ÀÎÅ×ÀÌºí°³¼ö 
-    private int n2SeatNo = -1;
-    
-    // 4ÀÎÅ×ÀÌºí°³¼ö 
-    private int n4SeatNo = -1;
-
-    // ¸ÅÀå¼Ò°³ 
-    private String storeIntro;
-
-    // ¸ÅÀåÆò±Õ½Ä»ç½Ã°£ 
-    private int avgMealTm;
-
-    // ¸ÅÀåÈŞ¹«ÀÏ 
-    private String hldy;
-
-    // ¼ö¿ëÀÎ¿ø 
-    private int acmPnum = -1;
-    
-    // Ãß°¡!!
-    private HtdlVO htdl; // ÇÖµô VO¸í º¯°æ
-    private StoreTagVO tag;
-    private List<MenuVO> menus;
-	
-	
-
+			public Builder setseatStusCd(String seatStusCd) {this.seatStusCd = seatStusCd; 	return this;}
+			public Builder setBreakSttm	(String breakSttm) 	{this.breakSttm = breakSttm; 	return this;}
+			public Builder setBreakEntm	(String breakEntm) 	{this.breakEntm = breakEntm;	return this;}
+			public Builder setN1SeatNo	(int n1SeatNo) 		{this.n1SeatNo = n1SeatNo; 		return this;}
+			public Builder setN2SeatNo	(int n2SeatNo) 		{this.n2SeatNo = n2SeatNo; 		return this;}
+			public Builder setN4SeatNo	(int n4SeatNo) 		{this.n4SeatNo = n4SeatNo; 		return this;}
+			public Builder setStoreIntro(String storeIntro) {this.storeIntro = storeIntro; 	return this;}
+			public Builder setAvgMealTm	(int avgMealTm) 	{this.avgMealTm = avgMealTm; 	return this;}
+			public Builder setHldy		(String hldy) 		{this.hldy = hldy; 				return this;}
+			public Builder setAcmPnum	(int acmPnum) 		{this.acmPnum = acmPnum; 		return this;}
+			
+		    public BStoreVO build() {
+		    	return new BStoreVO(this);
+		    }
+	    }
+	    
+	    public BStoreVO(Builder builder) {
+	    	storeId = builder.storeId;
+	    	buserId = builder.buserId;
+	    	brch = builder.brch;
+	    	repImg = builder.repImg;
+	    	repMenu = builder.repMenu;
+	    	openTm = builder.openTm;
+	    	closeTm = builder.closeTm;
+	    	seatStusCd = builder.seatStusCd;
+	    	breakSttm = builder.breakSttm;
+	    	breakEntm = builder.breakEntm;
+	    	n1SeatNo = builder.n1SeatNo;
+	    	n2SeatNo = builder.n2SeatNo;
+	    	n4SeatNo = builder.n4SeatNo;
+	    	storeIntro = builder.storeIntro;
+	    	avgMealTm = builder.avgMealTm;
+	    	hldy = builder.hldy;
+	    	acmPnum = builder.acmPnum;
+	    }
 }

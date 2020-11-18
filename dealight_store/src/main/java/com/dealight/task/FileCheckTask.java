@@ -58,7 +58,7 @@ public class FileCheckTask {
 		
 	}
 	
-	//¿¹¾à ÀÚµ¿ »ý¼º±â
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Scheduled(cron="0 * * * * *")
 	public void registerRsvd() throws Exception{
 		log.warn("Auto Rsvd Register Task run .....................");
@@ -98,10 +98,10 @@ public class FileCheckTask {
         int totAmt = 30;
         int totQty = 30;
     	
-    	//ÇÊ¼ö ÀÔ·Â°ª
+    	//ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
         long rsvdId = 9;
         long rsvdtSeq = 22;
-        String menuNm = "¶±ººÀÌ";
+        String menuNm = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
         int menuTotQty = 5;
         int menuPrc = 3000;
         
@@ -112,7 +112,7 @@ public class FileCheckTask {
         storeId = storeList.get(storeIdx);
         
     	RsvdVO rsvd = new RsvdVO().builder()
-    			.id(id)
+    			.rsvdId(id)
     			.htdlId(htdlId)
 				.storeId(storeId)
 				.userId(userId)
@@ -125,7 +125,7 @@ public class FileCheckTask {
     	
     	rsvdMapper.insertSelectKey(rsvd);
     	
-    	rsvdId = rsvd.getId();
+    	rsvdId = rsvd.getRsvdId();
     	
     	log.warn(rsvd);
     	
@@ -140,7 +140,7 @@ public class FileCheckTask {
     	
     	RsvdDtlsVO rsvdDtls2 = new RsvdDtlsVO().builder()
 				.rsvdId(rsvdId)
-				.menuNm("¼ø´ë")
+				.menuNm("ï¿½ï¿½ï¿½ï¿½")
 				.menuTotQty(menuTotQty)
 				.menuPrc(menuPrc)
 				.build();
@@ -148,7 +148,7 @@ public class FileCheckTask {
     	
     	RsvdDtlsVO rsvdDtls3 = new RsvdDtlsVO().builder()
 				.rsvdId(rsvdId)
-				.menuNm("Æ¢±è")
+				.menuNm("Æ¢ï¿½ï¿½")
 				.menuTotQty(menuTotQty)
 				.menuPrc(menuPrc)
 				.build();
@@ -163,7 +163,7 @@ public class FileCheckTask {
     	
     	
     	log.warn(result);
-		log.warn("=========================================rsvd ¿Ï·á");
+		log.warn("=========================================rsvd ï¿½Ï·ï¿½");
 	}
 
 	@Scheduled(cron="0 10 * * * *")

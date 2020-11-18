@@ -6,10 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dealight.domain.UserVO;
-import com.dealight.domain.WaitingVO;
+import com.dealight.domain.WaitVO;
 import com.dealight.mapper.UserMapper;
-import com.dealight.mapper.WaitingMapper;
+import com.dealight.mapper.WaitMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -18,15 +17,15 @@ import lombok.extern.log4j.Log4j;
 public class WaitingServiceImpl implements WaitingService {
 	
 	@Autowired
-	private WaitingMapper waitMapper;
+	private WaitMapper waitMapper;
 	
 	@Autowired
 	private UserMapper userMapper;
 
 	@Override
-	public WaitingVO read(long waitingId) {
+	public WaitVO read(long waitingId) {
 
-		WaitingVO wait = waitMapper.findById(waitingId);
+		WaitVO wait = waitMapper.findById(waitingId);
 		
 		//UserVO user = userMapper.findById(wait.getUserId());
 		
@@ -38,100 +37,100 @@ public class WaitingServiceImpl implements WaitingService {
 	}
 
 	@Override
-	public long registerOnWaiting(WaitingVO waiting) {
+	public long registerOnWaiting(WaitVO waiting) {
 		
 		String userId = waiting.getUserId();
 		
-		// user°¡ ¿þÀÌÆÃÀÌ °¡´ÉÇÏÁö ¾Ê´Ù¸é?
+		// userï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Ù¸ï¿½?
 		if(!isPossibleWaitingUser(userId))
 			return -1;
 		
 		waitMapper.insertSelectKey(waiting);
 		
-		// µî·ÏµÈ ¿þÀÌÆÃ ¹øÈ£¸¦ ¹ÝÈ¯ÇÑ´Ù.
-		return waiting.getId();
+		// ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½.
+		return waiting.getWaitId();
 	}
 
 	@Override
 	public boolean isPossibleWaitingUser(String userId) {
 		
-		// ÇØ´ç À¯ÀÚ°¡ ¿þÀÌÆÃÀ» ÇØµµ µÇ´ÂÁö(ÆÐ³ÎÆ¼, ¿þÀÌÆÃ Áßº¹) ÆÇº°ÇÑ´Ù.
+		// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øµï¿½ ï¿½Ç´ï¿½ï¿½ï¿½(ï¿½Ð³ï¿½Æ¼, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ßºï¿½) ï¿½Çºï¿½ï¿½Ñ´ï¿½.
 		return !isCurWaitingUser(userId) && !isCurPanaltyUser(userId);
 	}
 
 	@Override
 	public boolean isCurWaitingUser(String userId) {
 		
-		// ÇØ´ç À¯Àú°¡ ¿þÀÌÆÃ »óÅÂÀÎÁö È®ÀÎÇÑ´Ù.
+		// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ñ´ï¿½.
 		return waitMapper.findByUserId(userId, "W").size() > 0;
 	}
 
 	@Override
 	public boolean isCurPanaltyUser(String userId) {
 
-		// ÇØ´ç À¯Àú°¡ ÆÐ³ÎÆ¼ °í°´ÀÎÁö ÆÇº°ÇÑ´Ù.
+		// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½ï¿½Ñ´ï¿½.
 		return userMapper.findById(userId).getPmStus().equals("P");
 	}
 
 	@Override
-	public long registerOffWaiting(WaitingVO waiting) {
+	public long registerOffWaiting(WaitVO waiting) {
 
 		waitMapper.insertSelectKey(waiting);
 		
-		// µî·ÏµÈ ¿þÀÌÆÃÀÇ id¸¦ ¹ÝÈ¯ÇÑ´Ù.
-		return waiting.getId();
+		// ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ idï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½.
+		return waiting.getWaitId();
 
 	}
 
 	@Override
 	public boolean cancelWaiting(long waitingId) {
 		
-		// ¿þÀÌÆÃ »óÅÂ¸¦ C(ÀÔÀå)·Î ¹Ù²ã³õ´Â´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ C(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½Â´ï¿½.
 		return waitMapper.changeWaitStusCd(waitingId, "C") == 1;
 	}
 
 	@Override
 	public boolean enterWaiting(long waitingId) {
 
-		// ¿þÀÌÆÃ »óÅÂ¸¦ E(ÀÔÀå)·Î ¹Ù²ã³õ´Â´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ E(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½Â´ï¿½.
 		return waitMapper.changeWaitStusCd(waitingId, "E") == 1;
 	}
 
 	@Override
 	public boolean panaltyWaiting(long waitingId) {
 
-		// ¿þÀÌÆÃ »óÅÂ¸¦ P(ÆÐ³ÎÆ¼)·Î ¹Ù²ã³õ´Â´Ù.	
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ P(ï¿½Ð³ï¿½Æ¼)ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½Â´ï¿½.	
 		return waitMapper.changeWaitStusCd(waitingId, "P") == 1;
 	}
 
 	@Override
-	public List<WaitingVO> allStoreWaitList(long storeId) {
+	public List<WaitVO> allStoreWaitList(long storeId) {
 		
 		return waitMapper.findByStoreId(storeId);
 	}
 
 	@Override
-	public List<WaitingVO> curStoreWaitList(long storeId, String waitStusCd) {
+	public List<WaitVO> curStoreWaitList(long storeId, String waitStusCd) {
 		
 		return waitMapper.findByStoreIdAndStusCd(storeId, waitStusCd);
 	}
 
 	@Override
-	public int calWatingOrder(List<WaitingVO> curStoreWaitiList, long waitingId) {
+	public int calWatingOrder(List<WaitVO> curStoreWaitiList, long waitingId) {
 				
-		// ÇöÀç ¿þÀÌÆÃ ¸®½ºÆ® Áß¿¡¼­ ÇØ´ç ¿þÀÌÆÃ ¹øÈ£º¸´Ù ¿þÀÌÆÃ ¹øÈ£°¡ ³·Àº ¿þÀÌÆÃÀÇ ¼ýÀÚ + 1
-		return curStoreWaitiList.stream().filter(c -> c.getId() < waitingId).collect(Collectors.toList()).size()+1;
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ + 1
+		return curStoreWaitiList.stream().filter(c -> c.getWaitId() < waitingId).collect(Collectors.toList()).size()+1;
 	}
 
 	@Override
-	public int calWaitingTime(List<WaitingVO> curStoreWaitiList, long waitingId, int avgTime) {
+	public int calWaitingTime(List<WaitVO> curStoreWaitiList, long waitingId, int avgTime) {
 		
-		// ÇØ´ç ´ë±â¼øÀ§ * avgTime
+		// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ * avgTime
 		return calWatingOrder(curStoreWaitiList, waitingId) * avgTime;
 	}
 
 	@Override
-	public WaitingVO readNextWait(List<WaitingVO> curStoreWaitiList) {
+	public WaitVO readNextWait(List<WaitVO> curStoreWaitiList) {
 		
 		// null check
 		if(curStoreWaitiList == null)
@@ -141,9 +140,9 @@ public class WaitingServiceImpl implements WaitingService {
 		if(curStoreWaitiList.stream().filter(w -> w.getWaitStusCd().equals("W")).collect(Collectors.toList()).size() ==0)
 			return null;
 		
-		// ÇöÀç store ¿þÀÌÆÃ ¸®½ºÆ®¿¡¼­ ÇöÀç ¿þÀÌÆÃ »óÅÂÀÌ°í °¡Àå ¸ÕÀú ¿þÀÌÆÃÇÑ(¿þÀÌÆÃ ÀÏ·Ã¹øÈ£°¡ ³·Àº) ¿þÀÌÆÃ ²¨³»¿À±â
+		// ï¿½ï¿½ï¿½ï¿½ store ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return curStoreWaitiList.stream().filter(w -> w.getWaitStusCd().equals("W")).sorted(
-				(w1, w2) -> (int) (w1.getId() - w2.getId())).collect(Collectors.toList()).get(0);
+				(w1, w2) -> (int) (w1.getWaitId() - w2.getWaitId())).collect(Collectors.toList()).get(0);
 	}
 
 }

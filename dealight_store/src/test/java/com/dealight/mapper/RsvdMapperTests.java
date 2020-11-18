@@ -25,17 +25,17 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class RsvdMapperTests {
 	
-	// ÇÊ¼öÀÔ·Â°ª
-    private long id = 6;
-    private long storeId = 13;
+	// ï¿½Ê¼ï¿½ï¿½Ô·Â°ï¿½
+    private Long id = 6L;
+    private Long storeId = 13L;
     private String userId = "kjuioq";
     private int pnum = 30;
     private String time = "09:30";
-    private String stusCd;
+    private String stusCd = "b";
     private int totAmt = 30;
     private int totQty = 30;
     
-    // ¼±ÅÃÀÔ·Â°ª
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ô·Â°ï¿½
     private long htdlId = 10;
     private int aprvNo = 1111;
     
@@ -46,13 +46,15 @@ public class RsvdMapperTests {
     @Test
     public void insertTest1() {
     	RsvdVO rsvd = new RsvdVO().builder()
-				.id(id)
+				.rsvdId(id)
 				.storeId(storeId)
 				.htdlId(htdlId)
 				.pnum(pnum)
 				.time(time)
 				.totAmt(totAmt)
 				.totQty(totQty)
+				.userId(userId)
+				.stusCd(stusCd)
 				.build();
     	
     	List<RsvdVO> list = mapper.findAll();
@@ -72,13 +74,14 @@ public class RsvdMapperTests {
     @Test
     public void insertSelectKeyTest1() {
     	RsvdVO rsvd = new RsvdVO().builder()
-				.id(id)
+				.rsvdId(id)
 				.storeId(storeId)
 				.userId(userId)
 				.htdlId(htdlId)
 				.pnum(pnum)
 				.time(time)
 				.totAmt(totAmt)
+				.stusCd(stusCd)
 				.totQty(totQty)
 				.build();
     	
@@ -92,7 +95,7 @@ public class RsvdMapperTests {
     	
     	assertTrue(bf + 1 == list.size());
     	
-    	assertTrue(list.get(list.size()-1).getId() == rsvd.getId());
+    	assertTrue(list.get(list.size()-1).getRsvdId() == rsvd.getRsvdId());
 
     	
     }
@@ -170,63 +173,63 @@ public class RsvdMapperTests {
     
     // read list
     // find by store and today
-    @Test
-    public void findRsvdListByStoreTodayTest1() {
-
-    	
-    	LocalDate currentDate = LocalDate.now();
-    	
-    	log.info(currentDate);
-    	
-    	DateTimeFormatter dateTimeForMatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-    	
-    	String today = currentDate.format(dateTimeForMatter);
-    	
-    	log.info("today............................." + today);
-    	
-    	List<RsvdVO> list = mapper.findByStoreIdToday(storeId, today);
-    	
-
-    	log.info(list);
-    	
-    	assertNotNull(list);
-    	
-		String pattern = "yyyyMMdd";
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    	
-    	list.forEach((rsvd) -> {
-    		assertTrue(rsvd.getStoreId() == storeId);
-    		assertTrue(simpleDateFormat.format(rsvd.getInDate()).equals(today));
-    	});
-    	 
-    	
-    }
+//    @Test
+//    public void findRsvdListByStoreTodayTest1() {
+//
+//    	
+//    	LocalDate currentDate = LocalDate.now();
+//    	
+//    	log.info(currentDate);
+//    	
+//    	DateTimeFormatter dateTimeForMatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+//    	
+//    	String today = currentDate.format(dateTimeForMatter);
+//    	
+//    	log.info("today............................." + today);
+//    	
+//    	List<RsvdVO> list = mapper.findByStoreIdToday(storeId, today);
+//    	
+//
+//    	log.info(list);
+//    	
+//    	assertNotNull(list);
+//    	
+//		String pattern = "yyyyMMdd";
+//		
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//    	
+//    	list.forEach((rsvd) -> {
+//    		assertTrue(rsvd.getStoreId() == storeId);
+//    		assertTrue(simpleDateFormat.format(rsvd.getRegDate()).equals(today));
+//    	});
+//    	 
+//    	
+//    }
     
     // read list
     // find by store and date
-    @Test
-    public void findRsvdListByStoreAndDateTest1() {
-    	
-    	String date = "20201107";
-    	
-    	List<RsvdVO> list = mapper.findByStoreIdToday(storeId, date);
-
-    	log.info(list);
-    	
-    	assertNotNull(list);
-    	
-		String pattern = "yyyyMMdd";
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    	
-    	list.forEach((rsvd) -> {
-    		assertTrue(rsvd.getStoreId() == storeId);
-    		assertTrue(simpleDateFormat.format(rsvd.getInDate()).equals(date));
-    	});
+//    @Test
+//    public void findRsvdListByStoreAndDateTest1() {
+//    	
+//    	String date = "20201107";
+//    	
+//    	List<RsvdVO> list = mapper.findByStoreIdToday(storeId, date);
+//
+//    	log.info(list);
+//    	
+//    	assertNotNull(list);
+//    	
+//		String pattern = "yyyyMMdd";
+//		
+//		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//    	
+//    	list.forEach((rsvd) -> {
+//    		assertTrue(rsvd.getStoreId() == storeId);
+//    		assertTrue(simpleDateFormat.format(rsvd.getRegDate()).equals(date));
+//    	});
     	 
     	
-    }
+//    }
     
     // read list
     // find by store and user
@@ -271,7 +274,7 @@ public class RsvdMapperTests {
     @Test
     public void findUserByStoreIdAndDateAndStusTest1() {
     	
-    	storeId = 101;
+    	storeId = 101L;
     	
     	List<UserWithRsvdDTO> map =  mapper.findUserByStoreIdAndDate(storeId, "20201115");
     	
@@ -283,15 +286,15 @@ public class RsvdMapperTests {
     @Test
     public void updateTest1() {
     	
-    	id = 24;
+    	id = 24L;
     	
     	RsvdVO rsvd = new RsvdVO().builder()
-    			.id(id)
+    			.rsvdId(id)
 				.storeId(storeId)
 				.userId(userId)
 				.htdlId(htdlId)
 				.pnum(pnum)
-				.time("¼öÁ¤")
+				.time("ï¿½ï¿½ï¿½ï¿½")
 				.totAmt(totAmt)
 				.totQty(totQty)
 				.stusCd("C")

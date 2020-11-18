@@ -23,15 +23,15 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class UserMapperTests {
 	
-	// ÇÊ¼ö ÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
 	String id = "kjuioq";
-	String name = "±èµ¿ÀÎ";
+	String name = "ï¿½èµ¿ï¿½ï¿½";
 	String pwd = "123123";
 	String email = "kjuioq@naver.com";
 	String telno = "010-2737-5157";
 	String sex = "M";
 
-	// ¼±ÅÃ ÀÔ·Â°ª
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
 	String brdt = "931211";
 	String photoSrc = "/a.jpg";
 	Date pmExpi = new Date();
@@ -40,7 +40,7 @@ public class UserMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private UserMapper mapper;
 
-	// mapper Àß ÁÖÀÔµÇ¾ú´ÂÁö DI Å×½ºÆ®
+	// mapper ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ï¿½ï¿½ï¿½ï¿½ DI ï¿½×½ï¿½Æ®
 	@Test
 	public void mapperDItest() {
 		log.info("mapper DI test : " + mapper);
@@ -71,7 +71,13 @@ public class UserMapperTests {
 
 	@Test
 	public void mapperInsertTest() {
-		UserVO user = new UserVO.Builder("aa32add", name, pwd, email, telno, sex)
+		UserVO user = new UserVO().builder()
+				.userId("kjuioq")
+				.brdt(brdt)
+				.name(name)
+				.pwd(pwd)
+				.email(email)
+				.sex(sex)
 				.build();
 		
 		log.info(user);
@@ -112,7 +118,13 @@ public class UserMapperTests {
 	public void mapperDeleteTest1() {
 		
 		
-		UserVO user = new UserVO.Builder("#####", name, pwd, email, telno, sex)
+		UserVO user = new UserVO().builder()
+				.userId("kjuioq")
+				.brdt(brdt)
+				.name(name)
+				.pwd(pwd)
+				.email(email)
+				.sex(sex)
 				.build();
 		
 		log.info(user);

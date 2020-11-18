@@ -27,7 +27,7 @@
  -->
 
 <resultMap type="com.dealight.domain.RsvdVO" id="RsvdVO">
-    <result column="id" property="id"/>
+    <result column="id" property="rsvdId"/>
     <result column="store_id" property="storeId"/>
     <result column="user_id" property="userId"/>
     <result column="htdl_id" property="htdlId"/>
@@ -37,7 +37,6 @@
     <result column="stus_cd" property="stusCd"/>
     <result column="tot_amt" property="totAmt"/>
     <result column="tot_qty" property="totQty"/>
-    <result column="in_date" property="inDate"/>
     
 	<collection property="rsvdDtlsList" column="rsvd_id" ofType="com.dealight.domain.RsvdDtlsVO">
 		<result column="id" property="rsvdId"/>
@@ -50,7 +49,7 @@
 
 <resultMap type="com.dealight.domain.UserWithRsvdDTO" id="UserWithRsvdDTO">
 	
-	<result column="id" property="id"/>
+	<result column="id" property="rsvdId"/>
     <result column="store_id" property="storeId"/>
     <result column="htdl_id" property="htdlId"/>
     <result column="aprv_no" property="aprvNo"/>
@@ -59,7 +58,6 @@
     <result column="stus_cd" property="stusCd"/>
     <result column="tot_amt" property="totAmt"/>
     <result column="tot_qty" property="totQty"/>
-    <result column="in_date" property="inDate"/>
 	
 	<result column="user_id" property="userId"/>
 	<result column="name" property="name"/>
@@ -90,7 +88,7 @@
 		SELECT
 		*
 		FROM tbl_rsvd
-		where id = #{id}
+		where id = #{rsvdId}
 		ORDER BY in_date asc
 	</select>
 
@@ -207,14 +205,14 @@
 	</insert>
 
 	<insert id="insertSelectKey">
-		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+		<selectKey keyProperty="rsvdId" order="BEFORE" resultType="long">
 			select seq_rsvd.nextval from dual
 		</selectKey>
 		INSERT
 		INTO tbl_rsvd(id, store_id, user_id, htdl_id, aprv_no, pnum,
 		time, stus_cd, tot_amt, tot_qty,in_date)
 		VALUES
-		(#{id},#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty},sysdate)
+		(#{rsvdId},#{storeId},#{userId},#{htdlId},#{aprvNo},#{pnum},#{time},#{stusCd},#{totAmt},#{totQty},sysdate)
 	</insert>
 
 	<update id="update">
@@ -231,13 +229,13 @@
 		stus_cd = #{stusCd},
 		tot_amt = #{totAmt},
 		tot_qty = #{totQty}
-		where id = #{id}
+		where id = #{rsvdId}
 	</update>
 
 	<delete id="delete">
 		DELETE
 		FROM tbl_rsvd
-		WHERE id = #{id}
+		WHERE id = #{rsvdId}
 	</delete>
 
 

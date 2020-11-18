@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.dealight.mapper.UserMapperTests;
 
 import lombok.extern.log4j.Log4j;
 
@@ -29,15 +28,15 @@ import lombok.extern.log4j.Log4j;
 public class StoreVOTests {
 	
     private long storeId = 1;
-    private String storeNm = "¿µµ¿Á·¹ß";
+    private String storeNm = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     private String telno = "010-2737-5157";
     private String clsCd = "I";
     
     //private Validator validator;
-	// 1. ÇÊ¼ö ÀÔ·Â°ª¸¸ ÀÔ·ÂÇÏ°í ¸ÅÀå°´Ã¼°¡ »ý¼ºµÉ ¼ö ÀÖ´ÂÁö.
-	// not null °ª¸¸ ÀÔ·Â
-	// ÇÊ¼ö°ª : store_id,store_nm,telno
-	// ¼±ÅÃ°ª : cls_cd
+	// 1. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½å°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½.
+	// not null ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+	// ï¿½Ê¼ï¿½ï¿½ï¿½ : store_id,store_nm,telno
+	// ï¿½ï¿½ï¿½Ã°ï¿½ : cls_cd
     
     @Before
     public void setUp() {
@@ -46,7 +45,10 @@ public class StoreVOTests {
     }
 	@Test
 	public void storeGenerateTest1() {
-		StoreVO store = new StoreVO.Builder(storeId, storeNm, telno)
+		StoreVO store = new StoreVO().builder()
+				.storeId(storeId)
+				.storeNm(storeNm)
+				.telno(telno)
 				.build();
 		
 		assertTrue(store.getStoreId() == storeId);
@@ -61,11 +63,14 @@ public class StoreVOTests {
 		//set.forEach(msg -> Log.info(msg.getMessage()));
 	}
 	
-	// 2. ¸ðµç ÀÔ·Â°ª Å×½ºÆ®
+	// 2. ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½ ï¿½×½ï¿½Æ®
 	@Test
 	public void storeGenerateTest2() {
-		StoreVO store = new StoreVO.Builder(storeId, storeNm, telno)
-				.setClsCd(clsCd)
+		StoreVO store = new StoreVO().builder()
+				.storeId(storeId)
+				.storeNm(storeNm)
+				.telno(telno)
+				.clsCd(clsCd)
 				.build();
 		
 		assertTrue(store.getStoreId() == storeId);

@@ -1,57 +1,54 @@
 package com.dealight.domain;
 
-import java.awt.Menu;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 
-import jdk.internal.org.jline.utils.Log;
-
 public class AllStoreVOTests {
 
     private long storeId = 13;
-    private String storeNm = "¿µµ¿Á·¹ß";
+    private String storeNm = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
     private String telno = "010-2737-5157";
     private String clsCd = "I";
-    // ¸ÅÀå¹øÈ£ 
+    // ï¿½ï¿½ï¿½ï¿½ï¿½È£ 
 
-    // ÇØ½ÃÅÂ±×ÀÌ¸§ 
-    private String tagNm = "ºÐ½Ä";
-    // ¸ÅÀå¹øÈ£ 
+    // ï¿½Ø½ï¿½ï¿½Â±ï¿½ï¿½Ì¸ï¿½ 
+    private String tagNm = "ï¿½Ð½ï¿½";
+    // ï¿½ï¿½ï¿½ï¿½ï¿½È£ 
     private String park = "Y";
     private String nokids = "Y";
     private String pg = "N";
     private String wifi = "N";
     private String pet = "N";
     private String smoke = "N";
-	private String addr = "ÁÖ¼Ò";
-	private int lt = 90;
-	private int lo = 30;
+	private String addr = "ï¿½Ö¼ï¿½";
+	private double lat = 90;
+	private double lng = 30;
 	private long imgSeq = 1;
 	private String imgUrl = "/a.jpg";
 	private double avgRating = 4.5;
 	private int revwTotNum = 5;
 	private int likeTotNum = 25;
-	// ÇÊ¼ö ÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
     private long id = 1;
-    private String cnts = "³Ê¹« ¸ÀÀÖ¾î¿ë~";
-    private Date regDt = new Date(); 
+    private String cnts = "ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½~";
+    private String regDt = "20201113"; 
     private double rating = 5.5;
-    private String replyCnts = "¶Ç ½ÃÄÑÁÖ¼¼¿ä~";
-    private Date replyRegDt = new Date();
+    private String replyCnts = "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½~";
+    private String replyRegDt = "20201107";
     
-    // ¼±ÅÃ ÀÔ·Â°ª
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
     private long rsvdId = 1;
     private long waitId = 1;
-	// ÇÊ¼ö ÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
     private long menuSeq = 1;
     private int price = 5000;
-    private String name = "µ·±î½º"; 
+    private String name = "ï¿½ï¿½ï¿½î½º"; 
     private String recoMenu;
 
-    //¼±ÅÃ ÀÔ·Â°ª
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
 	private String userId = "kjuioq";
 	
     private String seatStusCd;
@@ -65,9 +62,9 @@ public class AllStoreVOTests {
     private int n1SeatNo = 8;
     private int n2SeatNo = 10;
     private int n4SeatNo = 5;
-    private String storeIntro = "¾È³ç?";
+    private String storeIntro = "ï¿½È³ï¿½?";
     private int avgMealTm = 30;
-    private String hldy = "ÀÏ¿äÀÏ"; 
+    private String hldy = "ï¿½Ï¿ï¿½ï¿½ï¿½"; 
     private int acmPnum = 40;
     
     @Test
@@ -75,12 +72,15 @@ public class AllStoreVOTests {
     	
     }
     
-	// 2. ¸ðµç ÀÔ·Â°ª Å×½ºÆ®
+	// 2. ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½ ï¿½×½ï¿½Æ®
 	@Test
 	public void AllStoreDTOGenerateTest() {
 		
-		StoreVO store = new StoreVO.Builder(storeId, storeNm, telno)
-				.setClsCd(clsCd)
+		StoreVO store = new StoreVO().builder()
+				.storeId(storeId)
+				.storeNm(storeNm)
+				.telno(telno)
+				.clsCd(clsCd)
 				.build();
     	StoreTagVO stag = new StoreTagVO().builder()
     			.storeId(storeId)
@@ -97,8 +97,8 @@ public class AllStoreVOTests {
 				.build();
 		StoreLocVO sloc = new StoreLocVO.StoreLocVOBuilder()
 				.addr(addr)
-				.lt(lt)
-				.lo(lo)
+				.lat(lat)
+				.lng(lng)
 				.storeId(storeId)
 				.build();
 		StoreImgVO simg = new StoreImgVO.StoreImgVOBuilder()
@@ -112,7 +112,7 @@ public class AllStoreVOTests {
 				.likeTotNum(likeTotNum)
 				.build();
 		RevwVO review = new RevwVO.RevwVOBuilder()
-				.id(id)
+				.revwId(id)
 				.storeId(storeId)
 				.userId(userId)
 				.cnts(cnts)
@@ -121,7 +121,7 @@ public class AllStoreVOTests {
 				.replyCnts(replyCnts)
 				.replyRegDt(replyRegDt)
 				.rsvdId(rsvdId)
-				.waitSeq(waitId)
+				.waitId(waitId)
 				.build();
 		MenuVO menu = new MenuVO.MenuVOBuilder()
 				.storeId(storeId)
@@ -179,8 +179,8 @@ public class AllStoreVOTests {
 				.pet(pet)
 				.smoke(smoke)
 				.addr(addr)
-				.lt(lt)
-				.lo(lo)
+				.lat(lat)
+				.lng(lng)
 				.storeId(storeId)
 				.avgRating(avgRating)
 				.revwTotNum(revwTotNum)

@@ -9,7 +9,7 @@ import com.dealight.domain.RsvdVO;
 import com.dealight.domain.UserVO;
 import com.dealight.mapper.RsvdMapper;
 import com.dealight.mapper.UserMapper;
-import com.dealight.mapper.WaitingMapper;
+import com.dealight.mapper.WaitMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 	
 	@Autowired
-	private WaitingMapper waitMapper;
+	private WaitMapper waitMapper;
 	
 	@Autowired
 	private RsvdMapper rsvdMapper;

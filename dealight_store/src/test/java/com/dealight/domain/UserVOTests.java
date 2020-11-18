@@ -9,30 +9,37 @@ import org.junit.Test;
 
 public class UserVOTests {
 	
-	// ÇÊ¼ö ÀÔ·Â°ª
-	String id = "kjuioq";
-	String name = "±èµ¿ÀÎ";
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
+	String userId = "kjuioq";
+	String name = "ï¿½èµ¿ï¿½ï¿½";
 	String pwd = "123123";
 	String email = "kjuioq@naver.com";
 	String telno = "010-2737-5157";
 	String sex = "M";
 
-	// ¼±ÅÃ ÀÔ·Â°ª
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
 	String brdt = "931211";
 	String photoSrc = "/a.jpg";
 	Date pmExpi = new Date();
 	
-	// 1. ÇÊ¼ö ÀÔ·Â°ª¸¸ ÀÔ·ÂÇÏ°í À¯Àú°´Ã¼°¡ »ý¼ºµÉ ¼ö ÀÖ´ÂÁö.
-	// not null °ª¸¸ ÀÔ·Â
-	// ÇÊ¼ö°ª : id,name,pw,email,telno,sex
-	// ¼±ÅÃ°ª : snsLginYn, clsCd, pmStus, pmCnt
-	// ÇÊ¼ö ÀÔ·Â°ªÀ» ÀÔ·ÂÇÏÁö ¾Ê¾ÒÀ»½Ã ÄÄÆÄÀÏ¿¡·¯
+	// 1. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½.
+	// not null ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+	// ï¿½Ê¼ï¿½ï¿½ï¿½ : id,name,pw,email,telno,sex
+	// ï¿½ï¿½ï¿½Ã°ï¿½ : snsLginYn, clsCd, pmStus, pmCnt
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½
 	@Test
 	public void userGenerateTest1() {
-		UserVO user = new UserVO.Builder(id,name,pwd,email,telno,sex)
+		UserVO user = new UserVO().builder()
+				.userId(userId)
+				.brdt(brdt)
+				.name(name)
+				.pwd(pwd)
+				.email(email)
+				.telno(telno)
+				.sex(sex)
 				.build();
 		
-		assertTrue(user.getUserId().equals(id));
+		assertTrue(user.getUserId().equals(userId));
 		assertTrue(user.getName().equals(name));
 		assertTrue(user.getPwd().equals(pwd));
 		assertTrue(user.getEmail().equals(email));
@@ -43,17 +50,23 @@ public class UserVOTests {
 	}
 	
 	
-	// 2. ¸ðµç ÀÔ·Â°ªÀ» ÀÔ·ÂÇØ¼­ À¯Àú °´Ã¼¸¦ »ý¼±ÇÑ´Ù.
-	// Ãß°¡ : brdt, photoSrc, pmExpi
+	// 2. ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+	// ï¿½ß°ï¿½ : brdt, photoSrc, pmExpi
 	@Test
 	public void userGenerateTest2() {
-		UserVO user = new UserVO.Builder(id,name,pwd,email,telno,sex)
-				.setBrbt(brdt)
-				.setPhotoSrc(photoSrc)
-				.setPmExpi(pmExpi)
+		UserVO user = new UserVO().builder()
+				.userId(userId)
+				.brdt(brdt)
+				.name(name)
+				.telno(telno)
+				.pwd(pwd)
+				.email(email)
+				.photoSrc(photoSrc)
+				.sex(sex)
+				.pmExpi(pmExpi)
 				.build();
 		
-		assertTrue(user.getUserId().equals(id));
+		assertTrue(user.getUserId().equals(userId));
 		assertTrue(user.getName().equals(name));
 		assertTrue(user.getPwd().equals(pwd));
 		assertTrue(user.getEmail().equals(email));
@@ -67,95 +80,95 @@ public class UserVOTests {
 		assertNotNull(user);
 	}
 	
-	
-	// 3. ÀÔ·ÂÇÑ °ªÀÌ Çü½Ä¿¡ ¸ÂÁö ¾ÊÀ»¶§ ¿¹¿Ü¸¦ ¹ß»ý½ÃÅ²´Ù.
-	// 3-1. ¾ÆÀÌµð°¡ 20ÀÚ ÀÌ»óÀÏ ¶§
-	@Test(expected=IllegalArgumentException.class)
-	public void userGenerateExceptionTest1() {
-			UserVO user = new UserVO.Builder("dddddddddddddddddddddddddddddd", "±èµ¿ÀÎ", "123123", "kjuioq@naver.com", "010-2737-5157",
-														"M")
-					.setBrbt("931211")
-					.setPhotoSrc("/a.jpg")
-					.setPmExpi(new Date())
-					.build();
-			
-			System.out.println(user);
-			assertNotNull(user);
-	}
-	
-	// 3. ÀÔ·ÂÇÑ °ªÀÌ Çü½Ä¿¡ ¸ÂÁö ¾ÊÀ»¶§ ¿¹¿Ü¸¦ ¹ß»ý½ÃÅ²´Ù.
-	// 3-2. ÀÌ¸§ÀÇ ±ÛÀÚ¼ö°¡ 5ÀÚ¸¦ ÃÊ°úÇßÀ» ¶§
-	@Test(expected=IllegalArgumentException.class)
-	public void userGenerateExceptionTest2() {
-			UserVO user = new UserVO.Builder("ddd", "±èµ¿ÀÎÀÎÀÎÀÎ", "123123", "kjuioq@naver.com", "010-2737-5157",
-														"M")
-					.setBrbt("931211")
-					.setPhotoSrc("/a.jpg")
-					.setPmExpi(new Date())
-					.build();
-			
-			System.out.println(user);
-			assertNotNull(user);
-	}
-	
-	// 3. ÀÔ·ÂÇÑ °ªÀÌ Çü½Ä¿¡ ¸ÂÁö ¾ÊÀ»¶§ ¿¹¿Ü¸¦ ¹ß»ý½ÃÅ²´Ù.
-	// 3-3. ºñ¹Ð¹øÈ£ÀÇ ±ÛÀÚ¼ö°¡ 20ÀÚ¸¦ ÃÊ°úÇßÀ» ¶§
-	@Test(expected=IllegalArgumentException.class)
-	public void userGenerateExceptionTest3() {
-			UserVO user = new UserVO.Builder("ddd", "±èµ¿ÀÎ", "1231233333333333333333", "kjuioq@naver.com", "010-2737-5157",
-														"M")
-					.setBrbt("931211")
-					.setPhotoSrc("/a.jpg")
-					.setPmExpi(new Date())
-					.build();
-			
-			System.out.println(user);
-			assertNotNull(user);
-	}
-	
-	// 3. ÀÔ·ÂÇÑ °ªÀÌ Çü½Ä¿¡ ¸ÂÁö ¾ÊÀ»¶§ ¿¹¿Ü¸¦ ¹ß»ý½ÃÅ²´Ù.
-	// 3-4. emailÀÇ ±ÛÀÚ¼ö°¡ 30ÀÚ¸¦ ÃÊ°úÇßÀ» ¶§
-	@Test(expected=IllegalArgumentException.class)
-	public void userGenerateExceptionTest4() {
-			UserVO user = new UserVO.Builder("dddddddd", "±èµ¿ÀÎ", "123123", "kjuioq@naver.cdsandjsandjasdasjndasjndjasndjn dasjom", "010-2737-5157",
-														"M")
-					.setBrbt("931211")
-					.setPhotoSrc("/a.jpg")
-					.setPmExpi(new Date())
-					.build();
-			
-			System.out.println(user);
-			assertNotNull(user);
-	}
-	
-	// 3. ÀÔ·ÂÇÑ °ªÀÌ Çü½Ä¿¡ ¸ÂÁö ¾ÊÀ»¶§ ¿¹¿Ü¸¦ ¹ß»ý½ÃÅ²´Ù.
-	// 3-5. ÀüÈ­¹øÈ£ÀÇ ±ÛÀÚ¼ö°¡ 13ÀÚ¸¦ ÃÊ°úÇßÀ» ¶§
-	@Test(expected=IllegalArgumentException.class)
-	public void userGenerateExceptionTest5() {
-			UserVO user = new UserVO.Builder("dddddddd", "±èµ¿ÀÎ", "123123", "kjuioq@naver.com", "00000000000010-2737-5157",
-														"M")
-					.setBrbt("931211")
-					.setPhotoSrc("/a.jpg")
-					.setPmExpi(new Date())
-					.build();
-			
-			System.out.println(user);
-			assertNotNull(user);
-	}
-	
-	// 3. ÀÔ·ÂÇÑ °ªÀÌ Çü½Ä¿¡ ¸ÂÁö ¾ÊÀ»¶§ ¿¹¿Ü¸¦ ¹ß»ý½ÃÅ²´Ù.
-	// 3-6. ¼ºº°ÀÔ·ÂÄÚµå°¡ M È¤Àº F°¡ ¾Æ´Ò¶§
-	@Test(expected=IllegalArgumentException.class)
-	public void userGenerateExceptionTest6() {
-			UserVO user = new UserVO.Builder("dddddddd", "±èµ¿ÀÎ", "123123", "kjuioq@naver.com", "010-2737-5157",
-														"G")
-					.setBrbt("931211")
-					.setPhotoSrc("/a.jpg")
-					.setPmExpi(new Date())
-					.build();
-			
-			System.out.println(user);
-			assertNotNull(user);
-	}
+//	
+//	// 3. ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¸ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+//	// 3-1. ï¿½ï¿½ï¿½Ìµï¿½ 20ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½
+//	@Test(expected=IllegalArgumentException.class)
+//	public void userGenerateExceptionTest1() {
+//			UserVO user = new UserVO.Builder("dddddddddddddddddddddddddddddd", "ï¿½èµ¿ï¿½ï¿½", "123123", "kjuioq@naver.com", "010-2737-5157",
+//														"M")
+//					.setBrbt("931211")
+//					.setPhotoSrc("/a.jpg")
+//					.setPmExpi(new Date())
+//					.build();
+//			
+//			System.out.println(user);
+//			assertNotNull(user);
+//	}
+//	
+//	// 3. ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¸ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+//	// 3-2. ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ 5ï¿½Ú¸ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+//	@Test(expected=IllegalArgumentException.class)
+//	public void userGenerateExceptionTest2() {
+//			UserVO user = new UserVO.Builder("ddd", "ï¿½èµ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "123123", "kjuioq@naver.com", "010-2737-5157",
+//														"M")
+//					.setBrbt("931211")
+//					.setPhotoSrc("/a.jpg")
+//					.setPmExpi(new Date())
+//					.build();
+//			
+//			System.out.println(user);
+//			assertNotNull(user);
+//	}
+//	
+//	// 3. ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¸ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+//	// 3-3. ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ 20ï¿½Ú¸ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+//	@Test(expected=IllegalArgumentException.class)
+//	public void userGenerateExceptionTest3() {
+//			UserVO user = new UserVO.Builder("ddd", "ï¿½èµ¿ï¿½ï¿½", "1231233333333333333333", "kjuioq@naver.com", "010-2737-5157",
+//														"M")
+//					.setBrbt("931211")
+//					.setPhotoSrc("/a.jpg")
+//					.setPmExpi(new Date())
+//					.build();
+//			
+//			System.out.println(user);
+//			assertNotNull(user);
+//	}
+//	
+//	// 3. ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¸ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+//	// 3-4. emailï¿½ï¿½ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ 30ï¿½Ú¸ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+//	@Test(expected=IllegalArgumentException.class)
+//	public void userGenerateExceptionTest4() {
+//			UserVO user = new UserVO.Builder("dddddddd", "ï¿½èµ¿ï¿½ï¿½", "123123", "kjuioq@naver.cdsandjsandjasdasjndasjndjasndjn dasjom", "010-2737-5157",
+//														"M")
+//					.setBrbt("931211")
+//					.setPhotoSrc("/a.jpg")
+//					.setPmExpi(new Date())
+//					.build();
+//			
+//			System.out.println(user);
+//			assertNotNull(user);
+//	}
+//	
+//	// 3. ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¸ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+//	// 3-5. ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ 13ï¿½Ú¸ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+//	@Test(expected=IllegalArgumentException.class)
+//	public void userGenerateExceptionTest5() {
+//			UserVO user = new UserVO.Builder("dddddddd", "ï¿½èµ¿ï¿½ï¿½", "123123", "kjuioq@naver.com", "00000000000010-2737-5157",
+//														"M")
+//					.setBrbt("931211")
+//					.setPhotoSrc("/a.jpg")
+//					.setPmExpi(new Date())
+//					.build();
+//			
+//			System.out.println(user);
+//			assertNotNull(user);
+//	}
+//	
+//	// 3. ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¸ï¿½ ï¿½ß»ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+//	// 3-6. ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½Úµå°¡ M È¤ï¿½ï¿½ Fï¿½ï¿½ ï¿½Æ´Ò¶ï¿½
+//	@Test(expected=IllegalArgumentException.class)
+//	public void userGenerateExceptionTest6() {
+//			UserVO user = new UserVO.Builder("dddddddd", "ï¿½èµ¿ï¿½ï¿½", "123123", "kjuioq@naver.com", "010-2737-5157",
+//														"G")
+//					.setBrbt("931211")
+//					.setPhotoSrc("/a.jpg")
+//					.setPmExpi(new Date())
+//					.build();
+//			
+//			System.out.println(user);
+//			assertNotNull(user);
+//	}
 	
 }

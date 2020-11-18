@@ -22,17 +22,17 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class RevwMapperTests {
 	
-	// ÇÊ¼ö ÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
     private long id = 1;
     private long storeId = 13;
     private String userId = "kjuioq";
-    private String cnts = "³Ê¹« ¸ÀÀÖ¾î¿ë~";
-    private Date regDt = new Date(); 
+    private String cnts = "ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½~";
+    private String regDt = "20201107"; 
     private double rating = 5.5;
-    private String replyCnts = "¶Ç ½ÃÄÑÁÖ¼¼¿ä~";
-    private Date replyRegDt = new Date();
+    private String replyCnts = "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½~";
+    private String replyRegDt = "20201107";
     
-    // ¼±ÅÃ ÀÔ·Â°ª
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
     private long rsvdId = 1;
     private long waitId = 1;
     
@@ -87,7 +87,7 @@ public class RevwMapperTests {
     	
     	assertTrue(list.size() == bf + 1);
     	
-    	assertTrue(list.get(list.size()-1).getId() == review.getId());
+    	assertTrue(list.get(list.size()-1).getRevwId() == review.getRevwId());
     	
     }
     
@@ -119,13 +119,13 @@ public class RevwMapperTests {
     @Test
     public void updateTest1() {
     	RevwVO review = new RevwVO().builder()
-				.id(22)
+				.revwId(22L)
 				.storeId(storeId)
 				.userId(userId)
 				.cnts(cnts)
 				.regDt(regDt)
 				.rating(rating)
-				.replyCnts("¼öÁ¤")
+				.replyCnts("ï¿½ï¿½ï¿½ï¿½")
 				.replyRegDt(replyRegDt)
 				.build();
     	

@@ -1,6 +1,7 @@
 package com.dealight.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,16 +14,9 @@ import lombok.NonNull;
 @NoArgsConstructor
 @Builder
 public class StoreLocVO {
-
-    // 매장번호 
-    private long storeId;
-
-    // 매장주소 
-    private String addr;
-
-    // 위도 
-    private double lt;
-
-    // 경도 
-    private double lo;
+	private Long storeId;
+	private String addr;
+	private Double lat;
+	private Double lng;
+	
 }

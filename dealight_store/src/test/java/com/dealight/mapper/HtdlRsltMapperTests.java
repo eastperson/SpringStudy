@@ -116,7 +116,7 @@ public class HtdlRsltMapperTests {
     public void deleteTest1() {
     	
     	HtdlRsltVO htdlRslt = new HtdlRsltVO().builder()
-				.htdlId(6)
+				.htdlId(6L)
 				.storeId(storeId)
 				.lastPnum(lastPnum)
 				.htdlLmtPnum(htdlLmtPnum)

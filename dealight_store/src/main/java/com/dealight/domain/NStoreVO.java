@@ -1,32 +1,22 @@
 package com.dealight.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NStoreVO{
-	
-    // ¸ÅÀå¹øÈ£ 
-    @NonNull private long storeId;
+public class NStoreVO {
 
-    // ¿µ¾÷½Ã°£ 
-    // ¼öÁ¤ biz tm
-    private String bizTm;
-    //@NonNull private String breakEntm;
-
-    // ¸Þ´º 
-    private String menu;
-
+	private Long storeId;
+	//ë¹„ì¦ˆíƒ€ìž„
+	private String bizTm;
+	private String menu;
 }

@@ -8,17 +8,17 @@ import org.junit.Test;
 public class StoreLocVOTests {
 	
 	private long storeId = 13;
-	private String addr = "аж╪р";
-	private int lt = 90;
-	private int lo = 30;
+	private String addr = "О©╫ж╪О©╫";
+	private Double lat = 90.0;
+	private Double lng = 30.0;
 	
 	@Test
 	public void StoreLocGenerateTest1() {
 		
 		StoreLocVO sloc = new StoreLocVO.StoreLocVOBuilder()
 				.addr(addr)
-				.lt(lt)
-				.lo(lo)
+				.lat(lat)
+				.lng(lng)
 				.storeId(storeId)
 				.build();
 		
@@ -26,8 +26,8 @@ public class StoreLocVOTests {
 		
 		assertTrue(sloc.getStoreId() == storeId);
 		assertTrue(sloc.getAddr().equals(addr));
-		assertTrue(sloc.getLo() == lo);
-		assertTrue(sloc.getLt() == lt);
+		assertTrue(sloc.getLat() == lat);
+		assertTrue(sloc.getLng() == lng);
 		
 		
 	}

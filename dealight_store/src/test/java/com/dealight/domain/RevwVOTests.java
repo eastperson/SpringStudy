@@ -9,26 +9,26 @@ import org.junit.Test;
 
 public class RevwVOTests {
 	
-	// ÇÊ¼ö ÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
     private long id = 1;
     private long storeId = 1;
     private String userId = "kjuioq";
-    private String cnts = "³Ê¹« ¸ÀÀÖ¾î¿ë~";
-    private Date regDt = new Date(); 
+    private String cnts = "ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½~";
+    private String regDt = "20201107"; 
     private double rating = 5.5;
-    private String replyCnts = "¶Ç ½ÃÄÑÁÖ¼¼¿ä~";
-    private Date replyRegDt = new Date();
+    private String replyCnts = "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½~";
+    private String replyRegDt = "20201107";
     
-    // ¼±ÅÃ ÀÔ·Â°ª
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
     private long rsvdId = 1;
     private long waitId = 1;
 
-	// 1. ÇÊ¼ö ÀÔ·Â°ª¸¸ ÀÔ·ÂÇÏ°í ¸ÅÀå°´Ã¼°¡ »ý¼ºµÉ ¼ö ÀÖ´ÂÁö.
+	// 1. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½å°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½.
 	@Test
 	public void reviewGenerateTest1() {
 		
 		RevwVO review = new RevwVO.RevwVOBuilder()
-				.id(id)
+				.revwId(id)
 				.storeId(storeId)
 				.userId(userId)
 				.cnts(cnts)
@@ -38,7 +38,7 @@ public class RevwVOTests {
 				.replyRegDt(replyRegDt)
 				.build();
 		
-		assertTrue(review.getId() == id);
+		assertTrue(review.getRevwId() == id);
 		assertTrue(review.getStoreId() == storeId);
 		assertTrue(review.getUserId().equals(userId));
 		assertTrue(review.getCnts().equals(cnts));
@@ -47,17 +47,15 @@ public class RevwVOTests {
 		assertTrue(review.getReplyCnts().equals(replyCnts));
 		assertTrue(review.getRegDt().equals(replyRegDt));
 		
-		assertTrue(review.getRsvdId() == 0);
-		assertTrue(review.getWaitSeq() == 0);
 		
 	}
 	
-	// ¸ðµç ÀÔ·Â°ª
+	// ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
 	@Test
 	public void reviewGenerateTest2() {
 		
 		RevwVO review = new RevwVO.RevwVOBuilder()
-				.id(id)
+				.revwId(id)
 				.storeId(storeId)
 				.userId(userId)
 				.cnts(cnts)
@@ -66,10 +64,10 @@ public class RevwVOTests {
 				.replyCnts(replyCnts)
 				.replyRegDt(replyRegDt)
 				.rsvdId(rsvdId)
-				.waitSeq(waitId)
+				.waitId(waitId)
 				.build();
 		
-		assertTrue(review.getId() == id);
+		assertTrue(review.getRevwId() == id);
 		assertTrue(review.getStoreId() == storeId);
 		assertTrue(review.getUserId().equals(userId));
 		assertTrue(review.getCnts().equals(cnts));
@@ -78,7 +76,7 @@ public class RevwVOTests {
 		assertTrue(review.getReplyCnts().equals(replyCnts));
 		assertTrue(review.getRegDt().equals(replyRegDt));
 		assertTrue(review.getRsvdId() == rsvdId);
-		assertTrue(review.getWaitSeq() == waitId);
+		assertTrue(review.getWaitId() == waitId);
 		
 	}
 

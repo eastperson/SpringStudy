@@ -6,24 +6,29 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class StoreEvalVO {
-	
-	// ¸ÅÀå¹øÈ£ 
-    private long storeId;
 
-    // Æò±ÕÆòÁ¡ 
+	// ë§¤ì¥ë²ˆí˜¸ 
+    private Long storeId;
+
+    // í‰ê· í‰ì  
     private double avgRating;
 
-    // ¸®ºä¼ö 
+    // ë¦¬ë·°ìˆ˜ 
     private int revwTotNum;
-
-    // ÁÁ¾Æ¿äÇÕ°è 
+    
+    // ì¢‹ì•„ìš”í•©ê³„ 
     private int likeTotNum;
-
+    
+    //ë“±ë¡ ë‚ ì§œ
+    private Date regDate;
+    
+    //ìˆ˜ì • ë‚ ì§œ
+    private Date updateDate;
+    
 }

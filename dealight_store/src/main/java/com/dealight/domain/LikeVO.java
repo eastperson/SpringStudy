@@ -12,10 +12,8 @@ import lombok.NonNull;
 @Builder
 public class LikeVO {
 	
-    // 회원아이디 
     private String userId;
 
-    // 매장번호 
-    private long storeId;
+    private Long storeId;
 
 }

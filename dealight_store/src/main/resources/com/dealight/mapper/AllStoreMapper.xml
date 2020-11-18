@@ -54,8 +54,8 @@
 
 <resultMap type="com.dealight.domain.StoreLocVO" id="StoreLocVO">
 	<result column="addr" property="addr"/>
-	<result column="lt" property="lt"/>
-	<result column="lo" property="lo"/>
+	<result column="lat" property="lat"/>
+	<result column="lng" property="lng"/>
 </resultMap>
 
 <resultMap type="com.dealight.domain.NStoreVO" id="NStoreVO">
@@ -116,8 +116,8 @@
 	<!-- <collection property="bstore" resultMap="BStoreVO"/> -->
 	 
 	 <result column="addr" property="addr"/>
-	<result column="lt" property="lt"/>
-	<result column="lo" property="lo"/>
+	<result column="lat" property="lat"/>
+	<result column="lng" property="lng"/>
 	 
 	<!-- <collection property="loc" resultMap="StoreLocVO"/> -->
 	<result column="park" property="park"/>

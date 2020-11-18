@@ -1,6 +1,7 @@
 package com.dealight.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,11 +14,8 @@ import lombok.NonNull;
 @NoArgsConstructor
 @Builder
 public class StoreTagVO {
-	
-    // ¸ÅÀå¹øÈ£ 
-    private long storeId;
-
-    // ÇØ½ÃÅÂ±×ÀÌ¸§ 
-    private String tagNm;
-
+	// ë§¤ì¥ë²ˆí˜¸
+	private Long storeId;
+	// í•´ì‹œíƒœê·¸ì´ë¦„
+	private String tagNm;
 }

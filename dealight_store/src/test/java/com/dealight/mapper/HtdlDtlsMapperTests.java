@@ -27,9 +27,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class HtdlDtlsMapperTests {
 	
-	// ÇÊ¼öÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ï¿½Ô·Â°ï¿½
     private long hotdealId = 25;
-    private String name = "µ·±î½º¼¼Æ®";
+    private String name = "ï¿½ï¿½ï¿½î½ºï¿½ï¿½Æ®";
     private long storeId = 13;
     private double dcRate = 0.5;
     private String startTm = "13:00";
@@ -39,16 +39,16 @@ public class HtdlDtlsMapperTests {
     private int ddct = 7500;
     private int curPnum = 25;
     
-    // ±âº»°ª
-    private String stusCd;
+    // ï¿½âº»ï¿½ï¿½
+    private String stusCd = "A";
     
-    //¼±ÅÃ ÀÔ·Â°ª
-    private String intro = "ÇÖµô °í°í";
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
+    private String intro = "ï¿½Öµï¿½ ï¿½ï¿½ï¿½";
     
 	
     private long htdlId = 4;
     private long htdlSeq = 1;
-    private String menuName = "µ·±î½º";
+    private String menuName = "ï¿½ï¿½ï¿½î½º";
     private int menuPrice = 3000;
     
     @Autowired
@@ -152,7 +152,7 @@ public class HtdlDtlsMapperTests {
     	HtdlDtlsVO htdlDtls = new HtdlDtlsVO().builder()
 				.htdlId(htdlId)
 				.htdlSeq(htdlSeq)
-				.menuName("¼öÁ¤")
+				.menuName("ï¿½ï¿½ï¿½ï¿½")
 				.menuPrice(menuPrice)
 				.build();
     	
@@ -218,6 +218,7 @@ public class HtdlDtlsMapperTests {
 				.befPrice(befPrice)
 				.ddct(ddct)
 				.curPnum(curPnum)
+				.stusCd(stusCd)
 				.build();
     	
     	htdlMapper.insertSelectKey(htdl);

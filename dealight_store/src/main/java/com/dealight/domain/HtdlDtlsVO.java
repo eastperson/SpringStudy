@@ -2,14 +2,15 @@ package com.dealight.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -17,20 +18,28 @@ import lombok.ToString;
 @Builder
 public class HtdlDtlsVO {
 	
-    // �ֵ���ȣ
-	@NonNull
-    private long htdlId;
+	// 핫딜번호
+	@NotNull(message = "핫딜번호는 null일 수 없습니다.")
+    private Long htdlId;
 
-    // �ֵ����Ϸù�ȣ
-	@NonNull
-    private long htdlSeq;
+    // 핫딜상세일련번호
+	@NotNull(message = "핫딜상세일련번호는 null일 수 없습니다.")
+    private Long htdlSeq;
 
-    // �ֵ��޴��̸�
-	@NonNull
+    // 핫딜메뉴이름
+	@NotBlank
+	@Length(min = 1, max = 20)
     private String menuName;
 
-    // �޴�����
-	@NonNull
+    // 메뉴가격
+	@NotNull
     private int menuPrice;
-
+	
+	// 등록날짜
+	@NotNull
+	private Date regDate;
+	
+	// 수정날짜
+	@NotNull
+	private Date updateDate;
 }

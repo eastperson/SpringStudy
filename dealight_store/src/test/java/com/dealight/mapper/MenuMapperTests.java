@@ -21,14 +21,14 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class MenuMapperTests {
 	
-	// ÇÊ¼ö ÀÔ·Â°ª
+	// ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½
     private long storeId = 13;
     private long menuSeq = 3;
     private int price = 5000;
-    private String name = "µ·±î½º"; 
-    private String recoMenu;
+    private String name = "ï¿½ï¿½ï¿½î½º"; 
+    private String recoMenu = "Y";
 
-    //¼±ÅÃ ÀÔ·Â°ª
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
     private String imgUrl = "/a.jpg";
     
     @Autowired
@@ -42,6 +42,7 @@ public class MenuMapperTests {
 				.menuSeq(menuSeq)
 				.price(price)
 				.name(name)
+				.recoMenu(recoMenu)
 				.build();
     	
     	List<MenuVO> list = mapper.findAll();
@@ -65,6 +66,7 @@ public class MenuMapperTests {
 				.menuSeq(menuSeq)
 				.price(price)
 				.name(name)
+				.recoMenu(recoMenu)
 				.build();
     	
     	List<MenuVO> list = mapper.findAll();
@@ -115,10 +117,10 @@ public class MenuMapperTests {
 				.storeId(storeId)
 				.menuSeq(menuSeq)
 				.price(price)
-				.name("¼öÁ¤")
+				.name("ï¿½ï¿½ï¿½ï¿½")
 				.build();
 
-    	String bf = mapper.findBySeq(menuSeq).getName();
+    	String bf = mapper.findBySeq(1).getName();
     	
     	int result = mapper.update(menu);
     	

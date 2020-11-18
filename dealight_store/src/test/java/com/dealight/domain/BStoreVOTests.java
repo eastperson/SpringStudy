@@ -7,13 +7,13 @@ import org.junit.Test;
 
 public class BStoreVOTests {
 	
-	// ÇÊ¼ö ÀÔ·Â
+	// ï¿½Ê¼ï¿½ ï¿½Ô·ï¿½
     private long storeId = 1;
     private String seatStusCd;
     private String openTm = "09:30";
     private String closeTm = "21:30";
     
-    // ¼±ÅÃ ÀÔ·Â
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
     private String buserId = "kjuioq";
     private String breakSttm = "15:00";
     private String breakEntm = "16:00";
@@ -21,15 +21,15 @@ public class BStoreVOTests {
     private int n1SeatNo = 8;
     private int n2SeatNo = 10;
     private int n4SeatNo = 5;
-    private String storeIntro = "¾È³ç?";
+    private String storeIntro = "ï¿½È³ï¿½?";
     private int avgMealTm = 30;
-    private String hldy = "ÀÏ¿äÀÏ"; 
+    private String hldy = "ï¿½Ï¿ï¿½ï¿½ï¿½"; 
     private int acmPnum = 40;
 
-	// 1. ÇÊ¼ö ÀÔ·Â°ª¸¸ ÀÔ·ÂÇÏ°í ¸ÅÀå°´Ã¼°¡ »ý¼ºµÉ ¼ö ÀÖ´ÂÁö.
-	// not null °ª¸¸ ÀÔ·Â
-	// ÇÊ¼ö°ª : storeId,openTm,closeTm, storenm
-	// ±âº»°ª : clsCd
+	// 1. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½å°´Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½.
+	// not null ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+	// ï¿½Ê¼ï¿½ï¿½ï¿½ : storeId,openTm,closeTm, storenm
+	// ï¿½âº»ï¿½ï¿½ : clsCd
 	@Test
 	public void storeGenerateTest1() {
 		BStoreVO bstore = new BStoreVO.BStoreVOBuilder()
@@ -55,19 +55,19 @@ public class BStoreVOTests {
 		
 	}
 	
-	// 2. ÇÊ¼ö ÀÔ·Â°ªÀ» ÀÔ·ÂÇÏÁö ¾Ê¾ÒÀ» ‹š
-	// nullpointer exception ¹ß»ý
+	// 2. ï¿½Ê¼ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ ï¿½ï¿½
+	// nullpointer exception ï¿½ß»ï¿½
 	@Test(expected=NullPointerException.class)
 	public void storeGenerateTest2() {
 		BStoreVO bstore = new BStoreVO.BStoreVOBuilder()
 				.storeId(storeId)
-				//.openTm(openTm)
+				.openTm(openTm)
 				.closeTm(closeTm)
 				.build();
 		
 	}
 	
-	// 3. ¸ðµç ÀÔ·Â°ª
+	// 3. ï¿½ï¿½ï¿½ ï¿½Ô·Â°ï¿½
 	@Test
 	public void storeGenerateTest3() {
 		BStoreVO bstore = new BStoreVO.BStoreVOBuilder()

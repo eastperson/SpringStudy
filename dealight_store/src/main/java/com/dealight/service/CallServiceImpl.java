@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.dealight.domain.WaitingVO;
+import com.dealight.domain.WaitVO;
 import com.dealight.handler.RestTemplateResponseErrorHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -30,39 +30,39 @@ import lombok.extern.log4j.Log4j;
 public class CallServiceImpl implements CallService {
 	
 	/*
-	 * Ä«Ä«¿À ¸Þ½ÃÁö APIÀÇ REST API ¹æ½ÄÀº ´ÙÀ½ÀÇ ¼ø¼­·Î ÁøÇàµÈ´Ù. 
+	 * Ä«Ä«ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ APIï¿½ï¿½ REST API ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´ï¿½. 
 	 * 
-	 * 0. Ä«Ä«¿À °³¹ßÀÚ¿¡ °¡ÀÔÀ» ÇÑ ÈÄ REST API KEY, redirect URI¸¦ ÁöÁ¤ÇÑ´Ù.
-	 * 1. ÀÎ°¡ ÄÚµå¸¦ ¹Þ¾Æ¾ß ÇÑ´Ù. GET ¹æ½ÄÀ¸·Î REST API key¿Í redirect URI¸¦ ÅëÇØ code¸¦ ¹Þ¾Æ¿ÀÀÚ.
-	 * 1-1. **½ÃÅ©¸´ ¸ðµå·Î ÁøÇàÇÏÀÚ.
-	 * 1-2. localhost:8080/oauth¿¡ °¡¼­ a¸µÅ©¸¦ °£´Ù.
-	 * 1-3. ±×·¯¸é ¹Þ¾Æ¿Â urlÀÇ code¸¦ º¹»çÇÏÀÚ
-	 * 1-4. **ÀÎ°¡ÄÚµå´Â ¼­¹ö°¡ µ¿ÀÛÇÒ ¶§¿¡¸¸ À¯È¿ÇÏ´Ù. ¼­¹ö¸¦ Á¾·áÇÏ¸é ´Ù½Ã ¹ß±Þ¹Þ¾Æ¾ß ÇÑ´Ù.
-	 * 2. ÀÎ°¡ ÄÚµå¸¦ ÅëÇØ ¾×¼¼½º ÅäÅ«À» ¹ß±Þ¹Þ¾Æ¾ß ÇÑ´Ù.
-	 * 2-1. code¸¦ get ¹æ½Ä (/token?code={})À¸·Î ³Ñ±âÀÚ
-	 * 2-2. POST Å¸ÀÔÀÇ °æ¿ì Äõ¸® ½ºÆ®¸µÀ» È°¿ëÇÏ´Â°ÍÀÌ ÆíÇÒ¼ö ÀÖ´Ù.
-	 * 2-3. https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={RESTÅ°}&redirect_uri={¸®´ÙÀÌ·ºÆ® URI}&code={ÄÚµå}
-	 * 2-4. JSONÅ¸ÀÔÀ¸·Î access_tokenÀ» ¹ÝÈ¯¹ÞÀ» ¼ö ÀÖ´Ù.
-	 * 3. ¿¢¼¼½º ÅäÅ«À» È°¿ëÇØ¼­ ¸Þ½ÃÁö¸¦ ³Ö´Â´Ù.
-	 * 3-1. ÅäÅ«µµ get ¹æ½ÄÀ¸·Î uri
-	 * 3-2. https://kapi.kakao.com/v2/api/talk/memo/default/send?template_object={¸Þ½ÃÁö JSON}
-	 * 3-3. Çì´õ¿¡ Authorization : Bearer + access_token
-	 * 3-4. 200 ok¸¦ ¹ÞÀ¸¸é ¸Þ½ÃÁö Àü´ÞµÈ °Í
+	 * 0. Ä«Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ REST API KEY, redirect URIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+	 * 1. ï¿½Î°ï¿½ ï¿½Úµå¸¦ ï¿½Þ¾Æ¾ï¿½ ï¿½Ñ´ï¿½. GET ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ REST API keyï¿½ï¿½ redirect URIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ codeï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½.
+	 * 1-1. **ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+	 * 1-2. localhost:8080/oauthï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ aï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+	 * 1-3. ï¿½×·ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ urlï¿½ï¿½ codeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * 1-4. **ï¿½Î°ï¿½ï¿½Úµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ù½ï¿½ ï¿½ß±Þ¹Þ¾Æ¾ï¿½ ï¿½Ñ´ï¿½.
+	 * 2. ï¿½Î°ï¿½ ï¿½Úµå¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½×¼ï¿½ï¿½ï¿½ ï¿½ï¿½Å«ï¿½ï¿½ ï¿½ß±Þ¹Þ¾Æ¾ï¿½ ï¿½Ñ´ï¿½.
+	 * 2-1. codeï¿½ï¿½ get ï¿½ï¿½ï¿½ (/token?code={})ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½ï¿½
+	 * 2-2. POST Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½ï¿½Ï´Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö´ï¿½.
+	 * 2-3. https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={RESTÅ°}&redirect_uri={ï¿½ï¿½ï¿½ï¿½ï¿½Ì·ï¿½Æ® URI}&code={ï¿½Úµï¿½}
+	 * 2-4. JSONÅ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ access_tokenï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
+	 * 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å«ï¿½ï¿½ È°ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
+	 * 3-1. ï¿½ï¿½Å«ï¿½ï¿½ get ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ uri
+	 * 3-2. https://kapi.kakao.com/v2/api/talk/memo/default/send?template_object={ï¿½Þ½ï¿½ï¿½ï¿½ JSON}
+	 * 3-3. ï¿½ï¿½ï¿½ï¿½ï¿½ Authorization : Bearer + access_token
+	 * 3-4. 200 okï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½ï¿½
 	 * 
 	 * 
-	 * ¾ÕÀ¸·Î
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
-	 * > oauth¸¦ ÀÚµ¿À¸·Î ¹Þ¾Æ¼­ ÀúÀåÇÒ ¼ö ÀÖ´Â ¹æ¹ýÀ» Ã£¾Æº¸ÀÚ. -> ÀÏ´Ü URI¸¦ È®ÀÎÇÏ°í ÄÚµå¸¦ Á÷Á¢ ÀÔ·ÂÇØ¼­ ÅäÅ« ¹Þ´Â ¹æ½Ä
-	 * > ¾×¼¼½º ÅäÅ«À» ¹Þ¾Æ ÀúÀåÇÏ´Â ¹æ¹ý -> POST·Î jsonÀ» º¸³»¼­ JSONÀ¸·Î ÅäÅ«À» ¹Þ´Â´Ù. 
-	 * > ¸Þ½ÃÁö¸¦ ¹ß¼ÛÇÏ´Â ¹æ¹ýÀ» Ã£¾Æº¸ÀÚ. -> ÅäÅ«°ú ÇÔ²² ¸Þ½ÃÁö º¸³»´Â Çü½ÄÀ» ¸¸µç´Ù. JSONÀ¸·Î º¸³»´Â ¹æ¹ýÀ» Ã£¾Æº¸ÀÚ.
-	 * > ¸Þ½ÃÁö¸¦ ÀÛ¼ºÇØ¼­ ¹ß¼ÛÇØº¸ÀÚ -> TEST
-	 * -- ³ª¿¡°Ô ¸Þ½ÃÁö º¸³»±â ¿Ï·á
-	 * > ÇÁ·ÎÇÊ °¡Á®¿À±â -> ÇÁ·ÎÇÊ ±¸Çö
-	 * > Ä£±¸ ¸ñ·Ï °¡Á®¿À±â api -> Ä£±¸ ¸ñ·Ï ±¸Çö
-	 * > Ä£±¸¿¡°Ô ¸Þ½ÃÁö º¸³»±â -> ¸Þ½ÃÁöº¸³»±â ±¸Çö
-	 * > ¿Ï·á!
+	 * > oauthï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æºï¿½ï¿½ï¿½. -> ï¿½Ï´ï¿½ URIï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Úµå¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½Å« ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½
+	 * > ï¿½×¼ï¿½ï¿½ï¿½ ï¿½ï¿½Å«ï¿½ï¿½ ï¿½Þ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ -> POSTï¿½ï¿½ jsonï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ JSONï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å«ï¿½ï¿½ ï¿½Þ´Â´ï¿½. 
+	 * > ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¼ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æºï¿½ï¿½ï¿½. -> ï¿½ï¿½Å«ï¿½ï¿½ ï¿½Ô²ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½. JSONï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æºï¿½ï¿½ï¿½.
+	 * > ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½Ø¼ï¿½ ï¿½ß¼ï¿½ï¿½Øºï¿½ï¿½ï¿½ -> TEST
+	 * -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½
+	 * > ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 * > Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ api -> Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 * > Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 * > ï¿½Ï·ï¿½!
 	 * 
-	 * ***Âü°í·Î HTTP method ¿À·ù°¡ ³ª¸é https·Î Á¢¼ÓÇß´ÂÁö È®ÀÎÇÏÀÚ. http·Î Á¢¼ÓÇØ¾ßÇÑ´Ù.
+	 * ***ï¿½ï¿½ï¿½ï¿½ï¿½ HTTP method ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ httpsï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. httpï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ñ´ï¿½.
 	 * 
 	 * 
 	 * 
@@ -74,17 +74,17 @@ public class CallServiceImpl implements CallService {
 		
 		
 		
-		// 1. RestTemplat »ý¼º
+		// 1. RestTemplat ï¿½ï¿½ï¿½ï¿½
 		RestTemplate restTemplate = new RestTemplate();	
 		
 		String url = "https://kauth.kakao.com/oauth/authorize?client_id=dba6ebc24e85989c7afde75bd48c5746&redirect_uri=https://localhost:8080/oauth&response_type=code";
 		
 		UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 		
-		// ½ÃÅ©¸´ ¸ðµå·Î ¹Þ¾Æ¿ÀÀÚ ¤Ð
-		// ¾òÀº ÄÚµå O67g7f5UQRDFIrAfiMwe3mxQTgX1_905Safvjt2_WSbjfqL4v3hflGR9xLGMQSkAS4_W5wo9dVoAAAF11gJ1Kw
+		// ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ O67g7f5UQRDFIrAfiMwe3mxQTgX1_905Safvjt2_WSbjfqL4v3hflGR9xLGMQSkAS4_W5wo9dVoAAAF11gJ1Kw
 		
-		// ÀÌ ÇÑÁÙÀÇ ÄÚµå·Î API·Î È£ÃâÇÏ¿© MAPÅ¸ÀÔÀ¸·Î Àü´Þ¹Þ´Â´Ù.
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ APIï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï¿ï¿½ MAPÅ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þ¹Þ´Â´ï¿½.
 		String strResult = restTemplate.getForObject(url, String.class);
 
        return strResult;
@@ -106,25 +106,25 @@ public class CallServiceImpl implements CallService {
 		 
 		 try {
 		
-		// 1. RestTemplat »ý¼º
+		// 1. RestTemplat ï¿½ï¿½ï¿½ï¿½
 		RestTemplate restTemplate = new RestTemplate();	
 		
-		// 1-1. error ÇÚµé·¯¸¦ ¸¸µé¾îÁØ´Ù.
+		// 1-1. error ï¿½Úµé·¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		RestTemplateResponseErrorHandler errorHandler = new RestTemplateResponseErrorHandler();
 		
 		restTemplate.setErrorHandler(errorHandler);
 		
 		
-		// 2. Çì´õ¸¦ ¸¸µé¾îÁØ´Ù.
+		// 2. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		HttpHeaders header = new HttpHeaders();
 		
-		// 2-1. content-typeÀ» ¸¸µé¾îÁØ´Ù.
+		// 2-1. content-typeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		header.setContentType(MediaType.APPLICATION_JSON);
 		
-		// 3. request body parameter¸¦ ¼³Á¤ÇÑ´Ù.
+		// 3. request body parameterï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		
-		// 3-1. jsonÀÇ ÇüÅÂ¸¦ ´ãÀ» mapÀ» ¸¸µé¾îÁØ´Ù.
-		// *****************ÅäÅ«À» ¹ÞÀ» ¶§´Â Äõ¸® ½ºÆ®¸µÀ¸·Î ³Ö¾îº¸ÀÚ.
+		// 3-1. jsonï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ mapï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+		// *****************ï¿½ï¿½Å«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾îº¸ï¿½ï¿½.
 //		Map<String, Object> map = new HashMap<>();
 //
 //		map.put("grant_type", "authorization_code");
@@ -132,7 +132,7 @@ public class CallServiceImpl implements CallService {
 //		map.put("redirect_uri", "http://localhost:8080");
 //		map.put("code", "O67g7f5UQRDFIrAfiMwe3mxQTgX1_905Safvjt2_WSbjfqL4v3hflGR9xLGMQSkAS4_W5wo9dVoAAAF11gJ1Kw");
 		
-		// 4. map°ú header¸¦ Ãß°¡ÇØÁØ´Ù.
+		// 4. mapï¿½ï¿½ headerï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 //       HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map,header);
 	
 		String url = "https://kauth.kakao.com/oauth/token";
@@ -146,7 +146,7 @@ public class CallServiceImpl implements CallService {
 				
 		log.info(uri.toString());
 		
-		// ÀÌ ÇÑÁÙÀÇ ÄÚµå·Î API·Î È£ÃâÇÏ¿© MAPÅ¸ÀÔÀ¸·Î Àü´Þ¹Þ´Â´Ù.
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ APIï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï¿ï¿½ MAPÅ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þ¹Þ´Â´ï¿½.
 		ResponseEntity<Map> resultMap = restTemplate.postForEntity(uri.toString(), header, Map.class);
 		
 		
@@ -154,17 +154,17 @@ public class CallServiceImpl implements CallService {
 		log.info(resultMap);
 		
 		
-		result.put("statusCode", resultMap.getStatusCodeValue()); //http status code¸¦ È®ÀÎ
-       result.put("header", resultMap.getHeaders()); //Çì´õ Á¤º¸ È®ÀÎ
-       result.put("body", resultMap.getBody()); //½ÇÁ¦ µ¥ÀÌÅÍ Á¤º¸ È®ÀÎ
+		result.put("statusCode", resultMap.getStatusCodeValue()); //http status codeï¿½ï¿½ È®ï¿½ï¿½
+       result.put("header", resultMap.getHeaders()); //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+       result.put("body", resultMap.getBody()); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 		
-       //µ¥ÀÌÅÍ¸¦ Á¦´ë·Î Àü´Þ ¹Þ¾Ò´ÂÁö È®ÀÎ stringÇüÅÂ·Î ÆÄ½ÌÇØÁÜ
+       //ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Ò´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ stringï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½
        ObjectMapper mapper = new ObjectMapper();
        jsonInString = mapper.writeValueAsString(resultMap.getBody());
        
 		} catch (Exception e) {
            result.put("statusCode", "999");
-           result.put("body"  , "excpetion¿À·ù");
+           result.put("body"  , "excpetionï¿½ï¿½ï¿½ï¿½");
            System.out.println(e.toString());
        }
 
@@ -178,31 +178,31 @@ public String sendMessage(String access_token) {
 		 String jsonInString = "";
 		 try {
 		
-		// 1. RestTemplat »ý¼º
+		// 1. RestTemplat ï¿½ï¿½ï¿½ï¿½
 		RestTemplate restTemplate = new RestTemplate();	
 		
 		RestTemplateResponseErrorHandler errorHandler = new RestTemplateResponseErrorHandler();
 		
 		restTemplate.setErrorHandler(errorHandler);
 		
-		// 2. Çì´õ¸¦ ¸¸µé¾îÁØ´Ù.
+		// 2. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		HttpHeaders header = new HttpHeaders();
 		
-		// 2-1. content-typeÀ» ¸¸µé¾îÁØ´Ù.
+		// 2-1. content-typeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		header.setContentType(MediaType.APPLICATION_JSON);
 		
-		// 2-2. accept Çì´õ¸¦ ¸¸µé¾îÁØ´Ù.
+		// 2-2. accept ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 	//	header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
-		// 2-3. Authorization À» ¼³Á¤ÇØÁØ´Ù.
+		// 2-3. Authorization ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 		String authHeader = "Bearer " + access_token;
 		
 		header.set("Authorization", authHeader);
 		
-		// 3. request body parameter¸¦ ¼³Á¤ÇÑ´Ù.
+		// 3. request body parameterï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		
-		// 3-1. jsonÀÇ ÇüÅÂ¸¦ ´ãÀ» mapÀ» ¸¸µé¾îÁØ´Ù.
-		//String requestJson = "template_object={\"object_type\":\"feed\",\"content\":{\"title\":\"µðÀúÆ® »çÁø\",\"description\": \"¾Æ¸Þ¸®Ä«³ë, »§, ÄÉÀÍ\",\"image_url\":\"http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg\",\"image_width\":640,\"image_height\": 640,\"link\":{\"web_url\": \"http://www.daum.net\",\"mobile_web_url\": \"http://m.daum.net\",\"android_execution_params\": \"contentId=100\",\"ios_execution_params\": \"contentId=100\"}},\"social\": {\"like_count\": 100,\"comment_count\": 200,\"shared_count\": 300,\"view_count\": 400,\"subscriber_count\": 500},\"buttons\": [{\"title\": \"À¥À¸·Î ÀÌµ¿\",\"link\": {\"web_url\": \"http://www.daum.net\",\"mobile_web_url\": \"http://m.daum.net\"}},{\"title\": \"¾ÛÀ¸·Î ÀÌµ¿\",\"link\": {\"android_execution_params\": \"contentId=100\",\"ios_execution_params\": \"contentId=100\"}}]}";
+		// 3-1. jsonï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ mapï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
+		//String requestJson = "template_object={\"object_type\":\"feed\",\"content\":{\"title\":\"ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½\",\"description\": \"ï¿½Æ¸Þ¸ï¿½Ä«ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½\",\"image_url\":\"http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg\",\"image_width\":640,\"image_height\": 640,\"link\":{\"web_url\": \"http://www.daum.net\",\"mobile_web_url\": \"http://m.daum.net\",\"android_execution_params\": \"contentId=100\",\"ios_execution_params\": \"contentId=100\"}},\"social\": {\"like_count\": 100,\"comment_count\": 200,\"shared_count\": 300,\"view_count\": 400,\"subscriber_count\": 500},\"buttons\": [{\"title\": \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½\",\"link\": {\"web_url\": \"http://www.daum.net\",\"mobile_web_url\": \"http://m.daum.net\"}},{\"title\": \"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½\",\"link\": {\"android_execution_params\": \"contentId=100\",\"ios_execution_params\": \"contentId=100\"}}]}";
 		
 		
 		Map<String, Object> map = new HashMap<>();
@@ -211,8 +211,8 @@ public String sendMessage(String access_token) {
 		
 		Map<String, Object> content = new HashMap<>();
 		
-		content.put("title", "µðÀúÆ® »çÁø");
-		content.put("description","¾Æ¸Þ¸®Ä«³ë, »§, ÄÉÀÍ");
+		content.put("title", "ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½");
+		content.put("description","ï¿½Æ¸Þ¸ï¿½Ä«ï¿½ï¿½, ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½");
 		content.put("image_url", "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg");
 		content.put("image_width", "640");
 		content.put("image_height","640");
@@ -242,7 +242,7 @@ public String sendMessage(String access_token) {
 		
 		Map<String, Object> button1 = new HashMap<>();
 		
-		button1.put("title", "À¥À¸·Î ÀÌµ¿");
+		button1.put("title", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½");
 		
 		Map<String, Object> link2 = new HashMap<>();
 		
@@ -255,7 +255,7 @@ public String sendMessage(String access_token) {
 		
 		Map<String, Object> button2 = new HashMap<>();
 		
-		button2.put("title", "¾ÛÀ¸·Î ÀÌµ¿");
+		button2.put("title", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½");
 		
 		Map<String, Object> link3 = new HashMap<>();
 		
@@ -272,7 +272,7 @@ public String sendMessage(String access_token) {
 		
 		String requestJson =  gson.toJson(map);
 		
-		// 4. map°ú header¸¦ Ãß°¡ÇØÁØ´Ù.
+		// 4. mapï¿½ï¿½ headerï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
         HttpEntity<String> entity = new HttpEntity<>(requestJson,header);
 	
 		String url = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
@@ -283,20 +283,20 @@ public String sendMessage(String access_token) {
 				.queryParam("template_object", requestJson)
 				.build();
 		
-		// ÀÌ ÇÑÁÙÀÇ ÄÚµå·Î API·Î È£ÃâÇÏ¿© MAPÅ¸ÀÔÀ¸·Î Àü´Þ¹Þ´Â´Ù.
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ APIï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï¿ï¿½ MAPÅ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þ¹Þ´Â´ï¿½.
 		ResponseEntity<Map> resultMap = restTemplate.postForEntity(uri.toUri(), header, Map.class);
 		
-		result.put("statusCode", resultMap.getStatusCodeValue()); //http status code¸¦ È®ÀÎ
-        result.put("header", resultMap.getHeaders()); //Çì´õ Á¤º¸ È®ÀÎ
-        result.put("body", resultMap.getBody()); //½ÇÁ¦ µ¥ÀÌÅÍ Á¤º¸ È®ÀÎ
+		result.put("statusCode", resultMap.getStatusCodeValue()); //http status codeï¿½ï¿½ È®ï¿½ï¿½
+        result.put("header", resultMap.getHeaders()); //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+        result.put("body", resultMap.getBody()); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 		
-        //µ¥ÀÌÅÍ¸¦ Á¦´ë·Î Àü´Þ ¹Þ¾Ò´ÂÁö È®ÀÎ stringÇüÅÂ·Î ÆÄ½ÌÇØÁÜ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Ò´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ stringï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½
         ObjectMapper mapper = new ObjectMapper();
         jsonInString = mapper.writeValueAsString(resultMap.getBody());
         
 		} catch (Exception e) {
             result.put("statusCode", "999");
-            result.put("body"  , "excpetion¿À·ù");
+            result.put("body"  , "excpetionï¿½ï¿½ï¿½ï¿½");
             System.out.println(e.toString());
         }
  
@@ -304,7 +304,7 @@ public String sendMessage(String access_token) {
 	}
 
 	@Override
-	public int callAllList(List<WaitingVO> curStoreWaitList) {
+	public int callAllList(List<WaitVO> curStoreWaitList) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

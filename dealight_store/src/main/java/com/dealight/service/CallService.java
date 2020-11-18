@@ -3,16 +3,16 @@ package com.dealight.service;
 import java.util.HashMap;
 import java.util.List;
 
-import com.dealight.domain.WaitingVO;
+import com.dealight.domain.WaitVO;
 
 public interface CallService {
 	
-	// '¿þÀÌÆÃ'¿¡°Ô ÄÝ ¸Þ½ÃÁö º¸³»±â
+	// 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	boolean call(long waitingId);
 	
-	// ÀüÃ¼ ÄÝ ¸Þ½ÃÁö º¸³»±â
-	// returnÀº ¼º°øÇÑ ¸Þ½ÃÁö °³¼ö
-	int callAllList(List<WaitingVO> curStoreWaitList);
+	// ï¿½ï¿½Ã¼ ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// returnï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	int callAllList(List<WaitVO> curStoreWaitList);
 	
 	String getProfile();
 	
