@@ -59,7 +59,7 @@ public class FileCheckTask {
 	}
 	
 	//예약 자동 생성기
-	@Scheduled(cron="0 0 * * * *")
+	@Scheduled(cron="0 * * * * *")
 	public void registerRsvd() throws Exception{
 		log.warn("Auto Rsvd Register Task run .....................");
 		

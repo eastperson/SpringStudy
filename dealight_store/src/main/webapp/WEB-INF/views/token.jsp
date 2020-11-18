@@ -10,7 +10,11 @@
 </head>
 <body>
 <h2>Rest Template Result</h2>
-result : ${result}
+result : ${result}</br></br>
+access_token : ${access_token}</br>
+
+
+<a href="/message?access_token=${access_token }">메시지 보내기</a>
 
 
 </body>

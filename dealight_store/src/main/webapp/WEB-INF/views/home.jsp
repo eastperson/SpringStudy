@@ -13,14 +13,16 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
-    
+    /*
     Kakao.init('9a6bde461f2e377ce232962931b7d1ce');
     console.log(Kakao.isInitialized());
     Kakao.API.request({
     	  url: '/v1/api/talk/profile'
     });
+    */
 /*
     Kakao.API.request({
     	  url: '/v1/api/talk/profile',

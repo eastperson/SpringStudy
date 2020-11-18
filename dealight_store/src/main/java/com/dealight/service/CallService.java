@@ -1,5 +1,6 @@
 package com.dealight.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.dealight.domain.WaitingVO;
@@ -17,7 +18,7 @@ public interface CallService {
 	
 	String getAuth();
 	
-	String getToken(String code);
+	HashMap<String, Object> getToken(String code);
 	
 	String sendMessage(String access_token);
 

@@ -1,5 +1,7 @@
 package com.dealight.service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.dealight.domain.WaitingVO;
 import com.dealight.handler.RestTemplateResponseErrorHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import lombok.extern.log4j.Log4j;
 
@@ -74,7 +77,7 @@ public class CallServiceImpl implements CallService {
 		// 1. RestTemplat 생성
 		RestTemplate restTemplate = new RestTemplate();	
 		
-		String url = "https://kauth.kakao.com/oauth/authorize?client_id=dba6ebc24e85989c7afde75bd48c5746&redirect_uri=https://localhost:8080&response_type=code";
+		String url = "https://kauth.kakao.com/oauth/authorize?client_id=dba6ebc24e85989c7afde75bd48c5746&redirect_uri=https://localhost:8080/oauth&response_type=code";
 		
 		UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 		
@@ -89,7 +92,7 @@ public class CallServiceImpl implements CallService {
 	}
 
 	@Override
-	public String getToken(String code) {
+	public HashMap<String, Object> getToken(String code) {
 		
 		log.info("get token.................");
 		
@@ -99,7 +102,7 @@ public class CallServiceImpl implements CallService {
 		
 		 String jsonInString = "";
 		 String restKey = "dba6ebc24e85989c7afde75bd48c5746";
-		 String redirectURI = "https://localhost:8080";
+		 String redirectURI = "http://localhost:8080/oauth";
 		 
 		 try {
 		
@@ -165,7 +168,7 @@ public class CallServiceImpl implements CallService {
            System.out.println(e.toString());
        }
 
-       return jsonInString;
+       return result;
 	}
 	
 public String sendMessage(String access_token) {
@@ -173,7 +176,6 @@ public String sendMessage(String access_token) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
 		 String jsonInString = "";
-		 
 		 try {
 		
 		// 1. RestTemplat 생성
@@ -190,11 +192,9 @@ public String sendMessage(String access_token) {
 		header.setContentType(MediaType.APPLICATION_JSON);
 		
 		// 2-2. accept 헤더를 만들어준다.
-		header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+	//	header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
 		// 2-3. Authorization 을 설정해준다.
-		
-		
 		String authHeader = "Bearer " + access_token;
 		
 		header.set("Authorization", authHeader);
@@ -202,6 +202,9 @@ public String sendMessage(String access_token) {
 		// 3. request body parameter를 설정한다.
 		
 		// 3-1. json의 형태를 담을 map을 만들어준다.
+		//String requestJson = "template_object={\"object_type\":\"feed\",\"content\":{\"title\":\"디저트 사진\",\"description\": \"아메리카노, 빵, 케익\",\"image_url\":\"http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg\",\"image_width\":640,\"image_height\": 640,\"link\":{\"web_url\": \"http://www.daum.net\",\"mobile_web_url\": \"http://m.daum.net\",\"android_execution_params\": \"contentId=100\",\"ios_execution_params\": \"contentId=100\"}},\"social\": {\"like_count\": 100,\"comment_count\": 200,\"shared_count\": 300,\"view_count\": 400,\"subscriber_count\": 500},\"buttons\": [{\"title\": \"웹으로 이동\",\"link\": {\"web_url\": \"http://www.daum.net\",\"mobile_web_url\": \"http://m.daum.net\"}},{\"title\": \"앱으로 이동\",\"link\": {\"android_execution_params\": \"contentId=100\",\"ios_execution_params\": \"contentId=100\"}}]}";
+		
+		
 		Map<String, Object> map = new HashMap<>();
 
 		map.put("object_type", "feed");
@@ -211,8 +214,8 @@ public String sendMessage(String access_token) {
 		content.put("title", "디저트 사진");
 		content.put("description","아메리카노, 빵, 케익");
 		content.put("image_url", "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg");
-		content.put("image_width", 640);
-		content.put("image_height",640);
+		content.put("image_width", "640");
+		content.put("image_height","640");
 		
 		Map<String, Object> link = new HashMap<>();
 		
@@ -227,11 +230,11 @@ public String sendMessage(String access_token) {
 		
 		Map<String, Object> social = new HashMap<>();
 		
-		social.put("like_count", 100);
-		social.put("comment_count", 200);
-		social.put("shared_count", 300);
-		social.put("view_count", 400);
-		social.put("subscriber_count", 500);
+		social.put("like_count", "100");
+		social.put("comment_count", "200");
+		social.put("shared_count", "300");
+		social.put("view_count", "400");
+		social.put("subscriber_count", "500");
 		
 		map.put("social", social);
 		
@@ -259,17 +262,29 @@ public String sendMessage(String access_token) {
 		link3.put("android_execution_params", "contentId=100");
 		link3.put("ios_execution_params", "contentId=100");
 		
+		button2.put("link", link3);
+		
+		buttons.add(button2);
+		
 		map.put("buttons", buttons);
 		
+		Gson gson = new Gson();
+		
+		String requestJson =  gson.toJson(map);
+		
 		// 4. map과 header를 추가해준다.
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map,header);
+        HttpEntity<String> entity = new HttpEntity<>(requestJson,header);
 	
 		String url = "https://kapi.kakao.com/v2/api/talk/memo/default/send";
 		
-		UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
+		
+		UriComponents uri = UriComponentsBuilder.fromUriString(url)
+				//.queryParam("template_object", requestJson)
+				.queryParam("template_object", requestJson)
+				.build();
 		
 		// 이 한줄의 코드로 API로 호출하여 MAP타입으로 전달받는다.
-		ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST, entity, Map.class);
+		ResponseEntity<Map> resultMap = restTemplate.postForEntity(uri.toUri(), header, Map.class);
 		
 		result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
         result.put("header", resultMap.getHeaders()); //헤더 정보 확인

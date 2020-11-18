@@ -2,6 +2,8 @@ package com.dealight.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -39,7 +41,7 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model, String code) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -48,6 +50,7 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("code",code);
 		
 		
 		
@@ -73,15 +76,16 @@ public class HomeController {
 
 	
 	@RequestMapping(value="/oauth", method = RequestMethod.GET)
-	public String getOauth(Model model) {
+	public String getOauth(Model model, String code) {
 		
 		log.info("rest template get oauth..........................");
 		
 		String restKey = "dba6ebc24e85989c7afde75bd48c5746";
-		String redirectURI = "https://localhost:8080";
+		String redirectURI = "http://localhost:8080/oauth";
 		
 		model.addAttribute("restKey",restKey);
 		model.addAttribute("redirectURI",redirectURI);
+		model.addAttribute("code",code);
 		
 		return "oauth";
 	}
@@ -93,11 +97,15 @@ public class HomeController {
 		
 		log.info(code);
 		
-		String result = callService.getToken(code);
+		HashMap<String, Object> result = callService.getToken(code);
+		LinkedHashMap<String, String> lm = (LinkedHashMap) result.get("body");
+		String access_token = lm.get("access_token");
 		
 		log.info(result);
+		
 
 		model.addAttribute("result", result);
+		model.addAttribute("access_token",access_token);
 
 		return "token";
 	}
@@ -114,6 +122,6 @@ public class HomeController {
 		model.addAttribute("result", result);
 
 		
-		return "test";
+		return "message";
 	}
 }
