@@ -123,7 +123,7 @@ public class ReservationServiceTests {
 		
 		list.forEach((rsvd) -> {
 			
-			assertTrue(simpleDateFormat.format(rsvd.getInDate()).equals(simpleDateFormat.format(date)));
+			assertTrue(simpleDateFormat.format(rsvd.getRegDate()).equals(simpleDateFormat.format(date)));
 			
 		});
 		
@@ -147,7 +147,7 @@ public class ReservationServiceTests {
 		list.forEach((rsvd) -> {
 			
 			assertTrue(rsvd.getStoreId() == storeId);
-			assertTrue(simpleDateFormat.format(rsvd.getInDate()).equals(date));
+			assertTrue(simpleDateFormat.format(rsvd.getRegDate()).equals(date));
 			
 		});
 		
@@ -162,7 +162,7 @@ public class ReservationServiceTests {
 		List<RsvdVO> list = reservationService.readTodayCurRsvdList(storeId);
 		
 		list.forEach((rsvd) -> {
-			log.info(reservationService.getTime(rsvd.getInDate()));
+			log.info(reservationService.getTime(rsvd.getRegDate()));
 		});
 		
 	}
@@ -173,7 +173,7 @@ public class ReservationServiceTests {
 		List<RsvdVO> list = reservationService.readTodayCurRsvdList(storeId);
 		
 		list.forEach((rsvd) -> {
-			String time = reservationService.getTime(rsvd.getInDate());
+			String time = reservationService.getTime(rsvd.getRegDate());
 			log.info(time + ":::::::::::::" + reservationService.calTimeMinutes(time));
 		});
 		
@@ -211,12 +211,12 @@ public class ReservationServiceTests {
 	@Test
 	public void isReserveThisTimeStoreTest1() {
 		
-		// 2020³â 11¿ù 7ÀÏ 11½Ã 47ºÐ 30ÃÊ
-		// true°¡ ³ª¿Í¾ß ÇÔ
+		// 2020ï¿½ï¿½ 11ï¿½ï¿½ 7ï¿½ï¿½ 11ï¿½ï¿½ 47ï¿½ï¿½ 30ï¿½ï¿½
+		// trueï¿½ï¿½ ï¿½ï¿½ï¿½Í¾ï¿½ ï¿½ï¿½
 		//Date date = new Date(120,10,7,11,47,30);
 		
-		// 2020³â 11¿ù 7ÀÏ 12½Ã 12ºÐ 30ÃÊ
-		// false°¡ ³ª¿Í¾ß ÇÔ
+		// 2020ï¿½ï¿½ 11ï¿½ï¿½ 7ï¿½ï¿½ 12ï¿½ï¿½ 12ï¿½ï¿½ 30ï¿½ï¿½
+		// falseï¿½ï¿½ ï¿½ï¿½ï¿½Í¾ï¿½ ï¿½ï¿½
 		Date date = new Date(120,10,7,12,12,30);
 
 		int acm = 5;
@@ -292,7 +292,7 @@ public class ReservationServiceTests {
 	}
 	
 	
-	// ¿¹¾à ½Ã°£´ë Á¤·Ä
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Test
 	public void test() {
 		
@@ -358,7 +358,7 @@ public class ReservationServiceTests {
 		RsvdVO vo = null;
 		
 		for(RsvdVO rsvd : listByDate) {
-			if(rsvd.getId() == rsvdId)
+			if(rsvd.getRsvdId() == rsvdId)
 				vo = rsvd;
 		}
 		
